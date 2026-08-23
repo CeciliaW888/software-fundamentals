@@ -16,8 +16,41 @@ class QuietHandler(SimpleHTTPRequestHandler):
         return
 
 
+async def check_tooltip(page, term: str) -> dict[str, object]:
+    trigger = page.locator(f'.term[data-term="{term}"]').first
+    await trigger.click()
+    tooltip = page.locator("#term-tooltip")
+    await tooltip.wait_for(state="visible")
+    box = await tooltip.bounding_box()
+    if not box:
+        raise AssertionError(f"Tooltip for {term} has no visible bounds")
+    viewport_width = await page.evaluate("window.innerWidth")
+    viewport_height = await page.evaluate("window.innerHeight")
+    if box["x"] < 0 or box["x"] + box["width"] > viewport_width:
+        raise AssertionError(f"Tooltip for {term} overflows horizontally: {box}")
+    if box["y"] < 0 or box["y"] + box["height"] > viewport_height:
+        raise AssertionError(f"Tooltip for {term} overflows vertically: {box}")
+    result = {
+        "definition": await tooltip.locator(".term-tooltip__definition").inner_text(),
+        "source": await tooltip.locator(".term-tooltip__source").inner_text(),
+        "registered_terms": await page.locator('.term[data-term][data-registered="true"]').count(),
+        "unregistered_terms": await page.locator('.term[data-term]:not([data-registered="true"])').count(),
+    }
+    if not result["definition"] or not str(result["source"]).startswith("Source:"):
+        raise AssertionError(f"Tooltip for {term} lacks definition or source: {result}")
+    if result["unregistered_terms"]:
+        raise AssertionError(f"Page has unregistered terminology: {result}")
+    tooltip_screenshot = ROOT / "artifacts" / f"tooltip-{term}-{viewport_width}.png"
+    tooltip_screenshot.parent.mkdir(parents=True, exist_ok=True)
+    await page.screenshot(path=str(tooltip_screenshot), full_page=False)
+    await page.keyboard.press("Escape")
+    await tooltip.wait_for(state="hidden")
+    return result
+
+
 async def exercise(page, url: str) -> dict[str, object]:
     await page.goto(url, wait_until="networkidle")
+    tooltip = await check_tooltip(page, "function")
     await page.locator('.choice[data-correct="true"]').click()
     code = """def select_confident_anzsic_suggestions(
     about_page_texts,
@@ -45,6 +78,7 @@ async def exercise(page, url: str) -> dict[str, object]:
         "quiz": await page.locator(".question .feedback").inner_text(),
         "refactor": await page.locator("#refactor-feedback").inner_text(),
         "passed_checks": await page.locator("#refactor-checklist li.pass").count(),
+        "tooltip": tooltip,
         "scroll_width": await page.evaluate("document.documentElement.scrollWidth"),
         "client_width": await page.evaluate("document.documentElement.clientWidth"),
     }
@@ -52,6 +86,7 @@ async def exercise(page, url: str) -> dict[str, object]:
 
 async def exercise_promises(page, url: str) -> dict[str, object]:
     await page.goto(url, wait_until="networkidle")
+    tooltip = await check_tooltip(page, "interface")
     await page.locator('.choice[data-correct="true"]').click()
     for option in await page.locator('.promise-option[data-promise="true"]').all():
         await option.click()
@@ -72,6 +107,7 @@ async def exercise_promises(page, url: str) -> dict[str, object]:
         "promises": success_feedback,
         "persisted_selections": persisted_selections,
         "persisted_score": persisted_score,
+        "tooltip": tooltip,
         "scroll_width": await page.evaluate("document.documentElement.scrollWidth"),
         "client_width": await page.evaluate("document.documentElement.clientWidth"),
     }
@@ -90,12 +126,14 @@ async def run_browser_checks(base_url: str) -> None:
             page.on("console", lambda message: all_errors.append(f"console:{message.type}:{message.text}") if message.type == "error" else None)
             page.on("pageerror", lambda error: all_errors.append(f"pageerror:{error}"))
             await page.goto(base_url, wait_until="networkidle")
+            home_tooltip = await check_tooltip(page, "anzsic")
             home = {
                 "title": await page.title(),
                 "h1": await page.locator("h1").inner_text(),
                 "modules": await page.locator(".module-card").count(),
                 "scroll_width": await page.evaluate("document.documentElement.scrollWidth"),
                 "client_width": await page.evaluate("document.documentElement.clientWidth"),
+                "tooltip": home_tooltip,
             }
             if home["title"] != "Software Fundamentals" or home["modules"] != 6:
                 raise AssertionError(f"{name} course home is incomplete: {home}")
@@ -134,6 +172,16 @@ async def run_browser_checks(base_url: str) -> None:
             await page.screenshot(path=str(promise_screenshot), full_page=True)
             print(f"promises_{name}={promise_result}")
             print(f"screenshot={promise_screenshot}")
+
+            for reference_path, term in (
+                ("reference/meaningful-python-names.html", "ubiquitous-language"),
+                ("reference/python-interface-contracts.html", "side-effect"),
+            ):
+                await page.goto(f"{base_url}{reference_path}", wait_until="networkidle")
+                reference_tooltip = await check_tooltip(page, term)
+                if await page.evaluate("document.documentElement.scrollWidth") != await page.evaluate("document.documentElement.clientWidth"):
+                    raise AssertionError(f"{name} reference has horizontal overflow: {reference_path}")
+                print(f"reference_{name}_{term}={reference_tooltip}")
             await context.close()
         await browser.close()
         if all_errors:

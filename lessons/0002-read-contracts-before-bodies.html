@@ -8,6 +8,7 @@
   <title>Lesson 0002 · Know what a function promises</title>
   <link rel="stylesheet" href="../assets/course.css">
   <script src="../assets/lesson.js" defer></script>
+  <script src="../assets/terminology.js" defer></script>
 </head>
 <body data-lesson="0002-read-contracts-before-bodies">
   <div class="progress" aria-hidden="true"><span></span></div>
@@ -18,7 +19,7 @@
       <div>
         <div class="kicker">Function behaviour · 12 minutes</div>
         <h1>Know what a function promises</h1>
-        <p class="lede">Before reading every line, find what goes in, what may come back, what else changes, and what can fail.</p>
+        <p class="lede">Before reading every line of a <span class="term" data-term="function">function</span>, find what goes in, what may come back, what else changes, and what can fail.</p>
       </div>
       <aside class="lesson-meta"><strong>Your result</strong>You will describe one function clearly and test what other code is allowed to rely on.</aside>
     </header>
@@ -27,12 +28,12 @@
       <div class="win"><strong>Plain idea:</strong> other code should depend on a function’s promised result, not on the temporary steps inside it.</div>
 
       <h2>Start with a real question</h2>
-      <p>Our service receives a customer name, finds the official website, reads its About page, summarises the business activity, and suggests a code from the Australian and New Zealand Standard Industrial Classification (ANZSIC).</p>
+      <p>Our service receives a customer name, finds the official website, reads its About page, summarises the business activity, and suggests a code from the Australian and New Zealand Standard Industrial Classification (<span class="term" data-term="anzsic">ANZSIC</span>).</p>
       <p>If another part of the service uses that suggestion, what does it need to know?</p>
 
       <div class="principle-grid">
-        <section class="principle"><span class="number">01 · IN</span><h3>What goes in?</h3><p>A customer name, an industry classifier, and a place to save results.</p></section>
-        <section class="principle"><span class="number">02 · OUT</span><h3>What may come back?</h3><p>An industry suggestion, or <code>None</code> when the evidence is not strong enough.</p></section>
+        <section class="principle"><span class="number">01 · IN</span><h3>What goes in?</h3><p>A customer name, an industry <span class="term" data-term="classifier">classifier</span>, and a place to save results.</p></section>
+        <section class="principle"><span class="number">02 · OUT</span><h3>What may come back?</h3><p>An industry suggestion, or <code class="term" data-term="none">None</code> when the evidence is not strong enough.</p></section>
         <section class="principle"><span class="number">03 · ELSE</span><h3>What else happens?</h3><p>An accepted suggestion is saved; website or classification work may fail.</p></section>
       </div>
 
@@ -82,7 +83,7 @@
       </section>
 
       <h2>Write down the promise</h2>
-      <p>Python lets us place an explanation directly under the function name. This is called a <strong>docstring</strong>.</p>
+      <p>Python lets us place an explanation directly under the function name. This is called a <strong class="term" data-term="docstring">docstring</strong>.</p>
 
       <div class="code-card single-code">
         <div class="code-label">Understand the function without opening its body</div>
@@ -158,18 +159,18 @@
       <table class="ref-table term-table">
         <thead><tr><th>Word</th><th>Plain meaning</th><th>Where it comes from</th></tr></thead>
         <tbody>
-          <tr><td>Function</td><td>A named block of code that performs a job.</td><td>Official Python vocabulary</td></tr>
-          <tr><td>Docstring</td><td>Text inside a function that explains how to use it.</td><td>Official Python vocabulary</td></tr>
-          <tr><td>None</td><td>Python’s built-in marker for “no value here.”</td><td>Official Python vocabulary</td></tr>
-          <tr><td>Interface</td><td>What other code must know to use a function or module.</td><td>Standard software vocabulary; central in Ousterhout Chapter 4</td></tr>
-          <tr><td>Implementation</td><td>The steps currently used to do the work.</td><td>Standard software vocabulary; central in Ousterhout Chapter 4</td></tr>
+          <tr><td><span class="term" data-term="function">Function</span></td><td>A named block of code that performs a job.</td><td>Official Python vocabulary</td></tr>
+          <tr><td><span class="term" data-term="docstring">Docstring</span></td><td>Text inside a function that explains how to use it.</td><td>Official Python vocabulary</td></tr>
+          <tr><td><span class="term" data-term="none">None</span></td><td>Python’s built-in marker for “no value here.”</td><td>Official Python vocabulary</td></tr>
+          <tr><td><span class="term" data-term="interface">Interface</span></td><td>What other code must know to use a function or module.</td><td>Standard software vocabulary; central in Ousterhout Chapter 4</td></tr>
+          <tr><td><span class="term" data-term="implementation">Implementation</span></td><td>The steps currently used to do the work.</td><td>Standard software vocabulary; central in Ousterhout Chapter 4</td></tr>
         </tbody>
       </table>
 
       <details class="term-note">
         <summary>Two words you do not need yet</summary>
-        <p><strong>Contract</strong> appears in broader software-engineering writing as shorthand for promised behaviour. The reviewed Ousterhout chapters do not use it, and this course does not require it.</p>
-        <p><a href="https://docs.python.org/3/glossary.html#term-callable"><strong>Callable</strong></a> is official Python vocabulary for anything that can be used with function-call syntax. This lesson uses the narrower word <strong>function</strong>.</p>
+        <p><strong class="term" data-term="contract">Contract</strong> appears in broader software-engineering writing as shorthand for promised behaviour. The reviewed Ousterhout chapters do not use it, and this course does not require it.</p>
+        <p><strong class="term" data-term="callable">Callable</strong> is official Python vocabulary for anything that can be used with function-call syntax. This lesson uses the narrower word <strong>function</strong>.</p>
       </details>
 
       <h2>Try it elsewhere</h2>

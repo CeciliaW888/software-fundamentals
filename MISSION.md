@@ -36,6 +36,8 @@ It should help a learner answer at least one of these questions:
 - Use plain words before technical words.
 - Define each new term at first use.
 - Label terminology as official Python language, standard software vocabulary, a book’s term, domain language, or course shorthand.
+- Put a sourced plain-language tooltip on the first useful occurrence of an unfamiliar term.
+- Do not attribute a tooltip definition to a book unless the inspected text supports it.
 - Never call general software vocabulary “ubiquitous language.”
 - In DDD, ubiquitous language is the shared language of one business domain and team.
 - Introduce one durable idea per lesson.

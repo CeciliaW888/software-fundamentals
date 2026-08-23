@@ -173,6 +173,16 @@ textarea { min-height: 300px; padding: 20px; resize: vertical; }
 .term-note { margin: 20px 0 38px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255, 255, 255, .45); padding: 16px 18px; }
 .term-note summary { cursor: pointer; color: var(--accent); font: 800 15px/1.4 ui-sans-serif, system-ui, sans-serif; }
 .term-note p { margin: 14px 0 0; font-size: 16px; }
+.term { color: inherit; border-bottom: 1px dotted var(--accent); cursor: help; outline: none; }
+.term:hover, .term:focus-visible, .term[aria-expanded="true"] { color: var(--accent); border-bottom-style: solid; }
+.term:focus-visible { border-radius: 3px; box-shadow: 0 0 0 3px rgba(10, 100, 91, .16); }
+.term-tooltip { position: fixed; z-index: 1000; width: min(330px, calc(100vw - 24px)); padding: 14px 16px; border: 1px solid var(--accent); border-radius: 12px; background: #fffdf8; color: var(--ink); box-shadow: 0 16px 40px rgba(24, 32, 29, .18); font: 500 14px/1.48 ui-sans-serif, system-ui, sans-serif; }
+.term-tooltip[hidden] { display: none; }
+.term-tooltip__heading, .term-tooltip__definition, .term-tooltip__source { display: block; }
+.term-tooltip__heading { margin-bottom: 5px; font-size: 15px; }
+.term-tooltip__definition { color: var(--ink); }
+.term-tooltip__source { margin-top: 8px; color: var(--muted); font-size: 12px; }
+.term-tooltip a.term-tooltip__source { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
 
 .course-home { max-width: 1080px; }
 .home-hero { grid-template-columns: minmax(0, 1fr) 260px; }

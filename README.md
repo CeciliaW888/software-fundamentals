@@ -5,6 +5,7 @@ A public, practice-led course for learning how to understand, design, test, and 
 The course assumes **no software-engineering background**.
 Plain words and observable behaviour come first.
 Technical terms appear only after the idea is concrete, and each term is labelled by its source.
+Unfamiliar terms have tap, hover, and keyboard tooltips with a plain definition and source.
 
 ## The one service used throughout
 

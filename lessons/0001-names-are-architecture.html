@@ -8,6 +8,7 @@
   <title>Lesson 0001 · Use names that explain the job</title>
   <link rel="stylesheet" href="../assets/course.css">
   <script src="../assets/lesson.js" defer></script>
+  <script src="../assets/terminology.js" defer></script>
 </head>
 <body data-lesson="0001-names-are-architecture">
   <div class="progress" aria-hidden="true"><span></span></div>
@@ -18,7 +19,7 @@
       <div>
         <div class="kicker">Clear names · 10 minutes</div>
         <h1>Use names that explain the job</h1>
-        <p class="lede">Rename one small Python function so you can understand its purpose without guessing.</p>
+        <p class="lede">Rename one small Python <span class="term" data-term="function">function</span> so you can understand its purpose without guessing.</p>
       </div>
       <aside class="lesson-meta"><strong>Your result</strong>You will make a customer-industry decision visible without changing what the code does.</aside>
     </header>
@@ -27,13 +28,13 @@
       <div class="win"><strong>Plain idea:</strong> a name should tell you what a value represents and why the code needs it.</div>
 
       <h2>Meet the service</h2>
-      <p>The course follows one customer industry-enrichment service.</p>
+      <p>The course follows one customer industry-enrichment <span class="term" data-term="service">service</span>.</p>
       <ol>
         <li>Start with a customer name.</li>
         <li>Find the official website.</li>
         <li>Read the About page.</li>
         <li>Summarise the business’s main activity.</li>
-        <li>Suggest a code from the Australian and New Zealand Standard Industrial Classification (ANZSIC), with evidence and confidence.</li>
+        <li>Suggest a code from the Australian and New Zealand Standard Industrial Classification (<span class="term" data-term="anzsic">ANZSIC</span>), with evidence and <span class="term" data-term="confidence">confidence</span>.</li>
       </ol>
       <p>This lesson starts near the end of that flow. The service has About-page text and must decide which industry suggestions are confident enough to return.</p>
 
@@ -85,7 +86,7 @@
         </section>
       </div>
 
-      <p>The second version tells you that About-page text enters, an industry classifier produces probabilities, and a confidence rule selects a result.</p>
+      <p>The second version tells you that About-page text enters, an industry <span class="term" data-term="classifier">classifier</span> produces probabilities, and a confidence rule selects a result.</p>
 
       <section class="question" aria-labelledby="retrieval-question">
         <h3 id="retrieval-question">Quick check</h3>
@@ -129,10 +130,10 @@
       <table class="ref-table term-table">
         <thead><tr><th>Word</th><th>Plain meaning</th><th>Where it comes from</th></tr></thead>
         <tbody>
-          <tr><td>Function</td><td>A named block of code that performs a job.</td><td>Official Python vocabulary</td></tr>
-          <tr><td>Classifier</td><td>Something that assigns an input to a category.</td><td>Standard data and machine-learning vocabulary</td></tr>
-          <tr><td>Confidence</td><td>A score used here to show how strongly the model supports a suggestion.</td><td>Course domain term; its exact meaning must be defined by the chosen model</td></tr>
-          <tr><td>ANZSIC suggestion</td><td>A proposed industry code that still carries evidence and review status.</td><td>Domain language for this course</td></tr>
+          <tr><td><span class="term" data-term="function">Function</span></td><td>A named block of code that performs a job.</td><td>Official Python vocabulary</td></tr>
+          <tr><td><span class="term" data-term="classifier">Classifier</span></td><td>Something that assigns an input to a category.</td><td>Standard data and machine-learning vocabulary</td></tr>
+          <tr><td><span class="term" data-term="confidence">Confidence</span></td><td>A score used here to show how strongly the model supports a suggestion.</td><td>Course domain term; its exact meaning must be defined by the chosen model</td></tr>
+          <tr><td><span class="term" data-term="anzsic-suggestion">ANZSIC suggestion</span></td><td>A proposed industry code that still carries evidence and review status.</td><td>Domain language for this course</td></tr>
         </tbody>
       </table>
 

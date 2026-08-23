@@ -7,6 +7,7 @@
   <link rel="icon" href="data:,">
   <title>Reference · What a Python function promises</title>
   <link rel="stylesheet" href="../assets/course.css">
+  <script src="../assets/terminology.js" defer></script>
 </head>
 <body>
   <main class="shell">
@@ -25,8 +26,8 @@
       <table class="ref-table">
         <thead><tr><th>Ask</th><th>Customer-enrichment example</th></tr></thead>
         <tbody>
-          <tr><td>What goes in?</td><td>A customer name, an industry classifier, and a place to save results.</td></tr>
-          <tr><td>What can come back?</td><td>An ANZSIC suggestion, or <code>None</code> when evidence is weak.</td></tr>
+          <tr><td>What goes in?</td><td>A customer name, an industry <span class="term" data-term="classifier">classifier</span>, and a place to save results.</td></tr>
+          <tr><td>What can come back?</td><td>An <span class="term" data-term="anzsic-suggestion">ANZSIC suggestion</span>, or <code class="term" data-term="none">None</code> when evidence is weak.</td></tr>
           <tr><td>What else changes?</td><td>An accepted suggestion is saved before it is returned.</td></tr>
           <tr><td>What can fail?</td><td>The official website or About page may not be found or read.</td></tr>
         </tbody>
@@ -45,18 +46,18 @@
       <table class="ref-table term-table">
         <thead><tr><th>Word</th><th>Plain meaning</th><th>Source</th></tr></thead>
         <tbody>
-          <tr><td>Function</td><td>A named block of code that performs a job.</td><td>Official Python vocabulary</td></tr>
-          <tr><td>Docstring</td><td>Text inside a function that explains how to use it.</td><td>Official Python vocabulary</td></tr>
-          <tr><td>Interface</td><td>What other code must know to use the function.</td><td>Standard software vocabulary; Ousterhout Chapter 4</td></tr>
-          <tr><td>Implementation</td><td>The steps currently used to do the work.</td><td>Standard software vocabulary; Ousterhout Chapter 4</td></tr>
-          <tr><td>Side effect</td><td>An outside change, such as saving data or sending a message.</td><td>Standard software and Python documentation vocabulary</td></tr>
+          <tr><td><span class="term" data-term="function">Function</span></td><td>A named block of code that performs a job.</td><td>Official Python vocabulary</td></tr>
+          <tr><td><span class="term" data-term="docstring">Docstring</span></td><td>Text inside a function that explains how to use it.</td><td>Official Python vocabulary</td></tr>
+          <tr><td><span class="term" data-term="interface">Interface</span></td><td>What other code must know to use the function.</td><td>Standard software vocabulary; Ousterhout Chapter 4</td></tr>
+          <tr><td><span class="term" data-term="implementation">Implementation</span></td><td>The steps currently used to do the work.</td><td>Standard software vocabulary; Ousterhout Chapter 4</td></tr>
+          <tr><td><span class="term" data-term="side-effect">Side effect</span></td><td>An outside change, such as saving data or sending a message.</td><td>Standard software and Python documentation vocabulary</td></tr>
         </tbody>
       </table>
 
       <details class="term-note">
         <summary>Two words you do not need yet</summary>
-        <p><strong>Contract</strong> appears in broader software-engineering writing as shorthand for promised behaviour. The reviewed Ousterhout chapters do not use it, and this course does not require it.</p>
-        <p><a href="https://docs.python.org/3/glossary.html#term-callable"><strong>Callable</strong></a> is official Python vocabulary for anything used with function-call syntax. Lesson 0002 uses the narrower word <strong>function</strong>.</p>
+        <p><strong class="term" data-term="contract">Contract</strong> appears in broader software-engineering writing as shorthand for promised behaviour. The reviewed Ousterhout chapters do not use it, and this course does not require it.</p>
+        <p><strong class="term" data-term="callable">Callable</strong> is official Python vocabulary for anything used with function-call syntax. Lesson 0002 uses the narrower word <strong>function</strong>.</p>
       </details>
 
       <div class="takeaway">Remember the four plain questions first: input, result, outside change, and failure.</div>

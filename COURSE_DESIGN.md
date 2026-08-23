@@ -17,6 +17,9 @@ Each lesson uses the same loop:
 Every new term is labelled as official Python vocabulary, standard software vocabulary, a named book’s term, domain language, or course-authored shorthand.
 General software vocabulary is not described as DDD ubiquitous language.
 Ubiquitous language belongs to a specific business domain and team.
+The first useful occurrence of unfamiliar terminology gets a keyboard-accessible and touch-accessible tooltip.
+Each tooltip shows a plain definition and its provenance.
+Use a book definition only when the book actually defines the term; otherwise use official documentation, a domain authority, or label the definition as course-authored.
 
 ## One evolving practice service
 
