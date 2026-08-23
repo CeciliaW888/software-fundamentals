@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A quick reference for naming Python AI systems so intent, units, stages, and decisions are explicit.">
+  <link rel="icon" href="data:,">
+  <title>Reference · Meaningful names for Python AI systems</title>
+  <link rel="stylesheet" href="../assets/course.css">
+</head>
+<body>
+  <main class="shell">
+    <nav class="course-nav"><a href="../lessons/0001-names-are-architecture.html">← Lesson 0001</a><span>Printable reference</span></nav>
+    <header class="hero">
+      <div>
+        <div class="kicker">Field reference</div>
+        <h1>Meaningful names for Python AI systems</h1>
+        <p class="lede">Make the data stage, unit, decision, and domain visible before a reader opens a comment or debugger.</p>
+      </div>
+      <aside class="lesson-meta"><strong>One-page test</strong>Can a reviewer predict the value and its unit from the name alone?</aside>
+    </header>
+
+    <section class="prose">
+      <h2>The naming stack</h2>
+      <table class="ref-table">
+        <thead><tr><th>Signal</th><th>Question</th><th>Examples</th></tr></thead>
+        <tbody>
+          <tr><td>Domain noun</td><td>What real thing is this?</td><td><code>document</code>, <code>retrieval_query</code>, <code>model_response</code></td></tr>
+          <tr><td>Stage</td><td>Where is it in the pipeline?</td><td><code>raw_documents</code>, <code>validated_chunks</code>, <code>ranked_results</code></td></tr>
+          <tr><td>Unit</td><td>What does the number measure?</td><td><code>timeout_seconds</code>, <code>cost_usd</code>, <code>token_count</code></td></tr>
+          <tr><td>Decision verb</td><td>What outcome does the function choose?</td><td><code>select_relevant_chunks</code>, <code>reject_unsafe_output</code></td></tr>
+          <tr><td>Boundary</td><td>Which system owns the value?</td><td><code>openai_response</code>, <code>database_record</code>, <code>api_request</code></td></tr>
+        </tbody>
+      </table>
+
+      <h2>Fast review</h2>
+      <ul class="checklist">
+        <li class="pass">Replace generic verbs such as <code>run</code>, <code>handle</code>, and <code>process</code> with the decision or transformation.</li>
+        <li class="pass">Put units in numeric names when confusion is plausible.</li>
+        <li class="pass">Distinguish raw, validated, embedded, retrieved, ranked, and generated data.</li>
+        <li class="pass">Use one word for one concept across the service.</li>
+        <li class="pass">Rename when understanding improves. Names are maintained design.</li>
+      </ul>
+
+      <h2>Smell → repair</h2>
+      <table class="ref-table">
+        <thead><tr><th>Smell</th><th>Repair</th></tr></thead>
+        <tbody>
+          <tr><td><code>score</code></td><td><code>cosine_similarity</code> or <code>classification_confidence</code></td></tr>
+          <tr><td><code>limit</code></td><td><code>max_results</code>, <code>token_limit</code>, or <code>timeout_seconds</code></td></tr>
+          <tr><td><code>data</code></td><td>Name the domain object and pipeline stage.</td></tr>
+          <tr><td><code>process_response()</code></td><td>Name the observable transformation or decision.</td></tr>
+          <tr><td>A comment translating a short name</td><td>Move that meaning into the name.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="takeaway">A good name is a tiny contract: it narrows what a value can mean before tests or types speak.</div>
+
+      <h2>Sources</h2>
+      <div class="source-list">
+        <div class="source-card"><strong>Primary reading:</strong> Robert C. Martin, <em>Clean Code</em>, Chapter 2, “Meaningful Names.”</div>
+        <div class="source-card"><a href="https://peps.python.org/pep-0008/#function-and-variable-names">PEP 8: Function and Variable Names</a> for Python-specific conventions.</div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
