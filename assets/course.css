@@ -95,6 +95,8 @@ h3 { margin: 0 0 10px; font-size: 22px; }
 
 .code-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 28px 0; }
 .code-card { min-width: 0; }
+.single-code { margin: 28px 0; }
+.single-code pre { min-height: auto; }
 .code-label { margin: 0 0 8px 4px; color: var(--muted); font: 750 12px ui-sans-serif, system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase; }
 pre, textarea {
   width: 100%;
@@ -132,6 +134,16 @@ button[disabled] { cursor: not-allowed; opacity: .5; transform: none; }
 
 textarea { min-height: 300px; padding: 20px; resize: vertical; }
 .exercise-actions { display: flex; gap: 10px; margin-top: 14px; }
+.contract-options { display: grid; gap: 10px; }
+.contract-option { position: relative; padding-left: 46px; }
+.contract-option::before { content: "○"; position: absolute; left: 17px; color: var(--muted); }
+.contract-option.selected { border-color: var(--accent); background: var(--accent-soft); }
+.contract-option.selected::before { content: "●"; color: var(--accent); }
+.contract-option.correct { border-color: var(--accent); }
+.contract-option.excluded { border-color: #bcb5a7; background: #fffdf8; color: var(--muted); }
+.contract-option.wrong { border-color: var(--warm); background: #f7e5de; }
+.lesson-sequence { display: flex; justify-content: space-between; gap: 20px; }
+.lesson-sequence a { color: var(--accent); font-weight: 750; }
 .checklist { display: grid; gap: 8px; margin: 18px 0 0; padding: 0; list-style: none; }
 .checklist li { color: var(--muted); font: 650 14px/1.4 ui-sans-serif, system-ui, sans-serif; }
 .checklist li::before { content: "○"; display: inline-block; width: 24px; color: var(--warm); }
@@ -174,6 +186,8 @@ textarea { min-height: 300px; padding: 20px; resize: vertical; }
 .module-card h2 { margin: 20px 0 14px; font-size: 29px; }
 .module-card p { color: var(--muted); font-size: 16px; line-height: 1.5; }
 .module-card a { margin-top: auto; color: var(--accent); font: 750 14px/1.4 ui-sans-serif, system-ui, sans-serif; }
+.module-links { display: grid; gap: 7px; margin-top: auto; }
+.module-card .module-links a { margin-top: 0; }
 .module-status { margin-top: auto; color: var(--muted); font: 750 13px/1.4 ui-sans-serif, system-ui, sans-serif; text-transform: uppercase; letter-spacing: .08em; }
 .source-ladder { margin-top: 72px; }
 .source-ladder ol { padding-left: 24px; }
@@ -191,8 +205,9 @@ textarea { min-height: 300px; padding: 20px; resize: vertical; }
   .hero { margin-bottom: 36px; }
   .principle-grid, .course-map { grid-template-columns: 1fr; }
   .module-card { min-height: 220px; }
-  .home-actions { align-items: flex-start; flex-direction: column; }
+  .home-actions, .lesson-sequence { align-items: flex-start; flex-direction: column; }
   .choices { grid-template-columns: 1fr; }
+  pre { font-size: 12px; }
   h1 { font-size: 45px; }
   .lesson-meta { max-width: 260px; }
   textarea { min-height: 370px; font-size: 12px; }

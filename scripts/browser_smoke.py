@@ -36,6 +36,33 @@ async def exercise(page, url: str) -> dict[str, object]:
     }
 
 
+async def exercise_contracts(page, url: str) -> dict[str, object]:
+    await page.goto(url, wait_until="networkidle")
+    await page.locator('.choice[data-correct="true"]').click()
+    for option in await page.locator('.contract-option[data-contract="true"]').all():
+        await option.click()
+    await page.locator("#check-contract").click()
+    success_feedback = await page.locator("#contract-feedback").inner_text()
+
+    await page.reload(wait_until="networkidle")
+    persisted_selections = await page.locator(".contract-option.selected").count()
+    persisted_score = await page.evaluate(
+        "JSON.parse(localStorage.getItem('teach:0002-read-contracts-before-bodies') || '{}').contractScore"
+    )
+    await page.locator("#check-contract").click()
+
+    return {
+        "title": await page.title(),
+        "h1": await page.locator("h1").inner_text(),
+        "quiz": await page.locator(".question .feedback").inner_text(),
+        "contract": success_feedback,
+        "persisted_selections": persisted_selections,
+        "persisted_score": persisted_score,
+        "scroll_width": await page.evaluate("document.documentElement.scrollWidth"),
+        "client_width": await page.evaluate("document.documentElement.clientWidth"),
+    }
+
+
 async def run_browser_checks(base_url: str) -> None:
     async with async_playwright() as playwright:
         launch_args = {"headless": True}
@@ -76,6 +103,21 @@ async def run_browser_checks(base_url: str) -> None:
             await page.screenshot(path=str(screenshot), full_page=True)
             print(f"{name}={result}")
             print(f"screenshot={screenshot}")
+
+            contract_result = await exercise_contracts(
+                page,
+                f"{base_url}lessons/0002-read-contracts-before-bodies.html",
+            )
+            if contract_result["scroll_width"] != contract_result["client_width"]:
+                raise AssertionError(f"{name} Lesson 0002 has horizontal overflow: {contract_result}")
+            if contract_result["persisted_selections"] != 3 or contract_result["persisted_score"] != 5:
+                raise AssertionError(f"{name} Lesson 0002 persistence failed: {contract_result}")
+            if not str(contract_result["contract"]).startswith("5/5"):
+                raise AssertionError(f"{name} Lesson 0002 contract feedback failed: {contract_result}")
+            contract_screenshot = ROOT / "artifacts" / f"lesson-0002-{name}.png"
+            await page.screenshot(path=str(contract_screenshot), full_page=True)
+            print(f"contracts_{name}={contract_result}")
+            print(f"screenshot={contract_screenshot}")
             await context.close()
         await browser.close()
         if all_errors:

@@ -86,6 +86,63 @@
     if (state.code) renderChecks(state.code);
   }
 
+  const contractBuilder = document.querySelector("#contract-builder");
+  if (contractBuilder) {
+    const options = [...contractBuilder.querySelectorAll(".contract-option")];
+    const checkContract = contractBuilder.querySelector("#check-contract");
+    const resetContract = contractBuilder.querySelector("#reset-contract");
+    const contractFeedback = contractBuilder.querySelector("#contract-feedback");
+    const selected = new Set(state.contractSelections || []);
+
+    const renderSelections = () => {
+      options.forEach((option, index) => {
+        const isSelected = selected.has(index);
+        option.classList.toggle("selected", isSelected);
+        option.setAttribute("aria-pressed", String(isSelected));
+      });
+      state.contractSelections = [...selected];
+      save();
+    };
+
+    options.forEach((option, index) => {
+      option.setAttribute("aria-pressed", "false");
+      option.addEventListener("click", () => {
+        if (selected.has(index)) selected.delete(index);
+        else selected.add(index);
+        options.forEach((item) => item.classList.remove("correct", "wrong", "excluded"));
+        contractFeedback.textContent = "Selection updated. Check when the contract contains only caller-visible promises.";
+        renderSelections();
+      });
+    });
+
+    checkContract.addEventListener("click", () => {
+      let score = 0;
+      options.forEach((option, index) => {
+        const shouldSelect = option.dataset.contract === "true";
+        const matches = selected.has(index) === shouldSelect;
+        score += Number(matches);
+        option.classList.toggle("correct", matches && shouldSelect);
+        option.classList.toggle("excluded", matches && !shouldSelect);
+        option.classList.toggle("wrong", !matches);
+      });
+      contractFeedback.textContent = score === options.length
+        ? "5/5. The contract is complete without exposing replaceable machinery."
+        : `${score}/5 facts are classified correctly. Keep caller-visible promises; remove replaceable machinery.`;
+      state.contractScore = score;
+      save();
+    });
+
+    resetContract.addEventListener("click", () => {
+      selected.clear();
+      options.forEach((option) => option.classList.remove("correct", "wrong", "excluded"));
+      contractFeedback.textContent = "Three promises and two implementation details are mixed together.";
+      state.contractScore = 0;
+      renderSelections();
+    });
+
+    renderSelections();
+  }
+
   const progressBar = document.querySelector(".progress span");
   const updateProgress = () => {
     const root = document.documentElement;

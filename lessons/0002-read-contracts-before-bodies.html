@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A short interactive lesson on understanding and testing a Python interface contract before reading its implementation.">
+  <link rel="icon" href="data:,">
+  <title>Lesson 0002 · Read contracts before bodies</title>
+  <link rel="stylesheet" href="../assets/course.css">
+  <script src="../assets/lesson.js" defer></script>
+</head>
+<body data-lesson="0002-read-contracts-before-bodies">
+  <div class="progress" aria-hidden="true"><span></span></div>
+  <main class="shell">
+    <nav class="course-nav"><a href="../index.html">Software Fundamentals</a><span>Module 1 · Read before changing</span></nav>
+
+    <header class="hero">
+      <div>
+        <div class="kicker">Interfaces · 12 minutes</div>
+        <h1>Read contracts before bodies</h1>
+        <p class="lede">Decide what callers may rely on before implementation details tempt you to rely on the wrong things.</p>
+      </div>
+      <aside class="lesson-meta"><strong>Tangible win</strong>You will extract a callable contract and prove it with a test that survives an implementation change.</aside>
+    </header>
+
+    <article class="prose">
+      <div class="win"><strong>Mission link:</strong> safe change begins by separating a module’s promises from the machinery currently used to keep them.</div>
+
+      <h2>Every callable has two surfaces</h2>
+      <p>The <strong>interface</strong> is everything another part of the system must know to use a callable correctly. The <strong>implementation</strong> is how the callable keeps those promises today.</p>
+      <p>A signature exposes part of the interface, but types cannot express every return condition, side effect, failure, or precondition. Those remaining promises still belong to the contract.</p>
+
+      <div class="principle-grid">
+        <section class="principle"><span class="number">01 · FORMAL</span><h3>Read the declaration</h3><p>Name, parameters, types, return type, and declared exceptions constrain valid calls.</p></section>
+        <section class="principle"><span class="number">02 · INFORMAL</span><h3>Find the promises</h3><p>Behaviour, edge cases, side effects, failures, and preconditions complete the contract.</p></section>
+        <section class="principle"><span class="number">03 · HIDDEN</span><h3>Ignore the machinery</h3><p>Helpers, retries, batching, SQL, and algorithms may change without changing callers.</p></section>
+      </div>
+
+      <h2>Body-first reading creates accidental dependencies</h2>
+      <p>Suppose you find this service function with no useful interface documentation:</p>
+
+      <div class="code-card single-code">
+        <div class="code-label">Implementation visible, contract missing</div>
+        <pre><code>def classify_document(
+    document: Document,
+    classifier: Classifier,
+    store: ResultStore,
+) -&gt; Classification | None:
+    chunks = split_into_token_batches(
+        document.text,
+        max_tokens=512,
+    )
+    probabilities = retry_twice(
+        lambda: classifier.predict(chunks)
+    )
+    result = choose_top_class(probabilities)
+
+    if result.confidence &lt; 0.82:
+        return None
+
+    store.save(document.id, result)
+    return result</code></pre>
+      </div>
+
+      <p>You can infer several facts by tracing this body, but not every fact deserves to become a promise. The 512-token batches and retry helper are replaceable machinery. The return condition and persistence side effect affect callers, so they belong in the interface.</p>
+
+      <section class="question" aria-labelledby="contract-question">
+        <h3 id="contract-question">Retrieval check</h3>
+        <p>Which fact belongs in the interface contract?</p>
+        <div class="choices">
+          <button class="choice" data-correct="true" data-feedback="Correct. Persistence changes externally observable state, so callers must be able to rely on it.">Accepted results are persisted before the function returns.</button>
+          <button class="choice" data-correct="false" data-feedback="Batch size is replaceable machinery unless callers must coordinate with it.">Text uses 512-token batches before classification begins.</button>
+          <button class="choice" data-correct="false" data-feedback="The storage mechanism can change while the persistence promise stays intact.">SQLite performs an upsert using the document identifier.</button>
+          <button class="choice" data-correct="false" data-feedback="Retry count belongs to the adapter unless it changes a caller-visible guarantee.">Two retry attempts occur inside the classifier adapter.</button>
+        </div>
+        <p class="feedback" aria-live="polite"></p>
+      </section>
+
+      <h2>A contract should hide more than it reveals</h2>
+      <p>Now the callable can be understood without opening its body:</p>
+
+      <div class="code-card single-code">
+        <div class="code-label">Caller-facing declaration</div>
+        <pre><code>def classify_document(
+    document: Document,
+    classifier: Classifier,
+    store: ResultStore,
+) -&gt; Classification | None:
+    """Classify a document and persist accepted results.
+
+    Return the highest-confidence classification when its
+    confidence is at least 0.82. Return None below that
+    threshold without writing to the store.
+
+    Persist an accepted result before
+    returning it. Raise ClassificationUnavailable
+    if classification cannot produce a result.
+    """
+    ...</code></pre>
+      </div>
+
+      <p>The contract states behaviour, return semantics, side effects, and failure. It deliberately omits tokenisation, retry count, and storage technology. That omission creates room to change the implementation safely.</p>
+
+      <h2>Your turn: separate promise from machinery</h2>
+      <p>Select every fact a caller must know. Leave replaceable implementation details unselected.</p>
+
+      <section class="exercise" id="contract-builder">
+        <div class="contract-options" aria-label="Contract facts">
+          <button class="contract-option" data-contract="true">Returns a stored result when confidence meets the threshold.</button>
+          <button class="contract-option" data-contract="true">Returns nothing and performs no write below the threshold.</button>
+          <button class="contract-option" data-contract="true">Raises ClassificationUnavailable when classification cannot produce a result.</button>
+          <button class="contract-option" data-contract="false">Splits every document into 512-token batches before classification begins.</button>
+          <button class="contract-option" data-contract="false">Uses a SQLite upsert to persist every accepted classification.</button>
+        </div>
+        <div class="exercise-actions">
+          <button class="primary" id="check-contract">Check the contract</button>
+          <button id="reset-contract">Reset</button>
+        </div>
+        <p class="feedback" id="contract-feedback" aria-live="polite">Three promises and two implementation details are mixed together.</p>
+      </section>
+
+      <h2>Test the promise, not the machinery</h2>
+      <p>A contract test should keep passing if batching, retries, or storage technology changes:</p>
+
+      <div class="code-card single-code">
+        <div class="code-label">Observable contract test</div>
+        <pre><code>def test_rejected_result_is_not_saved():
+    classifier = classifier_returning(confidence=0.61)
+    store = recording_store()
+
+    result = classify_document(
+        sample_document(),
+        classifier,
+        store,
+    )
+
+    assert result is None
+    assert store.saved_results == []</code></pre>
+      </div>
+
+      <p>This test knows the return and side-effect promises. It does not know how many chunks, retries, helper calls, or SQL statements occur.</p>
+
+      <div class="takeaway">A contract is the smallest complete set of facts another module must know. Missing facts create surprises; implementation facts create coupling.</div>
+
+      <h2>Apply it to real code</h2>
+      <p>Choose one function you did not write. Before opening its body, write down its expected result, side effects, failures, and preconditions. Then inspect the implementation only to test whether those promises are accurate and complete.</p>
+      <p><a href="../reference/python-interface-contracts.html">Open the printable interface-contract reference →</a></p>
+
+      <h2>Primary reading and sources</h2>
+      <div class="source-list">
+        <div class="source-card"><strong>Primary design reading:</strong> John Ousterhout, <em>A Philosophy of Software Design</em>, Chapter 4, “Modules Should Be Deep,” and Chapter 13, “Comments Should Describe Things that Aren’t Obvious from the Code.”</div>
+        <div class="source-card"><a href="https://peps.python.org/pep-0257/#multi-line-docstrings">PEP 257: Multi-line Docstrings</a> says a function docstring should cover behaviour, arguments, returns, side effects, exceptions, and calling restrictions when applicable.</div>
+      </div>
+
+      <footer class="lesson-footer lesson-sequence">
+        <a href="0001-names-are-architecture.html">← Lesson 0001</a>
+        <span>Next: trace data and side effects</span>
+      </footer>
+    </article>
+  </main>
+</body>
+</html>
