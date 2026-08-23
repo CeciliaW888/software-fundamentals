@@ -1,41 +1,52 @@
 # Mission: Software Fundamentals
 
+## Who this is for
+
+This course is for a learner who can use technology but has no formal software-engineering background.
+It must teach judgment without assuming prior knowledge of software vocabulary.
+
 ## Why
 
-Build the software judgment needed to understand, design, test, and evolve reliable systems rather than merely assembling working demos.
-Use one evolving Python service so each fundamental becomes part of a real system.
+Build the judgment needed to understand, design, test, and change reliable software rather than merely assembling working demos.
+Use one evolving Python customer-enrichment service so every idea becomes part of a recognisable system.
 
 ## What “fundamental” means
 
-A fundamental is a durable decision skill that survives changes in language, framework, vendor, and scale.
+A fundamental is a decision skill that survives changes in language, framework, vendor, and scale.
 It should help a learner answer at least one of these questions:
 
-- What does this code mean?
-- What can change safely?
-- Where should this responsibility live?
+- What does this code do?
+- What can I change safely?
+- Where should this job live?
 - What evidence shows the system works?
-- Which trade-off is justified by the actual requirement?
+- Which choice fits the real requirement?
 
 ## Success looks like
 
-- Read unfamiliar Python code and explain its data flow, contracts, side effects, failure modes, and trade-offs.
-- Compare design alternatives using complexity, information hiding, and change cost rather than slogans.
-- Refactor generated or inherited code into code a team can safely change.
-- Model domain rules without turning every noun into a class.
-- Choose data and system designs from measurable requirements.
-- Operate and change a service with tests, observability, deployment discipline, and rollback options.
+- Read unfamiliar Python code and explain what goes in, what comes out, what else changes, and what can fail.
+- Compare designs by how much they make a learner or maintainer hold in their head.
+- Improve generated or inherited code without changing its intended behaviour.
+- Model business rules without turning every noun into a class.
+- Choose data and system designs from measurable needs.
+- Run and change a service with tests, monitoring, safe deployment, and rollback.
 
-## Constraints
+## Teaching rules
 
-- Lessons should fit one focused session.
-- Every lesson must produce one tangible improvement to the evolving service.
-- Prefer retrieval practice and immediate feedback over passive summaries.
-- Ground teaching in high-trust sources and name disagreements between them.
-- Introduce scale, distribution, and patterns only when the current problem requires them.
+- Start with an observable example, not a definition.
+- Use plain words before technical words.
+- Define each new term at first use.
+- Label terminology as official Python language, standard software vocabulary, a book’s term, domain language, or course shorthand.
+- Never call general software vocabulary “ubiquitous language.”
+- In DDD, ubiquitous language is the shared language of one business domain and team.
+- Introduce one durable idea per lesson.
+- Keep code examples short enough to understand in one sitting.
+- Give immediate feedback and one transfer task.
+- Add scale, distribution, or patterns only when the current service needs them.
 
 ## Out of scope
 
 - Memorising framework APIs that can be looked up.
-- Treating any author’s heuristics as universal laws.
+- Treating any author’s advice as a universal law.
+- Jargon used only to sound technical.
 - Building a course platform before the lessons prove useful.
 - Chasing every new tool, framework, or headline.

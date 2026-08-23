@@ -3,64 +3,63 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A quick reference for naming Python systems so intent, units, stages, and decisions are explicit.">
+  <meta name="description" content="A beginner-friendly reference for choosing Python names that explain the data, stage, and decision.">
   <link rel="icon" href="data:,">
-  <title>Reference · Meaningful names for Python systems</title>
+  <title>Reference · Names that explain the job</title>
   <link rel="stylesheet" href="../assets/course.css">
 </head>
 <body>
   <main class="shell">
-    <nav class="course-nav"><a href="../lessons/0001-names-are-architecture.html">← Lesson 0001</a><span>Printable reference</span></nav>
+    <nav class="course-nav"><a href="../lessons/0001-names-are-architecture.html">← Lesson 0001</a><span>Plain-language reference</span></nav>
     <header class="hero">
       <div>
-        <div class="kicker">Field reference</div>
-        <h1>Meaningful names for Python systems</h1>
-        <p class="lede">Make the data stage, unit, decision, and domain visible before a reader opens a comment or debugger.</p>
+        <div class="kicker">Quick reference</div>
+        <h1>Names that explain the job</h1>
+        <p class="lede">Choose names that answer the next reader’s questions before they need a comment or debugger.</p>
       </div>
-      <aside class="lesson-meta"><strong>One-page test</strong>Can a reviewer predict the value and its unit from the name alone?</aside>
+      <aside class="lesson-meta"><strong>Quick test</strong>Can you tell what the value means and why the code needs it?</aside>
     </header>
 
     <section class="prose">
-      <h2>The naming stack</h2>
+      <h2>Five questions</h2>
       <table class="ref-table">
-        <thead><tr><th>Signal</th><th>Question</th><th>Examples</th></tr></thead>
+        <thead><tr><th>Ask</th><th>Unclear</th><th>Clearer</th></tr></thead>
         <tbody>
-          <tr><td>Domain noun</td><td>What real thing is this?</td><td><code>document</code>, <code>retrieval_query</code>, <code>model_response</code></td></tr>
-          <tr><td>Stage</td><td>Where is it in the pipeline?</td><td><code>raw_documents</code>, <code>validated_chunks</code>, <code>ranked_results</code></td></tr>
-          <tr><td>Unit</td><td>What does the number measure?</td><td><code>timeout_seconds</code>, <code>cost_usd</code>, <code>token_count</code></td></tr>
-          <tr><td>Decision verb</td><td>What outcome does the function choose?</td><td><code>select_relevant_chunks</code>, <code>reject_unsafe_output</code></td></tr>
-          <tr><td>Boundary</td><td>Which system owns the value?</td><td><code>openai_response</code>, <code>database_record</code>, <code>api_request</code></td></tr>
+          <tr><td>What real thing is this?</td><td><code>data</code></td><td><code>about_page_text</code></td></tr>
+          <tr><td>Where is it in the process?</td><td><code>website</code></td><td><code>verified_customer_website</code></td></tr>
+          <tr><td>What does the number measure?</td><td><code>score</code></td><td><code>classification_confidence</code></td></tr>
+          <tr><td>What choice does this function make?</td><td><code>process()</code></td><td><code>suggest_anzsic_code()</code></td></tr>
+          <tr><td>Who supplied the value?</td><td><code>result</code></td><td><code>website_search_result</code></td></tr>
         </tbody>
       </table>
 
       <h2>Fast review</h2>
       <ul class="checklist">
-        <li class="pass">Replace generic verbs such as <code>run</code>, <code>handle</code>, and <code>process</code> with the decision or transformation.</li>
-        <li class="pass">Put units in numeric names when confusion is plausible.</li>
-        <li class="pass">Distinguish raw, validated, embedded, retrieved, ranked, and generated data.</li>
-        <li class="pass">Use one word for one concept across the service.</li>
-        <li class="pass">Rename when understanding improves. Names are maintained design.</li>
+        <li class="pass">Replace <code>run</code>, <code>handle</code>, and <code>process</code> with the actual job.</li>
+        <li class="pass">Put a unit in a number’s name when confusion is possible.</li>
+        <li class="pass">Distinguish candidate, verified, scraped, summarised, suggested, and accepted data.</li>
+        <li class="pass">Use one word for one idea throughout the service.</li>
+        <li class="pass">Rename when your understanding improves.</li>
       </ul>
 
-      <h2>Smell → repair</h2>
-      <table class="ref-table">
-        <thead><tr><th>Smell</th><th>Repair</th></tr></thead>
+      <h2>Words used here</h2>
+      <table class="ref-table term-table">
+        <thead><tr><th>Word</th><th>Plain meaning</th><th>Source</th></tr></thead>
         <tbody>
-          <tr><td><code>score</code></td><td><code>cosine_similarity</code> or <code>classification_confidence</code></td></tr>
-          <tr><td><code>limit</code></td><td><code>max_results</code>, <code>token_limit</code>, or <code>timeout_seconds</code></td></tr>
-          <tr><td><code>data</code></td><td>Name the domain object and pipeline stage.</td></tr>
-          <tr><td><code>process_response()</code></td><td>Name the observable transformation or decision.</td></tr>
-          <tr><td>A comment translating a short name</td><td>Move that meaning into the name.</td></tr>
+          <tr><td>Domain</td><td>The real business problem the software works on.</td><td>Standard software vocabulary; important in DDD</td></tr>
+          <tr><td>Stage</td><td>Where a value is in a sequence of work.</td><td>Course-authored teaching word</td></tr>
+          <tr><td>Boundary</td><td>The point where this code meets another system or responsibility.</td><td>Standard software vocabulary</td></tr>
+          <tr><td>Ubiquitous language</td><td>Words agreed and used by one domain’s experts and developers.</td><td>Eric Evans’s DDD term; not universal software vocabulary</td></tr>
         </tbody>
       </table>
 
-      <div class="takeaway">A good name is a tiny contract: it narrows what a value can mean before tests or types speak.</div>
+      <div class="takeaway">A useful name removes a question from the next reader’s mind.</div>
 
       <h2>Sources</h2>
       <div class="source-list">
-        <div class="source-card"><strong>Primary design reading:</strong> John Ousterhout, <em>A Philosophy of Software Design</em>, Chapter 14, “Choosing Names.”</div>
-        <div class="source-card"><strong>Counterpoint:</strong> Robert C. Martin, <em>Clean Code</em>, Chapter 2, “Meaningful Names.”</div>
-        <div class="source-card"><a href="https://peps.python.org/pep-0008/#function-and-variable-names">PEP 8: Function and Variable Names</a> for Python-specific conventions.</div>
+        <div class="source-card"><strong>Main design reading:</strong> John Ousterhout, <em>A Philosophy of Software Design</em>, Chapter 14, “Choosing Names.”</div>
+        <div class="source-card"><strong>Another perspective:</strong> Robert C. Martin, <em>Clean Code</em>, Chapter 2, “Meaningful Names.”</div>
+        <div class="source-card"><a href="https://peps.python.org/pep-0008/#function-and-variable-names">PEP 8: Function and Variable Names</a> for Python-specific naming conventions.</div>
       </div>
     </section>
   </main>

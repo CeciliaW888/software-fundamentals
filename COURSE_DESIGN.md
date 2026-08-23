@@ -1,18 +1,43 @@
 # Course design
 
-## Teaching model
+## Learner and teaching model
 
-The course follows one evolving Python document-processing service from a readable function to an operable system.
+The course assumes no software-engineering background.
+A learner should not need to understand a technical term in order to reach the example that explains it.
+
 Each lesson uses the same loop:
 
-1. **Observe:** read a small piece of code or system behaviour.
-2. **Predict:** retrieve the principle before seeing the explanation.
-3. **Change:** make one constrained improvement.
-4. **Check:** receive immediate, concrete feedback.
-5. **Transfer:** apply the decision to a different example or real review.
+1. **Observe:** see a small piece of code or behaviour.
+2. **Say it plainly:** describe what happened in everyday language.
+3. **Name it:** introduce one technical term only after the idea is concrete.
+4. **Change:** make one constrained improvement.
+5. **Check:** receive immediate, concrete feedback.
+6. **Transfer:** apply the decision to another example or review.
 
+Every new term is labelled as official Python vocabulary, standard software vocabulary, a named book’s term, domain language, or course-authored shorthand.
+General software vocabulary is not described as DDD ubiquitous language.
+Ubiquitous language belongs to a specific business domain and team.
+
+## One evolving practice service
+
+The course follows one small Python customer industry-enrichment service from a readable function to an operable system.
+
+The service:
+
+1. receives a customer name
+2. finds the customer’s official website
+3. reads the website’s About page
+4. summarises the business’s main activity
+5. suggests an ANZSIC code and label
+6. records the source text, confidence, and review status
+
+The output is a suggestion because public website text may be incomplete or ambiguous.
+The service must retain evidence and send uncertain cases to human review.
+
+The example is generic and uses public sample data only.
+It does not contain employer data, code, decision rules, or internal processes.
 The service is a practice vehicle, not the course identity.
-Classification, APIs, storage, queues, and deployment appear only when they create a useful software-design decision.
+APIs, scraping, storage, queues, and deployment appear only when they create a useful software-design decision.
 
 ## Source hierarchy
 
@@ -44,17 +69,17 @@ The reviewed second-edition Early Release is incomplete, so public lessons must 
 
 ## Curriculum
 
-### Module 1: Read before changing — required
+### Module 1: Read code before changing it (required)
 
 | Lesson | Durable decision | Practice change | Main sources |
 |---|---|---|---|
-| 0001 Names are architecture in miniature | Make domain, stage, unit, and decision visible | Rename an opaque classifier without changing behaviour | *APOSD* Ch. 14; *Clean Code* Ch. 2; PEP 8 |
-| 0002 Read contracts before bodies | Separate what a module promises from how it works | Write and test an interface contract | *APOSD* Chs. 4, 13; Python docs |
-| 0003 Trace data and side effects | Identify hidden inputs, outputs, mutations, and dependencies | Draw and verify one request path | *APOSD* Chs. 2, 5 |
+| 0001 Use names that explain the job | Make the business object, stage, unit, and decision visible | Rename an opaque ANZSIC-suggestion function without changing behaviour | *APOSD* Ch. 14; *Clean Code* Ch. 2; PEP 8 |
+| 0002 Know what a function promises | Separate what other code may rely on from how the work happens | Describe and test one function’s promised behaviour | *APOSD* Chs. 4, 13; PEP 257 |
+| 0003 Follow the data and outside changes | Identify inputs, outputs, stored changes, and external dependencies | Trace customer name to ANZSIC suggestion and evidence | *APOSD* Chs. 2, 5 |
 
-**Exit evidence:** the learner can explain an unfamiliar function’s meaning and change surface before editing it.
+**Exit evidence:** the learner can explain an unfamiliar function’s job, inputs, possible results, outside changes, and failures before editing it.
 
-### Module 2: Control complexity — required
+### Module 2: Control complexity (required)
 
 | Lesson | Durable decision | Practice change | Main sources |
 |---|---|---|---|
@@ -65,18 +90,18 @@ The reviewed second-edition Early Release is incomplete, so public lessons must 
 
 **Exit evidence:** the learner can defend a module boundary using total system complexity rather than file size or style rules.
 
-### Module 3: Change safely — required
+### Module 3: Change safely (required)
 
 | Lesson | Durable decision | Practice change | Main sources |
 |---|---|---|---|
-| 0008 Make errors part of the contract | Prevent, mask, aggregate, or expose errors intentionally | Redesign one failure path | *APOSD* Ch. 10; Python docs |
-| 0009 Tests are executable evidence | Test observable contracts instead of implementation trivia | Add focused unit and integration tests | pytest and Python docs; selected *Clean Code* testing material |
+| 0008 Decide what each failure means | Prevent, hide, combine, or report errors intentionally | Redesign one website or classification failure path | *APOSD* Ch. 10; Python docs |
+| 0009 Tests are executable evidence | Test promised behaviour instead of internal trivia | Add focused unit and integration tests | pytest and Python docs; selected *Clean Code* testing material |
 | 0010 Put volatile dependencies at boundaries | Isolate databases, models, clocks, and network clients | Introduce one narrow adapter | *APOSD* Chs. 5, 7–8 |
 | 0011 Refactor under evidence | Improve structure without changing behaviour | Complete a tested refactoring sequence | *APOSD* Ch. 16 |
 
-**Exit evidence:** the learner can make a structural change while preserving a tested contract and containing external dependencies.
+**Exit evidence:** the learner can change code structure while preserving tested behaviour and containing external dependencies.
 
-### Module 4: Model the domain — selected
+### Module 4: Model the domain (selected)
 
 | Lesson | Durable decision | Practice change | Main sources |
 |---|---|---|---|
@@ -87,7 +112,7 @@ The reviewed second-edition Early Release is incomplete, so public lessons must 
 
 **Exit evidence:** the learner can model a real rule without overengineering a simple workflow.
 
-### Module 5: Design data that can evolve — selected
+### Module 5: Design data that can evolve (selected)
 
 | Lesson | Durable decision | Practice change | Main sources |
 |---|---|---|---|
@@ -99,11 +124,11 @@ The reviewed second-edition Early Release is incomplete, so public lessons must 
 
 **Exit evidence:** the learner can justify a data decision using access patterns, compatibility, and correctness requirements.
 
-### Module 6: Operate what you build — required for the capstone
+### Module 6: Operate what you build (required for the capstone)
 
 | Lesson | Durable decision | Practice change | Main sources |
 |---|---|---|---|
-| 0021 Observe contracts and failures | Instrument what users depend on | Add structured logs, metrics, traces, and one alert | OpenTelemetry and platform docs; *DDIA* Ch. 2 |
+| 0021 Observe promises and failures | Instrument what users depend on | Add structured logs, metrics, traces, and one alert | OpenTelemetry and platform docs; *DDIA* Ch. 2 |
 | 0022 Deploy reversibly | Make configuration, migration, rollout, and rollback explicit | Ship a backwards-compatible change with rollback | Platform and database docs |
 | 0023 Measure before optimizing | Locate the critical path before changing code | Benchmark, change, and compare | *APOSD* Ch. 20; *DDIA* Ch. 2 |
 | 0024 Design for expected failure | Choose retries, timeouts, idempotency, and fallbacks from failure semantics | Test one degraded-mode scenario | Protocol and platform docs; selected *DDIA* chapters |

@@ -20,6 +20,13 @@
         save();
       });
     });
+    if (state[`question${questionIndex}`] === true) {
+      const correctChoice = question.querySelector('.choice[data-correct="true"]');
+      if (correctChoice) {
+        correctChoice.classList.add("correct");
+        feedback.textContent = correctChoice.dataset.feedback;
+      }
+    }
   });
 
   const editor = document.querySelector("#refactor-editor");
@@ -37,12 +44,12 @@
         test: (code) => /def\s+(select|filter|find|choose)_[a-z_]+\s*\(/i.test(code),
       },
       {
-        label: "The inputs name documents or records, not xs.",
-        test: (code) => /(documents|records|texts)/i.test(code) && !/\bxs\b/.test(code),
+        label: "The input names About-page text or customer records.",
+        test: (code) => /(about_page_texts|customer_records|industry_suggestions)/i.test(code) && !/\bxs\b/.test(code),
       },
       {
-        label: "The model role is explicit, not m.",
-        test: (code) => /(classifier|classification_model|model)/i.test(code) && !/\bm\b/.test(code),
+        label: "The model’s industry-classifier job is explicit.",
+        test: (code) => /(industry_classifier|classification_model|classifier)/i.test(code) && !/\bm\b/.test(code),
       },
       {
         label: "The threshold names confidence and its meaning.",
@@ -67,8 +74,8 @@
       });
       const feedback = document.querySelector("#refactor-feedback");
       feedback.textContent = score === checks.length
-        ? "All five signals are explicit. Your code now carries its own context."
-        : `${score}/5 signals are explicit. Keep the behaviour unchanged and improve only the names.`;
+        ? "All five pieces of meaning are visible. The code explains its own job."
+        : `${score}/5 pieces of meaning are visible. Keep the behaviour unchanged and improve only the names.`;
       state.refactorScore = score;
       state.code = code;
       save();
@@ -86,13 +93,13 @@
     if (state.code) renderChecks(state.code);
   }
 
-  const contractBuilder = document.querySelector("#contract-builder");
-  if (contractBuilder) {
-    const options = [...contractBuilder.querySelectorAll(".contract-option")];
-    const checkContract = contractBuilder.querySelector("#check-contract");
-    const resetContract = contractBuilder.querySelector("#reset-contract");
-    const contractFeedback = contractBuilder.querySelector("#contract-feedback");
-    const selected = new Set(state.contractSelections || []);
+  const promiseBuilder = document.querySelector("#promise-builder");
+  if (promiseBuilder) {
+    const options = [...promiseBuilder.querySelectorAll(".promise-option")];
+    const checkPromises = promiseBuilder.querySelector("#check-promises");
+    const resetPromises = promiseBuilder.querySelector("#reset-promises");
+    const promiseFeedback = promiseBuilder.querySelector("#promise-feedback");
+    const selected = new Set(state.promiseSelections || state.contractSelections || []);
 
     const renderSelections = () => {
       options.forEach((option, index) => {
@@ -100,7 +107,8 @@
         option.classList.toggle("selected", isSelected);
         option.setAttribute("aria-pressed", String(isSelected));
       });
-      state.contractSelections = [...selected];
+      state.promiseSelections = [...selected];
+      delete state.contractSelections;
       save();
     };
 
@@ -110,33 +118,35 @@
         if (selected.has(index)) selected.delete(index);
         else selected.add(index);
         options.forEach((item) => item.classList.remove("correct", "wrong", "excluded"));
-        contractFeedback.textContent = "Selection updated. Check when the contract contains only caller-visible promises.";
+        promiseFeedback.textContent = "Selection updated. Check when you have kept only facts that other code needs.";
         renderSelections();
       });
     });
 
-    checkContract.addEventListener("click", () => {
+    checkPromises.addEventListener("click", () => {
       let score = 0;
       options.forEach((option, index) => {
-        const shouldSelect = option.dataset.contract === "true";
+        const shouldSelect = option.dataset.promise === "true";
         const matches = selected.has(index) === shouldSelect;
         score += Number(matches);
         option.classList.toggle("correct", matches && shouldSelect);
         option.classList.toggle("excluded", matches && !shouldSelect);
         option.classList.toggle("wrong", !matches);
       });
-      contractFeedback.textContent = score === options.length
-        ? "5/5. The contract is complete without exposing replaceable machinery."
-        : `${score}/5 facts are classified correctly. Keep caller-visible promises; remove replaceable machinery.`;
-      state.contractScore = score;
+      promiseFeedback.textContent = score === options.length
+        ? "5/5. You kept every promise and left out both temporary details."
+        : `${score}/5 choices are correct. Keep promised behaviour and remove temporary details.`;
+      state.promiseScore = score;
+      delete state.contractScore;
       save();
     });
 
-    resetContract.addEventListener("click", () => {
+    resetPromises.addEventListener("click", () => {
       selected.clear();
       options.forEach((option) => option.classList.remove("correct", "wrong", "excluded"));
-      contractFeedback.textContent = "Three promises and two implementation details are mixed together.";
-      state.contractScore = 0;
+      promiseFeedback.textContent = "Three promises and two temporary details are mixed together.";
+      state.promiseScore = 0;
+      delete state.contractScore;
       renderSelections();
     });
 

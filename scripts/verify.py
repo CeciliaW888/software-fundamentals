@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import ast
 from html.parser import HTMLParser
 from pathlib import Path
 import sys
@@ -15,12 +16,21 @@ class DocumentParser(HTMLParser):
         self.heading_count = 0
         self.links: list[str] = []
         self.scripts: list[str] = []
+        self.code_blocks: list[str] = []
         self._in_title = False
+        self._in_pre = False
+        self._in_pre_code = False
+        self._code_buffer: list[str] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         attributes = dict(attrs)
         if tag == "title":
             self._in_title = True
+        if tag == "pre":
+            self._in_pre = True
+        if tag == "code" and self._in_pre:
+            self._in_pre_code = True
+            self._code_buffer = []
         if tag in {"h1", "h2", "h3"}:
             self.heading_count += 1
         if tag == "a" and attributes.get("href"):
@@ -33,10 +43,17 @@ class DocumentParser(HTMLParser):
     def handle_endtag(self, tag: str) -> None:
         if tag == "title":
             self._in_title = False
+        if tag == "code" and self._in_pre_code:
+            self.code_blocks.append("".join(self._code_buffer))
+            self._in_pre_code = False
+        if tag == "pre":
+            self._in_pre = False
 
     def handle_data(self, data: str) -> None:
         if self._in_title:
             self.title += data
+        if self._in_pre_code:
+            self._code_buffer.append(data)
 
 
 def verify_document(path: Path) -> list[str]:
@@ -47,6 +64,11 @@ def verify_document(path: Path) -> list[str]:
         errors.append(f"{path}: missing title")
     if parser.heading_count < 2:
         errors.append(f"{path}: expected at least two headings")
+    for block_index, code in enumerate(parser.code_blocks, start=1):
+        try:
+            ast.parse(code)
+        except SyntaxError as error:
+            errors.append(f"{path}: Python block {block_index} has invalid syntax: {error.msg} at line {error.lineno}")
     for target in parser.links + parser.scripts:
         if target.startswith(("http://", "https://", "data:", "#", "mailto:")):
             continue

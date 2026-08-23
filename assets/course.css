@@ -134,14 +134,14 @@ button[disabled] { cursor: not-allowed; opacity: .5; transform: none; }
 
 textarea { min-height: 300px; padding: 20px; resize: vertical; }
 .exercise-actions { display: flex; gap: 10px; margin-top: 14px; }
-.contract-options { display: grid; gap: 10px; }
-.contract-option { position: relative; padding-left: 46px; }
-.contract-option::before { content: "○"; position: absolute; left: 17px; color: var(--muted); }
-.contract-option.selected { border-color: var(--accent); background: var(--accent-soft); }
-.contract-option.selected::before { content: "●"; color: var(--accent); }
-.contract-option.correct { border-color: var(--accent); }
-.contract-option.excluded { border-color: #bcb5a7; background: #fffdf8; color: var(--muted); }
-.contract-option.wrong { border-color: var(--warm); background: #f7e5de; }
+.promise-options { display: grid; gap: 10px; }
+.promise-option { position: relative; padding-left: 46px; }
+.promise-option::before { content: "○"; position: absolute; left: 17px; color: var(--muted); }
+.promise-option.selected { border-color: var(--accent); background: var(--accent-soft); }
+.promise-option.selected::before { content: "●"; color: var(--accent); }
+.promise-option.correct { border-color: var(--accent); }
+.promise-option.excluded { border-color: #bcb5a7; background: #fffdf8; color: var(--muted); }
+.promise-option.wrong { border-color: var(--warm); background: #f7e5de; }
 .lesson-sequence { display: flex; justify-content: space-between; gap: 20px; }
 .lesson-sequence a { color: var(--accent); font-weight: 750; }
 .checklist { display: grid; gap: 8px; margin: 18px 0 0; padding: 0; list-style: none; }
@@ -170,6 +170,9 @@ textarea { min-height: 300px; padding: 20px; resize: vertical; }
 .ref-table { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 16px; }
 .ref-table th, .ref-table td { padding: 13px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
 .ref-table th { font: 800 12px ui-sans-serif, system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase; }
+.term-note { margin: 20px 0 38px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255, 255, 255, .45); padding: 16px 18px; }
+.term-note summary { cursor: pointer; color: var(--accent); font: 800 15px/1.4 ui-sans-serif, system-ui, sans-serif; }
+.term-note p { margin: 14px 0 0; font-size: 16px; }
 
 .course-home { max-width: 1080px; }
 .home-hero { grid-template-columns: minmax(0, 1fr) 260px; }
@@ -211,6 +214,15 @@ textarea { min-height: 300px; padding: 20px; resize: vertical; }
   h1 { font-size: 45px; }
   .lesson-meta { max-width: 260px; }
   textarea { min-height: 370px; font-size: 12px; }
+  .ref-table { font-size: 13px; }
+  .ref-table th, .ref-table td { padding: 10px 7px; overflow-wrap: anywhere; }
+  .term-table, .term-table tbody, .term-table tr, .term-table td { display: block; width: 100%; }
+  .term-table thead { display: none; }
+  .term-table tr { padding: 10px 0; border-bottom: 1px solid var(--line); }
+  .term-table td { border: 0; padding: 3px 7px; font-size: 15px; }
+  .term-table td:first-child { font-weight: 800; }
+  .term-table td:nth-child(3) { color: var(--muted); }
+  .term-table td:nth-child(3)::before { content: "Source: "; color: var(--ink); font-weight: 800; }
 }
 
 @media print {

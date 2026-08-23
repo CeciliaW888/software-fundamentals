@@ -3,62 +3,69 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A printable checklist for reading and writing Python interface contracts.">
+  <meta name="description" content="A beginner-friendly checklist for understanding what a Python function promises.">
   <link rel="icon" href="data:,">
-  <title>Reference · Python interface contracts</title>
+  <title>Reference · What a Python function promises</title>
   <link rel="stylesheet" href="../assets/course.css">
 </head>
 <body>
   <main class="shell">
-    <nav class="course-nav"><a href="../lessons/0002-read-contracts-before-bodies.html">← Lesson 0002</a><span>Printable reference</span></nav>
+    <nav class="course-nav"><a href="../lessons/0002-read-contracts-before-bodies.html">← Lesson 0002</a><span>Plain-language reference</span></nav>
     <header class="hero">
       <div>
-        <div class="kicker">Field reference</div>
-        <h1>Python interface contracts</h1>
-        <p class="lede">Record every fact a caller must know and hide every implementation detail it can safely ignore.</p>
+        <div class="kicker">Quick reference</div>
+        <h1>What a Python function promises</h1>
+        <p class="lede">Understand the result before getting lost in the steps used to produce it.</p>
       </div>
-      <aside class="lesson-meta"><strong>Body-free test</strong>Can a caller use this function correctly without reading its implementation?</aside>
+      <aside class="lesson-meta"><strong>Quick test</strong>Can you use the function correctly without reading every line inside it?</aside>
     </header>
 
     <section class="prose">
-      <h2>The contract stack</h2>
+      <h2>Ask four questions</h2>
       <table class="ref-table">
-        <thead><tr><th>Part</th><th>Question</th><th>Typical evidence</th></tr></thead>
+        <thead><tr><th>Ask</th><th>Customer-enrichment example</th></tr></thead>
         <tbody>
-          <tr><td>Purpose</td><td>What outcome does the callable provide?</td><td>Name and summary sentence</td></tr>
-          <tr><td>Inputs</td><td>What values and constraints are accepted?</td><td>Parameters, types, ranges, required states</td></tr>
-          <tr><td>Return</td><td>What does each possible result mean?</td><td>Return type, sentinel values, edge cases</td></tr>
-          <tr><td>Side effects</td><td>What observable state can change?</td><td>Writes, messages, mutations, resource ownership</td></tr>
-          <tr><td>Failures</td><td>What can the caller observe when work fails?</td><td>Exceptions, error values, partial completion</td></tr>
-          <tr><td>Preconditions</td><td>What must already be true before the call?</td><td>Ordering, lifecycle, permissions, invariants</td></tr>
+          <tr><td>What goes in?</td><td>A customer name, an industry classifier, and a place to save results.</td></tr>
+          <tr><td>What can come back?</td><td>An ANZSIC suggestion, or <code>None</code> when evidence is weak.</td></tr>
+          <tr><td>What else changes?</td><td>An accepted suggestion is saved before it is returned.</td></tr>
+          <tr><td>What can fail?</td><td>The official website or About page may not be found or read.</td></tr>
         </tbody>
       </table>
 
-      <h2>Keep out of the interface</h2>
+      <h2>Do not promise temporary details</h2>
       <ul class="checklist">
+        <li class="pass">A particular search engine</li>
+        <li class="pass">A particular HTML-reading library</li>
         <li class="pass">Private helper names and call order</li>
-        <li class="pass">Current algorithm or data structure</li>
-        <li class="pass">Retry count unless it changes a public guarantee</li>
-        <li class="pass">Database or vendor choice behind an abstraction</li>
-        <li class="pass">Line-by-line narration of obvious code</li>
+        <li class="pass">Retry count unless another part of the system must rely on it</li>
+        <li class="pass">A database or AI vendor that can be replaced</li>
       </ul>
 
-      <h2>Contract-test filter</h2>
-      <table class="ref-table">
-        <thead><tr><th>Ask</th><th>Keep the assertion when…</th></tr></thead>
+      <h2>Technical words, after the idea</h2>
+      <table class="ref-table term-table">
+        <thead><tr><th>Word</th><th>Plain meaning</th><th>Source</th></tr></thead>
         <tbody>
-          <tr><td>Could implementation B honour the same promise?</td><td>The assertion still passes after a valid rewrite.</td></tr>
-          <tr><td>Can a caller observe this?</td><td>The result, state, failure, timing guarantee, or interaction crosses the boundary.</td></tr>
-          <tr><td>Would changing this break a legitimate caller?</td><td>The change requires coordination or a versioned contract.</td></tr>
+          <tr><td>Function</td><td>A named block of code that performs a job.</td><td>Official Python vocabulary</td></tr>
+          <tr><td>Docstring</td><td>Text inside a function that explains how to use it.</td><td>Official Python vocabulary</td></tr>
+          <tr><td>Interface</td><td>What other code must know to use the function.</td><td>Standard software vocabulary; Ousterhout Chapter 4</td></tr>
+          <tr><td>Implementation</td><td>The steps currently used to do the work.</td><td>Standard software vocabulary; Ousterhout Chapter 4</td></tr>
+          <tr><td>Side effect</td><td>An outside change, such as saving data or sending a message.</td><td>Standard software and Python documentation vocabulary</td></tr>
         </tbody>
       </table>
 
-      <div class="takeaway">Strong contracts are complete about behaviour and silent about replaceable machinery.</div>
+      <details class="term-note">
+        <summary>Two words you do not need yet</summary>
+        <p><strong>Contract</strong> appears in broader software-engineering writing as shorthand for promised behaviour. The reviewed Ousterhout chapters do not use it, and this course does not require it.</p>
+        <p><a href="https://docs.python.org/3/glossary.html#term-callable"><strong>Callable</strong></a> is official Python vocabulary for anything used with function-call syntax. Lesson 0002 uses the narrower word <strong>function</strong>.</p>
+      </details>
+
+      <div class="takeaway">Remember the four plain questions first: input, result, outside change, and failure.</div>
 
       <h2>Sources</h2>
       <div class="source-list">
-        <div class="source-card"><strong>Primary design reading:</strong> John Ousterhout, <em>A Philosophy of Software Design</em>, Chapters 4 and 13.</div>
+        <div class="source-card"><strong>Main design reading:</strong> John Ousterhout, <em>A Philosophy of Software Design</em>, Chapters 4 and 13.</div>
         <div class="source-card"><a href="https://peps.python.org/pep-0257/#multi-line-docstrings">PEP 257: Multi-line Docstrings</a> for Python docstring conventions.</div>
+        <div class="source-card"><a href="https://docs.python.org/3/glossary.html#term-callable">Python glossary: callable</a> for the broader Python term.</div>
       </div>
     </section>
   </main>

@@ -19,12 +19,26 @@ class QuietHandler(SimpleHTTPRequestHandler):
 async def exercise(page, url: str) -> dict[str, object]:
     await page.goto(url, wait_until="networkidle")
     await page.locator('.choice[data-correct="true"]').click()
-    code = """def select_high_confidence_documents(documents, classifier, minimum_confidence=0.82):
-    probabilities_by_document = classifier.predict_proba(documents)
-    return [document for document, class_probabilities in zip(documents, probabilities_by_document) if max(class_probabilities) >= minimum_confidence]
+    code = """def select_confident_anzsic_suggestions(
+    about_page_texts,
+    industry_classifier,
+    minimum_confidence=0.82,
+):
+    probabilities_by_page = industry_classifier.predict_proba(
+        about_page_texts
+    )
+    return [
+        about_text
+        for about_text, probabilities in zip(
+            about_page_texts,
+            probabilities_by_page,
+        )
+        if max(probabilities) >= minimum_confidence
+    ]
 """
     await page.locator("#refactor-editor").fill(code)
     await page.locator("#check-refactor").click()
+    await page.locator("#refactor-editor").evaluate("element => { element.scrollTop = 0; element.scrollLeft = 0; }")
     return {
         "title": await page.title(),
         "h1": await page.locator("h1").inner_text(),
@@ -36,26 +50,26 @@ async def exercise(page, url: str) -> dict[str, object]:
     }
 
 
-async def exercise_contracts(page, url: str) -> dict[str, object]:
+async def exercise_promises(page, url: str) -> dict[str, object]:
     await page.goto(url, wait_until="networkidle")
     await page.locator('.choice[data-correct="true"]').click()
-    for option in await page.locator('.contract-option[data-contract="true"]').all():
+    for option in await page.locator('.promise-option[data-promise="true"]').all():
         await option.click()
-    await page.locator("#check-contract").click()
-    success_feedback = await page.locator("#contract-feedback").inner_text()
+    await page.locator("#check-promises").click()
+    success_feedback = await page.locator("#promise-feedback").inner_text()
 
     await page.reload(wait_until="networkidle")
-    persisted_selections = await page.locator(".contract-option.selected").count()
+    persisted_selections = await page.locator(".promise-option.selected").count()
     persisted_score = await page.evaluate(
-        "JSON.parse(localStorage.getItem('teach:0002-read-contracts-before-bodies') || '{}').contractScore"
+        "JSON.parse(localStorage.getItem('teach:0002-read-contracts-before-bodies') || '{}').promiseScore"
     )
-    await page.locator("#check-contract").click()
+    await page.locator("#check-promises").click()
 
     return {
         "title": await page.title(),
         "h1": await page.locator("h1").inner_text(),
         "quiz": await page.locator(".question .feedback").inner_text(),
-        "contract": success_feedback,
+        "promises": success_feedback,
         "persisted_selections": persisted_selections,
         "persisted_score": persisted_score,
         "scroll_width": await page.evaluate("document.documentElement.scrollWidth"),
@@ -104,20 +118,22 @@ async def run_browser_checks(base_url: str) -> None:
             print(f"{name}={result}")
             print(f"screenshot={screenshot}")
 
-            contract_result = await exercise_contracts(
+            promise_result = await exercise_promises(
                 page,
                 f"{base_url}lessons/0002-read-contracts-before-bodies.html",
             )
-            if contract_result["scroll_width"] != contract_result["client_width"]:
-                raise AssertionError(f"{name} Lesson 0002 has horizontal overflow: {contract_result}")
-            if contract_result["persisted_selections"] != 3 or contract_result["persisted_score"] != 5:
-                raise AssertionError(f"{name} Lesson 0002 persistence failed: {contract_result}")
-            if not str(contract_result["contract"]).startswith("5/5"):
-                raise AssertionError(f"{name} Lesson 0002 contract feedback failed: {contract_result}")
-            contract_screenshot = ROOT / "artifacts" / f"lesson-0002-{name}.png"
-            await page.screenshot(path=str(contract_screenshot), full_page=True)
-            print(f"contracts_{name}={contract_result}")
-            print(f"screenshot={contract_screenshot}")
+            if promise_result["scroll_width"] != promise_result["client_width"]:
+                raise AssertionError(f"{name} Lesson 0002 has horizontal overflow: {promise_result}")
+            if promise_result["persisted_selections"] != 3 or promise_result["persisted_score"] != 5:
+                raise AssertionError(f"{name} Lesson 0002 persistence failed: {promise_result}")
+            if not str(promise_result["promises"]).startswith("5/5"):
+                raise AssertionError(f"{name} Lesson 0002 promise feedback failed: {promise_result}")
+            if not str(promise_result["quiz"]).startswith("Correct."):
+                raise AssertionError(f"{name} Lesson 0002 quiz persistence failed: {promise_result}")
+            promise_screenshot = ROOT / "artifacts" / f"lesson-0002-{name}.png"
+            await page.screenshot(path=str(promise_screenshot), full_page=True)
+            print(f"promises_{name}={promise_result}")
+            print(f"screenshot={promise_screenshot}")
             await context.close()
         await browser.close()
         if all_errors:
