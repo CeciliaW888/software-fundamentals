@@ -1,25 +1,44 @@
 # Software Fundamentals
 
-A stateful, practice-led course for understanding, designing, and evolving reliable software systems.
+A public, practice-led course for learning how to understand, design, test, and evolve reliable software.
 
-## Mission
-
-Read [`MISSION.md`](MISSION.md) before deciding what to teach next.
+The course improves one small Python document-processing service over time.
+Every lesson makes one observable change, checks understanding immediately, and transfers the idea to a real code-review decision.
 
 ## Start here
 
+- [Mission](MISSION.md)
+- [Course design and curriculum](COURSE_DESIGN.md)
+- [Source hierarchy](RESOURCES.md)
 - [Lesson 0001: Names are architecture in miniature](lessons/0001-names-are-architecture.html)
-- [Reference: Meaningful names for Python AI systems](reference/meaningful-python-names.html)
+- [Reference: Meaningful names for Python systems](reference/meaningful-python-names.html)
 
-## Course spine
+## Learning path
 
-The lessons will progressively improve one small Python AI service:
+1. **Read before changing:** names, contracts, data flow, side effects
+2. **Control complexity:** decomposition, deep modules, information hiding, design alternatives
+3. **Change safely:** errors, tests, boundaries, refactoring
+4. **Model the domain:** shared language, value objects, context boundaries
+5. **Design data that can evolve:** access patterns, schemas, storage, transactions
+6. **Operate what you build:** reliability, observability, performance, deployment and rollback
 
-1. **Readable core:** names, functions, data structures, errors, boundaries
-2. **Reliable behaviour:** tests, contracts, dependency isolation, evaluation
-3. **Production service:** API design, configuration, persistence, concurrency
-4. **Operable system:** logs, traces, metrics, monitoring, deployment, rollback
-5. **AI-specific judgment:** retrieval quality, prompt/version control, model fallbacks, cost and latency
+The first three modules form the required core.
+Domain and data modules begin only after the service is understandable and safely changeable.
+Distributed-system material is introduced when a concrete requirement justifies it, not as architecture theatre.
 
-Only the first lesson is generated now.
-The next lesson should be chosen from demonstrated learning, not from this list alone.
+## Source policy
+
+No single book is treated as law.
+
+- *A Philosophy of Software Design* is the main design spine.
+- Official Python and tool documentation define language and runtime behaviour.
+- *Clean Code* is an influential counterpoint, especially where its rules conflict with system-level simplicity.
+- *Domain-Driven Design* supports selected domain-modeling lessons.
+- *Designing Data-Intensive Applications* supports later data and systems lessons.
+
+See [RESOURCES.md](RESOURCES.md) for exact roles and edition caveats.
+
+## Course status
+
+Lesson 0001 is live.
+The curriculum is a tested sequence of learning goals, not a promise to generate every lesson before learner evidence supports it.

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A short interactive lesson on using names to make Python AI pipeline decisions explicit.">
+  <meta name="description" content="A short interactive lesson on using names to make Python service decisions explicit.">
   <link rel="icon" href="data:,">
   <title>Lesson 0001 · Names are architecture in miniature</title>
   <link rel="stylesheet" href="../assets/course.css">
@@ -12,22 +12,22 @@
 <body data-lesson="0001-names-are-architecture">
   <div class="progress" aria-hidden="true"><span></span></div>
   <main class="shell">
-    <nav class="course-nav"><a href="../README.md">Software Fundamentals</a><span>Lesson 0001 of an evolving course</span></nav>
+    <nav class="course-nav"><a href="../index.html">Software Fundamentals</a><span>Module 1 · Read before changing</span></nav>
 
     <header class="hero">
       <div>
         <div class="kicker">Readable core · 10 minutes</div>
         <h1>Names are architecture in miniature</h1>
-        <p class="lede">Refactor one opaque AI function until its data, decision, and confidence rule are visible without a comment.</p>
+        <p class="lede">Refactor one opaque classification function until its data, decision, and confidence rule are visible without a comment.</p>
       </div>
-      <aside class="lesson-meta"><strong>Tangible win</strong>You will turn a plausible AI-generated function into code another engineer can review safely.</aside>
+      <aside class="lesson-meta"><strong>Tangible win</strong>You will turn a plausible generated or inherited function into code another engineer can review safely.</aside>
     </header>
 
     <article class="prose">
-      <div class="win"><strong>Mission link:</strong> reliable AI systems begin with code whose behaviour can be understood before it is deployed, monitored, or evaluated.</div>
+      <div class="win"><strong>Mission link:</strong> reliable systems begin with code whose behaviour can be understood before it is changed, tested, or deployed.</div>
 
       <h2>The risk is hidden context</h2>
-      <p>AI code often looks simple while carrying several invisible meanings: which model produced a score, what the score measures, which pipeline stage the data belongs to, and which threshold changes a business decision.</p>
+      <p>Classification code can look simple while carrying several invisible meanings: which component produced a score, what the score measures, which processing stage the data belongs to, and which threshold changes a business decision.</p>
       <p>A short name saves keystrokes once. An intention-revealing name saves reconstruction every time the code is reviewed, debugged, or changed.</p>
 
       <div class="principle-grid">
@@ -114,13 +114,14 @@
 
       <div class="takeaway">Naming is not decoration. It is the first layer of the system contract, written for the next reader.</div>
 
-      <h2>Apply it to real AI code</h2>
+      <h2>Apply it to real service code</h2>
       <p>In your next code review, find one name that hides a stage, unit, or decision. Rename it before adding a comment. If the rename is difficult, the underlying responsibility may still be unclear.</p>
       <p><a href="../reference/meaningful-python-names.html">Open the printable naming reference →</a></p>
 
       <h2>Primary reading and sources</h2>
       <div class="source-list">
-        <div class="source-card"><strong>Read next:</strong> Robert C. Martin, <em>Clean Code</em>, Chapter 2, “Meaningful Names,” especially “Use Intention-Revealing Names.”</div>
+        <div class="source-card"><strong>Primary design reading:</strong> John Ousterhout, <em>A Philosophy of Software Design</em>, Chapter 14, “Choosing Names,” especially precise and consistent names.</div>
+        <div class="source-card"><strong>Counterpoint:</strong> Robert C. Martin, <em>Clean Code</em>, Chapter 2, “Meaningful Names.” Compare both authors by asking which name reduces obscurity without adding noise.</div>
         <div class="source-card"><a href="https://peps.python.org/pep-0008/#function-and-variable-names">PEP 8: Function and Variable Names</a> specifies Python’s lowercase, underscore-separated convention. Convention supports readability, but it does not replace domain meaning.</div>
         <div class="source-card"><a href="https://www.pearson.com/en-us/subject-catalog/p/clean-code-a-handbook-of-agile-software-craftsmanship/P200000009044/9780136083238">Pearson: Clean Code</a> describes the book’s principles, practices, and case-study structure.</div>
       </div>

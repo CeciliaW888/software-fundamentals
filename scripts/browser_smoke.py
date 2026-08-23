@@ -36,7 +36,7 @@ async def exercise(page, url: str) -> dict[str, object]:
     }
 
 
-async def run_browser_checks(url: str) -> None:
+async def run_browser_checks(base_url: str) -> None:
     async with async_playwright() as playwright:
         launch_args = {"headless": True}
         if CHROME.exists():
@@ -48,7 +48,25 @@ async def run_browser_checks(url: str) -> None:
             page = await context.new_page()
             page.on("console", lambda message: all_errors.append(f"console:{message.type}:{message.text}") if message.type == "error" else None)
             page.on("pageerror", lambda error: all_errors.append(f"pageerror:{error}"))
-            result = await exercise(page, url)
+            await page.goto(base_url, wait_until="networkidle")
+            home = {
+                "title": await page.title(),
+                "h1": await page.locator("h1").inner_text(),
+                "modules": await page.locator(".module-card").count(),
+                "scroll_width": await page.evaluate("document.documentElement.scrollWidth"),
+                "client_width": await page.evaluate("document.documentElement.clientWidth"),
+            }
+            if home["title"] != "Software Fundamentals" or home["modules"] != 6:
+                raise AssertionError(f"{name} course home is incomplete: {home}")
+            if home["scroll_width"] != home["client_width"]:
+                raise AssertionError(f"{name} course home has horizontal overflow: {home}")
+            home_screenshot = ROOT / "artifacts" / f"course-home-{name}.png"
+            home_screenshot.parent.mkdir(parents=True, exist_ok=True)
+            await page.screenshot(path=str(home_screenshot), full_page=True)
+            print(f"home_{name}={home}")
+            print(f"screenshot={home_screenshot}")
+
+            result = await exercise(page, f"{base_url}lessons/0001-names-are-architecture.html")
             if result["scroll_width"] != result["client_width"]:
                 raise AssertionError(f"{name} has horizontal overflow: {result}")
             if result["passed_checks"] != 5:
@@ -71,7 +89,7 @@ def main() -> None:
     thread = Thread(target=server.serve_forever, daemon=True)
     thread.start()
     port = server.server_address[1]
-    url = f"http://127.0.0.1:{port}/lessons/0001-names-are-architecture.html"
+    url = f"http://127.0.0.1:{port}/"
     try:
         asyncio.run(run_browser_checks(url))
     finally:
