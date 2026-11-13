@@ -1,0 +1,39 @@
+{
+  "day": 17,
+  "title": "Choose a data model from access patterns",
+  "questions": [
+    {
+      "question": "Why are outcome and checked_at plain columns?",
+      "options": [
+        "SQLite requires every field as a column.",
+        "To save disk space.",
+        "The review queue filters by outcome and sorts by time across all companies.",
+        "Because they never change."
+      ],
+      "answer": 2,
+      "explanation": "Access pattern 3 needs to filter and sort on them, which is simple and fast on plain columns."
+    },
+    {
+      "question": "Which access pattern is awkward for a one-document-per-company design?",
+      "options": [
+        "The latest result for one company",
+        "The history of one company",
+        "Saving a result",
+        "All results waiting for review, oldest first, across companies"
+      ],
+      "answer": 3,
+      "explanation": "The queue cuts across every company, so a per-company document design has to look inside all documents."
+    },
+    {
+      "question": "Why does review_queue use ? placeholders?",
+      "options": [
+        "Values are passed separately from the SQL, so data cannot change the query.",
+        "They make queries shorter.",
+        "SQLite cannot read numbers otherwise.",
+        "They sort the results."
+      ],
+      "answer": 0,
+      "explanation": "Parameter substitution keeps data and SQL apart, which is what the Python sqlite3 documentation recommends."
+    }
+  ]
+}

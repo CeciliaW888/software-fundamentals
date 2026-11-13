@@ -1,0 +1,39 @@
+{
+  "day": 23,
+  "title": "Measure before optimizing",
+  "questions": [
+    {
+      "question": "The benchmark shows website reads take about 900 ms and classification about 3 ms. What should you optimise?",
+      "options": [
+        "Reading websites, the critical path",
+        "The classifier, because its loops look slow",
+        "Both equally",
+        "Nothing; benchmarks are unreliable"
+      ],
+      "answer": 0,
+      "explanation": "Even a perfect classifier would save a few milliseconds. The measurement points at website reads."
+    },
+    {
+      "question": "Why does the test count calls instead of asserting a time limit?",
+      "options": [
+        "Counting is more accurate than timing.",
+        "Timing tests are flaky on shared machines; the call count checks the cause of the speed-up reliably.",
+        "Python cannot measure time in tests.",
+        "To make the test faster."
+      ],
+      "answer": 1,
+      "explanation": "The behaviour that makes it faster, one read per company, is deterministic; milliseconds are not."
+    },
+    {
+      "question": "Why does the cache not store failed lookups?",
+      "options": [
+        "Failures are too big to store.",
+        "Dictionaries cannot hold exceptions.",
+        "A temporary failure would otherwise be repeated for the rest of the run.",
+        "It would be slower."
+      ],
+      "answer": 2,
+      "explanation": "Caching a failure turns one bad moment into many. Only successful pages are remembered."
+    }
+  ]
+}

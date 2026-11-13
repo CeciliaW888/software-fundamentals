@@ -1,0 +1,21 @@
+name: Company Enricher tests
+
+on:
+  push:
+    paths:
+      - "projects/company-enricher/**"
+      - ".github/workflows/company-enricher-tests.yml"
+  pull_request:
+    paths:
+      - "projects/company-enricher/**"
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pytest
+      - run: ./projects/company-enricher/run_all_tests.sh

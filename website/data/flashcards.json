@@ -1,0 +1,550 @@
+[
+  {
+    "term": "Function",
+    "definition": "A named block of code that performs a job. Source: Official Python vocabulary (Python tutorial)."
+  },
+  {
+    "term": "Service",
+    "definition": "A higher-level unit of software with an interface and an implementation. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 4 (to verify against book)."
+  },
+  {
+    "term": "Classifier",
+    "definition": "Something that assigns an input to a category. In this course it proposes a business category from website evidence. Source: Standard data and machine-learning vocabulary, specialised for this course."
+  },
+  {
+    "term": "Confidence",
+    "definition": "A score used here to show how strongly the model supports a suggestion. Source: Course domain term; its exact meaning must be defined by the chosen model."
+  },
+  {
+    "term": "Category list",
+    "definition": "The short, plain list of about ten business categories the Company Enricher can suggest, such as Retail, Manufacturing, or Software & IT. Source: Course domain term, defined in the practice project."
+  },
+  {
+    "term": "Category suggestion",
+    "definition": "A proposed business category that still carries evidence and review status. Source: Domain language for this course."
+  },
+  {
+    "term": "Stage",
+    "definition": "Where a value is in a sequence of work, such as candidate, verified, or classified. Source: Course-authored teaching word."
+  },
+  {
+    "term": "Domain",
+    "definition": "The real business problem the software works on. Source: Standard software vocabulary; important in Domain-Driven Design."
+  },
+  {
+    "term": "Boundary",
+    "definition": "The point where this code meets another system or responsibility. Source: Standard software vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Ubiquitous language",
+    "definition": "Words agreed and used by one domain's experts and developers. Source: Eric Evans's Domain-Driven Design term, Chapter 2 (to verify against book); not universal software vocabulary."
+  },
+  {
+    "term": "Docstring",
+    "definition": "Text inside a function that explains how to use it. Source: Official Python vocabulary (PEP 257)."
+  },
+  {
+    "term": "None",
+    "definition": "Python's built-in marker for \"no value here.\" Source: Official Python vocabulary (Python documentation)."
+  },
+  {
+    "term": "Interface",
+    "definition": "What other code must know to use a function or module. Source: Standard software vocabulary; central in Ousterhout Chapter 4 (to verify against book)."
+  },
+  {
+    "term": "Implementation",
+    "definition": "The steps currently used to do the work. Source: Standard software vocabulary; central in Ousterhout Chapter 4 (to verify against book)."
+  },
+  {
+    "term": "Side effect",
+    "definition": "An outside change, such as saving data or sending a message. Source: Standard software vocabulary; PEP 257 says function documentation should describe side effects."
+  },
+  {
+    "term": "Module",
+    "definition": "A unit of code with an interface and an implementation. It can be a function, class, subsystem, or service. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 4 (to verify against book)."
+  },
+  {
+    "term": "Abstraction",
+    "definition": "A simplified view of something that leaves out unimportant details. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 4 (to verify against book)."
+  },
+  {
+    "term": "Input",
+    "definition": "Any data a function uses to produce its result, whether passed in or read from elsewhere. Source: Course-authored plain definition."
+  },
+  {
+    "term": "Output",
+    "definition": "The value a function gives back to its caller. Source: Course-authored plain definition."
+  },
+  {
+    "term": "External dependency",
+    "definition": "Something outside the function that it relies on, such as a website, file, database, or clock. Source: Standard software vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Hidden dependency",
+    "definition": "An external dependency that does not appear in the function's parameters. Source: Course-authored teaching term."
+  },
+  {
+    "term": "Unknown unknown",
+    "definition": "Something you must know to change code safely, with no sign in the code that you need to know it. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 2 (to verify against book)."
+  },
+  {
+    "term": "Information leakage",
+    "definition": "The same design knowledge appearing in more than one module, so a change to it touches all of them. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 5 (to verify against book)."
+  },
+  {
+    "term": "Complexity",
+    "definition": "Anything about the structure of a system that makes it hard to understand and modify. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 2 (to verify against book)."
+  },
+  {
+    "term": "Change amplification",
+    "definition": "A simple change requiring edits in many different places. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 2 (to verify against book)."
+  },
+  {
+    "term": "Cognitive load",
+    "definition": "How much a developer needs to know to complete a task. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 2 (to verify against book)."
+  },
+  {
+    "term": "Dependency",
+    "definition": "Code that cannot be understood or modified in isolation from other code. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 2 (to verify against book)."
+  },
+  {
+    "term": "Obscurity",
+    "definition": "Facts a reader needs to know that the code does not show. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 2 (to verify against book)."
+  },
+  {
+    "term": "Broken window",
+    "definition": "A small, visible sign of neglect that, left unfixed, encourages more neglect. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 3, \"Software Entropy\" (to verify against book)."
+  },
+  {
+    "term": "Deep module",
+    "definition": "A module that provides powerful functionality behind a simple interface. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 4 (to verify against book)."
+  },
+  {
+    "term": "Shallow module",
+    "definition": "A module whose interface is complicated compared with the functionality it provides. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 4 (to verify against book)."
+  },
+  {
+    "term": "Pass-through method",
+    "definition": "A method that does little except pass its arguments to another method. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 7 (to verify against book)."
+  },
+  {
+    "term": "Property",
+    "definition": "A Python attribute whose value is computed by a method each time it is read. Source: Official Python vocabulary (built-in functions: property)."
+  },
+  {
+    "term": "Somewhat general-purpose",
+    "definition": "A module whose functionality meets today's needs while its interface is general enough for several uses. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 6, checked in the author's free extract."
+  },
+  {
+    "term": "DRY",
+    "definition": "Each piece of knowledge in a system should be expressed in exactly one authoritative place. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 9, \"DRY - The Evils of Duplication\", checked in the publisher's free excerpt."
+  },
+  {
+    "term": "Orthogonality",
+    "definition": "Two parts are orthogonal when a change to one does not affect the other. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 10, \"Orthogonality\" (to verify against book)."
+  },
+  {
+    "term": "Duplicated knowledge",
+    "definition": "The same fact or rule needed in more than one place, even if the code text differs. Source: Course-authored plain definition, following The Pragmatic Programmer's DRY topic."
+  },
+  {
+    "term": "Shared information",
+    "definition": "Knowledge two pieces of code must both have, which is a reason to keep them together. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 9 (to verify against book)."
+  },
+  {
+    "term": "Dictionary",
+    "definition": "A Python mapping from keys to values, such as category to hit count. Source: Official Python vocabulary (Python tutorial: dictionaries)."
+  },
+  {
+    "term": "Design it twice",
+    "definition": "Considering two or more substantially different designs before choosing one. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 11 (to verify against book)."
+  },
+  {
+    "term": "Tracer bullet",
+    "definition": "A thin, working path through every layer of a system, kept and filled in over time. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 12, \"Tracer Bullets\" (to verify against book)."
+  },
+  {
+    "term": "Prototype",
+    "definition": "A throwaway experiment built to answer one specific question. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 13, \"Prototypes and Post-it Notes\" (to verify against book)."
+  },
+  {
+    "term": "Result object",
+    "definition": "A value that always comes back from an operation and describes what happened. Source: Course-authored plain definition."
+  },
+  {
+    "term": "Status",
+    "definition": "A field on a result that says which outcome happened, such as accepted or needs review. Source: Course-authored plain definition."
+  },
+  {
+    "term": "Exception",
+    "definition": "A Python object that signals an error and interrupts normal flow until something handles it. Source: Official Python vocabulary (tutorial: errors and exceptions)."
+  },
+  {
+    "term": "Exception masking",
+    "definition": "Handling an exceptional condition at a low level so higher levels never see it. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 10 (to verify against book)."
+  },
+  {
+    "term": "Exception aggregation",
+    "definition": "Handling many exceptions with one piece of code instead of many. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 10 (to verify against book)."
+  },
+  {
+    "term": "Crash early",
+    "definition": "Stopping as soon as the code finds an impossible state, instead of continuing with bad data. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 24, \"Dead Programs Tell No Lies\" (to verify against book)."
+  },
+  {
+    "term": "Review reason",
+    "definition": "Why a result needs a person: weak evidence or no website. Source: Course domain term."
+  },
+  {
+    "term": "Test",
+    "definition": "Code that runs other code and checks one expected behaviour. Source: Course-authored plain definition."
+  },
+  {
+    "term": "Fixture",
+    "definition": "A pytest function that prepares something tests need and passes it to them by name. Source: Official pytest vocabulary (fixtures)."
+  },
+  {
+    "term": "Parametrized test",
+    "definition": "One test function run once for each set of arguments. Source: Official pytest vocabulary (parametrize)."
+  },
+  {
+    "term": "Characterization test",
+    "definition": "A test that pins what the code does today, so a change that alters it fails. Source: Standard software vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Property-based test",
+    "definition": "A test that checks a rule holds for many generated inputs. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 42, \"Property-Based Testing\" (to verify against book)."
+  },
+  {
+    "term": "Deterministic",
+    "definition": "Giving the same result every time it runs with the same inputs. Source: Course-authored plain definition."
+  },
+  {
+    "term": "Volatile dependency",
+    "definition": "Something the code relies on that is likely to change or fail, such as a network service or the clock. Source: Course-authored plain definition."
+  },
+  {
+    "term": "Adapter",
+    "definition": "Code at a boundary that translates between an outside system and the rest of the service. Source: Standard software vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Protocol",
+    "definition": "A Python type that lists the methods an object must have, without requiring inheritance. Source: Official Python vocabulary (typing.Protocol)."
+  },
+  {
+    "term": "Dependency injection",
+    "definition": "Passing a dependency in from outside instead of creating or finding it inside. Source: Standard software vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Timeout",
+    "definition": "A limit on how long to wait for an answer before giving up. Source: Official Python vocabulary (urllib.request.urlopen)."
+  },
+  {
+    "term": "Refactoring",
+    "definition": "Restructuring existing code without changing its external behaviour. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 40, \"Refactoring\" (to verify against book)."
+  },
+  {
+    "term": "Commit",
+    "definition": "A saved snapshot of changes in Git, with a message explaining them. Source: Official Git vocabulary (git-commit)."
+  },
+  {
+    "term": "Revert",
+    "definition": "A new commit that undoes the changes of an earlier commit. Source: Official Git vocabulary (git-revert)."
+  },
+  {
+    "term": "Version control",
+    "definition": "A system that records every change to files so any earlier state can be recovered. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 19, \"Version Control\" (to verify against book)."
+  },
+  {
+    "term": "Domain expert",
+    "definition": "A person who knows the business area well, such as a reviewer who categorises companies. Source: Standard DDD vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Knowledge crunching",
+    "definition": "Working through examples with domain experts to distil a useful model. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 1 (to verify against book)."
+  },
+  {
+    "term": "Scenario",
+    "definition": "A concrete example of a situation and what should happen in it. Source: Course-authored plain definition."
+  },
+  {
+    "term": "Enum",
+    "definition": "A Python type with a fixed set of named values, such as Outcome.SUGGESTED. Source: Official Python vocabulary (enum)."
+  },
+  {
+    "term": "Entity",
+    "definition": "An object defined by its identity and continuity over time, not by its attributes. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 5 (to verify against book)."
+  },
+  {
+    "term": "Value object",
+    "definition": "An object that describes something, has no identity of its own, and is usually immutable. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 5 (to verify against book)."
+  },
+  {
+    "term": "Domain service",
+    "definition": "An operation in the model that does not belong naturally to any entity or value object. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 5 (to verify against book)."
+  },
+  {
+    "term": "Immutable",
+    "definition": "Unable to change after it is created. Source: Standard software vocabulary; Python's frozen dataclasses provide it."
+  },
+  {
+    "term": "Identity",
+    "definition": "What makes an entity the same one over time; here, company_id. Source: Course-authored plain definition."
+  },
+  {
+    "term": "Invariant",
+    "definition": "A rule that must always be true, such as \"confidence is between 0 and 1\". Source: Standard software vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Bounded context",
+    "definition": "The explicit boundary within which one model and its language apply. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 14 (to verify against book)."
+  },
+  {
+    "term": "Context map",
+    "definition": "A description of the bounded contexts in play and how they relate. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 14 (to verify against book)."
+  },
+  {
+    "term": "Anticorruption layer",
+    "definition": "A layer that translates between your model and another system's, keeping the other model out. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 14 (to verify against book)."
+  },
+  {
+    "term": "Directory hint",
+    "definition": "The category a partner directory suggests for a company, translated into our categories. Source: Course domain term."
+  },
+  {
+    "term": "Translation table",
+    "definition": "An explicit mapping from another system's values to yours. Source: Course-authored plain definition."
+  },
+  {
+    "term": "Core domain",
+    "definition": "The most valuable and specialised part of the model, where design effort should go first. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 15 (to verify against book)."
+  },
+  {
+    "term": "Generic subdomain",
+    "definition": "A part the system needs that is not special to this business. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 15 (to verify against book)."
+  },
+  {
+    "term": "Supporting subdomain",
+    "definition": "A part specific to this business that exists to support the core. Source: Standard DDD vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Domain vision statement",
+    "definition": "A short description of the core domain and the value it brings. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 15 (to verify against book)."
+  },
+  {
+    "term": "Segregated core",
+    "definition": "Core code separated from supporting code so it can be understood alone. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 15 (to verify against book)."
+  },
+  {
+    "term": "Port",
+    "definition": "A small interface in the core that says what it needs from the outside world. Source: Standard software vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Quality attribute",
+    "definition": "A requirement about how well a system works, such as speed or accuracy, rather than what it does. Source: Standard software vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Indicator",
+    "definition": "A measured value that shows how well a quality is met. Source: Course-authored plain definition."
+  },
+  {
+    "term": "Target",
+    "definition": "The value an indicator must meet for the quality to count as good. Source: Course-authored plain definition."
+  },
+  {
+    "term": "Precision",
+    "definition": "Of the items the service labelled, the share it labelled correctly. Source: Standard data and machine-learning vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Percentile",
+    "definition": "The value below which a given share of measurements fall; the 95th percentile is beaten by 95% of them. Source: Standard statistics vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Labelled sample",
+    "definition": "Example inputs with the correct answer decided by a person, used to measure a system. Source: Course-authored plain definition."
+  },
+  {
+    "term": "Access pattern",
+    "definition": "A question the system repeatedly asks of its stored data. Source: Course-authored plain definition."
+  },
+  {
+    "term": "Schema",
+    "definition": "The declared structure of a database: tables, columns, and their types. Source: Standard database vocabulary; see SQLite: CREATE TABLE."
+  },
+  {
+    "term": "Relational database",
+    "definition": "A database that stores rows in tables and is queried with SQL. Source: Standard database vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Primary key",
+    "definition": "The column or columns that uniquely identify each row in a table. Source: Official SQLite vocabulary (CREATE TABLE)."
+  },
+  {
+    "term": "Foreign key",
+    "definition": "A column whose values must match a key in another table. Source: Official SQLite vocabulary (foreign keys)."
+  },
+  {
+    "term": "Document model",
+    "definition": "Storing each record as a self-contained document, such as JSON. Source: Standard database vocabulary; see PostgreSQL: JSON types."
+  },
+  {
+    "term": "Repository",
+    "definition": "An object that gives the model query access to stored objects in the model's own language, hiding the database details. Source: Paraphrased from Eric Evans, Domain-Driven Design; concept checked in Evans's free DDD Reference; chapter to verify against book."
+  },
+  {
+    "term": "Index",
+    "definition": "A separate sorted structure that lets the database find rows by some columns without reading the whole table. Source: Official SQLite vocabulary (CREATE INDEX)."
+  },
+  {
+    "term": "Query plan",
+    "definition": "The steps the database will take to answer a query. Source: Official SQLite vocabulary (EXPLAIN QUERY PLAN)."
+  },
+  {
+    "term": "Query planner",
+    "definition": "The part of the database that chooses a query plan. Source: Official SQLite vocabulary (query planning)."
+  },
+  {
+    "term": "Full table scan",
+    "definition": "Reading every row of a table to answer a query. Source: Standard database vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Composite index",
+    "definition": "An index on more than one column, used left to right. Source: Standard database vocabulary; see SQLite query planning."
+  },
+  {
+    "term": "Write amplification",
+    "definition": "Extra work each write must do, such as updating indexes. Source: Standard database vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Migration",
+    "definition": "One numbered, ordered change to a database schema. Source: Standard software vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "user_version",
+    "definition": "An integer stored in a SQLite database file that applications may use as a version number. Source: Official SQLite vocabulary (PRAGMA user_version)."
+  },
+  {
+    "term": "ALTER TABLE",
+    "definition": "The SQL command that changes an existing table, for example by adding a column. Source: Official SQLite vocabulary (ALTER TABLE)."
+  },
+  {
+    "term": "Expand and contract",
+    "definition": "Making only additive changes first, and removing old structures in a later release. Source: Standard software vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Backward compatible",
+    "definition": "A change that existing code keeps working with. Source: Standard software vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Idempotent",
+    "definition": "Giving the same result whether it runs once or many times. Source: Standard software vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Race condition",
+    "definition": "A bug where the outcome depends on the timing of actions that happen at the same time. Source: Standard software vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Aggregate",
+    "definition": "A cluster of objects treated as one unit for changes, with a boundary inside which invariants must hold. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 6 (to verify against book)."
+  },
+  {
+    "term": "Unique index",
+    "definition": "An index that refuses two rows with the same value in its columns. Source: Official SQLite vocabulary (CREATE INDEX)."
+  },
+  {
+    "term": "Transaction",
+    "definition": "A group of database changes that succeed or fail together. Source: Official SQLite vocabulary (transactions)."
+  },
+  {
+    "term": "Isolation",
+    "definition": "How much one transaction can see of another's changes while both are running. Source: Official SQLite vocabulary (isolation in SQLite)."
+  },
+  {
+    "term": "Observability",
+    "definition": "How well you can understand what a running system is doing from the data it produces. Source: Paraphrased from OpenTelemetry: Observability primer."
+  },
+  {
+    "term": "Log",
+    "definition": "A timestamped record of an event. Source: Paraphrased from OpenTelemetry: Signals."
+  },
+  {
+    "term": "Metric",
+    "definition": "A measurement captured and aggregated over time, such as a count of outcomes. Source: Paraphrased from OpenTelemetry: Signals."
+  },
+  {
+    "term": "Trace ID",
+    "definition": "An identifier shared by every record about one request, so they can be found together. Source: Standard observability vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Structured logging",
+    "definition": "Writing log events as named fields, such as JSON, instead of free text. Source: Standard software vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Alert",
+    "definition": "A rule that notifies a person when an indicator crosses a threshold. Source: Standard operations vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Configuration",
+    "definition": "Values that control a program's behaviour and can change without changing its code. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 32, \"Configuration\" (to verify against book)."
+  },
+  {
+    "term": "Reversibility",
+    "definition": "How easily a decision can be changed or undone later. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 11, \"Reversibility\" (to verify against book)."
+  },
+  {
+    "term": "Environment variable",
+    "definition": "A named value set outside a program that the program can read, such as ENRICHER_DB_PATH. Source: Official Python vocabulary (os.environ)."
+  },
+  {
+    "term": "Feature flag",
+    "definition": "A setting that turns a piece of behaviour on or off without a code change. Source: Standard software vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Rollback",
+    "definition": "Returning a system to its previous working state. Source: Standard software vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Continuous integration",
+    "definition": "Running the tests automatically on every change. Source: Standard software vocabulary; see GitHub Actions documentation."
+  },
+  {
+    "term": "Critical path",
+    "definition": "The small part of a program where most of its time is spent. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 20 (to verify against book)."
+  },
+  {
+    "term": "Benchmark",
+    "definition": "A repeatable measurement of how fast something runs. Source: Standard software vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Profiler",
+    "definition": "A tool that measures how much time a program spends in each function. Source: Official Python vocabulary (The Python Profilers)."
+  },
+  {
+    "term": "Cache",
+    "definition": "A store of earlier results, used to answer repeated requests without redoing the work. Source: Standard software vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Latency",
+    "definition": "The time between asking for something and getting it. Source: Standard software vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Transient failure",
+    "definition": "A failure that may succeed if the same request is tried again. Source: Standard software vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Retry with backoff",
+    "definition": "Trying a failed operation again after waits that grow each time. Source: Standard software vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Idempotency key",
+    "definition": "An identifier that lets a system recognise a repeated request and apply it only once. Source: Standard software vocabulary; this plain definition is course-authored."
+  },
+  {
+    "term": "Upsert",
+    "definition": "An insert that does something else, such as nothing, when the row already exists. Source: Official SQLite vocabulary (UPSERT)."
+  },
+  {
+    "term": "Degraded mode",
+    "definition": "Running with reduced capability instead of stopping when a dependency fails. Source: Standard software vocabulary; this plain definition is course-authored."
+  }
+]

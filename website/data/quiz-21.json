@@ -1,0 +1,39 @@
+{
+  "day": 21,
+  "title": "Observe promises and failures",
+  "questions": [
+    {
+      "question": "Why log JSON fields instead of a sentence like \"Lantern Lane Bakery needs review\"?",
+      "options": [
+        "JSON is shorter.",
+        "Python cannot log sentences.",
+        "Tools can filter and count by field without parsing text.",
+        "Sentences are less accurate."
+      ],
+      "answer": 2,
+      "explanation": "Structured fields make questions like \"how many no_website reasons last night?\" a simple filter."
+    },
+    {
+      "question": "Why does the alert wait for at least 20 results?",
+      "options": [
+        "To save memory",
+        "Because the classifier needs warming up",
+        "Python requires it",
+        "So a few unlucky companies at the start do not raise a false alarm"
+      ],
+      "answer": 3,
+      "explanation": "Small samples are noisy. Alerts that fire on noise get ignored, which defeats them."
+    },
+    {
+      "question": "Which field should NOT go into the enrichment log event?",
+      "options": [
+        "The full About-page text",
+        "The outcome",
+        "The review reason",
+        "The trace ID"
+      ],
+      "answer": 0,
+      "explanation": "Logs are copied widely and kept long. Log identifiers and outcomes; keep page content in the store, where access is controlled."
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "day": 18,
+  "title": "Understand storage trade-offs",
+  "questions": [
+    {
+      "question": "What does SCAN results in a plan mean?",
+      "options": [
+        "SQLite uses an index.",
+        "SQLite reads every row in the table.",
+        "The query failed.",
+        "The table is empty."
+      ],
+      "answer": 1,
+      "explanation": "A scan reads the whole table. With an index the plan says SEARCH ... USING INDEX."
+    },
+    {
+      "question": "Why is the index on (outcome, checked_at) and not (checked_at, outcome)?",
+      "options": [
+        "Alphabetical order",
+        "SQLite only allows that order",
+        "The query filters by outcome, then sorts by time, and indexes are used left to right",
+        "It uses less space"
+      ],
+      "answer": 2,
+      "explanation": "The leftmost column serves the equality filter; the next one provides the order, so no separate sort is needed."
+    },
+    {
+      "question": "What is the main cost of adding an index?",
+      "options": [
+        "Reads become slower.",
+        "The table can no longer be queried.",
+        "SQL becomes longer.",
+        "Every write must also update the index, and it takes space."
+      ],
+      "answer": 3,
+      "explanation": "Indexes speed up matching reads at the cost of extra work on every write and extra storage."
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "day": 24,
+  "title": "Design for expected failure",
+  "questions": [
+    {
+      "question": "Which failure should be retried?",
+      "options": [
+        "The company has no website at all",
+        "The classifier returned confidence 1.7",
+        "A reviewer confirmed a category twice",
+        "The website timed out once"
+      ],
+      "answer": 3,
+      "explanation": "A timeout is transient. A missing website is permanent, an impossible confidence is a bug, and a double confirmation is an invariant violation."
+    },
+    {
+      "question": "Why do the waits grow between retries?",
+      "options": [
+        "To give a struggling server time to recover instead of hammering it",
+        "To make the batch slower on purpose",
+        "Because Python's sleep is inaccurate",
+        "To use less memory"
+      ],
+      "answer": 0,
+      "explanation": "Backing off reduces load on the failing dependency and raises the chance the next attempt succeeds."
+    },
+    {
+      "question": "A crashed batch is restarted with the same run ID. What stops duplicate results?",
+      "options": [
+        "The cache from Day 23",
+        "The unique index on the idempotency key",
+        "The retry loop",
+        "The review queue"
+      ],
+      "answer": 1,
+      "explanation": "Same run and same company give the same key, so the second insert does nothing."
+    }
+  ]
+}

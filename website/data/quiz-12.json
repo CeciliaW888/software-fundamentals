@@ -1,0 +1,39 @@
+{
+  "day": 12,
+  "title": "Build language from examples",
+  "questions": [
+    {
+      "question": "Why was \"accepted\" renamed?",
+      "options": [
+        "It was too long.",
+        "Python reserves the word.",
+        "The tests required it.",
+        "To reviewers it meant a person had agreed, which the code never checked."
+      ],
+      "answer": 3,
+      "explanation": "The code used a business word for a different event. Renaming to SUGGESTED makes the code say what actually happened."
+    },
+    {
+      "question": "Which of these is domain language for this service?",
+      "options": [
+        "Weak evidence",
+        "Exception",
+        "Return value",
+        "Function"
+      ],
+      "answer": 0,
+      "explanation": "Reviewers say \"weak evidence\". The others are general programming vocabulary, not this business's language."
+    },
+    {
+      "question": "How did the team discover the conflicting-sources rule?",
+      "options": [
+        "From a code review",
+        "By walking through a concrete example with reviewers",
+        "From a performance test",
+        "From the Python documentation"
+      ],
+      "answer": 1,
+      "explanation": "A concrete case, a partner listing that disagrees with the website, revealed a rule nobody had named."
+    }
+  ]
+}

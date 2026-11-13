@@ -1,0 +1,39 @@
+{
+  "day": 1,
+  "title": "Use names that explain the job",
+  "questions": [
+    {
+      "question": "Why is minimum_confidence better than t?",
+      "options": [
+        "It follows a style rule.",
+        "It explains the decision.",
+        "It makes the code longer.",
+        "It replaces a type hint."
+      ],
+      "answer": 1,
+      "explanation": "The name tells you what the number measures and how it affects the decision. Style is secondary, longer names can still be vague, and a type such as float cannot tell confidence from price or temperature."
+    },
+    {
+      "question": "A teammate sees a variable called website. Which rename tells them where it is in the process?",
+      "options": [
+        "website_value",
+        "website_data",
+        "verified_company_website",
+        "the_website"
+      ],
+      "answer": 2,
+      "explanation": "verified_company_website names the stage. The other names add words without saying where the value is in the process."
+    },
+    {
+      "question": "Which function name says what choice the function makes?",
+      "options": [
+        "suggest_company_category()",
+        "process()",
+        "handle()",
+        "run()"
+      ],
+      "answer": 0,
+      "explanation": "suggest_company_category() names the decision. Replace run, handle, and process with the actual job."
+    }
+  ]
+}

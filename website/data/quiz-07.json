@@ -1,0 +1,39 @@
+{
+  "day": 7,
+  "title": "Design it twice",
+  "questions": [
+    {
+      "question": "Why does a reviewer screen favour Design B?",
+      "options": [
+        "Weak results still carry the suggestion and its evidence.",
+        "It runs faster.",
+        "It never needs a website.",
+        "It has fewer classes."
+      ],
+      "answer": 0,
+      "explanation": "With Design A a weak case returns None and the evidence is lost. Design B keeps it on every result."
+    },
+    {
+      "question": "What is the main difference between a tracer bullet and a prototype?",
+      "options": [
+        "A prototype runs end to end; a tracer bullet does not.",
+        "A tracer bullet is kept and grown; a prototype is thrown away.",
+        "Only prototypes have tests.",
+        "There is no difference."
+      ],
+      "answer": 1,
+      "explanation": "Tracer-bullet code is the real skeleton of the system. A prototype answers one question and is discarded."
+    },
+    {
+      "question": "What should you write first when comparing two interfaces?",
+      "options": [
+        "The full implementation of both",
+        "A performance benchmark",
+        "The calling code each design would need",
+        "The database schema"
+      ],
+      "answer": 2,
+      "explanation": "The caller's code shows the cost of an interface directly. Implementations can wait until you have chosen."
+    }
+  ]
+}

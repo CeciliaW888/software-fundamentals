@@ -1,0 +1,39 @@
+{
+  "day": 19,
+  "title": "Evolve schemas without coordinated deployment",
+  "questions": [
+    {
+      "question": "Why must a released migration never be edited?",
+      "options": [
+        "Databases that already ran it would differ from new ones.",
+        "Git does not allow it.",
+        "SQLite caches migrations.",
+        "It makes the list longer."
+      ],
+      "answer": 0,
+      "explanation": "A changed step would only affect new databases, so old and new copies of the schema would silently disagree. Fix with a new step."
+    },
+    {
+      "question": "Which change is safe while old code is still running?",
+      "options": [
+        "Renaming category to category_name",
+        "Adding a nullable classifier_version column",
+        "Dropping the reason column",
+        "Changing confidence from a number to text"
+      ],
+      "answer": 1,
+      "explanation": "Adding a nullable column is expand-only; old code never asks for it. The others break existing readers or writers."
+    },
+    {
+      "question": "What does migrate() do on a database that is already up to date?",
+      "options": [
+        "Re-runs every step",
+        "Deletes the data",
+        "Nothing, because user_version already equals the target",
+        "Raises an error"
+      ],
+      "answer": 2,
+      "explanation": "It starts from the stored version, so running it again is safe: it is idempotent."
+    }
+  ]
+}

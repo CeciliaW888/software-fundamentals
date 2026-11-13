@@ -1,0 +1,39 @@
+{
+  "day": 2,
+  "title": "Know what a function promises",
+  "questions": [
+    {
+      "question": "Which fact must code using suggest_company_category be able to rely on?",
+      "options": [
+        "A returned suggestion has already been saved.",
+        "Google is used to find the official website.",
+        "A particular tool reads the About page.",
+        "The classifier tries exactly two times."
+      ],
+      "answer": 0,
+      "explanation": "Saving the accepted suggestion changes the state that other code can observe. The search provider, the page-reading tool, and the number of attempts can change without changing the function's useful result."
+    },
+    {
+      "question": "Which of these belongs in the function's promise rather than being a temporary detail?",
+      "options": [
+        "Uses one named search engine to find every company website.",
+        "Uses one named tool to read every About page.",
+        "Raises WebsiteUnavailable when no suitable page can be read.",
+        "Calls its private helpers in a fixed order."
+      ],
+      "answer": 2,
+      "explanation": "A failure other code must handle is part of the promise. The search engine, the page-reading tool, and helper order are replaceable details."
+    },
+    {
+      "question": "What does test_weak_suggestion_is_not_saved check?",
+      "options": [
+        "Which helper read the About page.",
+        "Which search engine found the website.",
+        "How many times the classifier was called.",
+        "The result is None and the store is unchanged."
+      ],
+      "answer": 3,
+      "explanation": "A useful test checks what other code can observe, not which helper or library was used. That lets it survive an internal rewrite."
+    }
+  ]
+}

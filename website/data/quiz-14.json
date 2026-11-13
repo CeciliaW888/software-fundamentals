@@ -1,0 +1,39 @@
+{
+  "day": 14,
+  "title": "Protect context boundaries",
+  "questions": [
+    {
+      "question": "What is wrong with passing Tradeline listings straight into the core?",
+      "options": [
+        "Dictionaries are slow.",
+        "Tradeline's codes and names would spread through the core, so their changes break our code.",
+        "Python cannot pass dictionaries.",
+        "It needs a database."
+      ],
+      "answer": 1,
+      "explanation": "Letting another model in unchanged makes it part of yours. The anticorruption layer keeps it at the border."
+    },
+    {
+      "question": "A listing arrives with sector code ZZZ. What should the adapter do?",
+      "options": [
+        "Guess the closest category",
+        "Raise an exception and stop the import",
+        "Return a company with no directory hint",
+        "Use Other as the hint"
+      ],
+      "answer": 2,
+      "explanation": "An unknown code means \"no information\". Guessing, or using Other, would invent a claim the partner never made."
+    },
+    {
+      "question": "In the context map, how does the review team relate to the Company Enricher?",
+      "options": [
+        "It is upstream and supplies data.",
+        "It is translated by the anticorruption layer.",
+        "It has no relationship.",
+        "It is downstream and works from our results, in our language."
+      ],
+      "answer": 3,
+      "explanation": "Reviewers consume our results and share our language, so no translation is needed between them and us."
+    }
+  ]
+}

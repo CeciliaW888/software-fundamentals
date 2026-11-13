@@ -1,0 +1,39 @@
+{
+  "day": 9,
+  "title": "Tests are executable evidence",
+  "questions": [
+    {
+      "question": "Which test is most likely to break when you improve the code without changing behaviour?",
+      "options": [
+        "A test that the result's status is needs_review",
+        "A test that the store is empty after weak evidence",
+        "A test that about_page was called before suggest",
+        "A test that confidence is between 0 and 1"
+      ],
+      "answer": 2,
+      "explanation": "Call order is an internal step. The other three check what callers can observe, which a refactoring keeps the same."
+    },
+    {
+      "question": "Why does the fixture use a fixed clock?",
+      "options": [
+        "To make tests run faster",
+        "Because Python has no clock",
+        "To test time zones",
+        "So checked_at is the same on every run and can be asserted"
+      ],
+      "answer": 3,
+      "explanation": "A real clock gives a different time on every run. Injecting a fixed time makes the test deterministic."
+    },
+    {
+      "question": "What does the property test find that example tests usually miss?",
+      "options": [
+        "Inputs nobody thought to write down, such as empty text",
+        "Slow code",
+        "Spelling mistakes in names",
+        "Missing documentation"
+      ],
+      "answer": 0,
+      "explanation": "Generated inputs explore cases beyond the hand-picked examples, such as text with no words at all."
+    }
+  ]
+}

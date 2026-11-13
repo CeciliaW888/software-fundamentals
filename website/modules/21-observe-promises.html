@@ -1,0 +1,92 @@
+<section class="module" id="module-21" data-day="21">
+  <div class="module-inner">
+    <h2>Observe promises and failures</h2>
+    <div class="callout-accent"><span class="callout-icon">📍</span><div class="callout-content"><strong>Where we are in the story:</strong> Week 4 · The service is almost ready for production. Now you run it, watch it, and recover when it fails.</div></div>
+    <div class="callout-info"><span class="callout-icon">ℹ️</span><div class="callout-content"><strong>Book coverage:</strong> Observability is not covered in the three books' freely available material. This lesson relies on the official Python, OpenTelemetry, and OWASP documentation only.</div></div>
+    <h3>🎯 Learning Objectives</h3>
+    <p>By the end of today, you will be able to:</p>
+    <ol><li>Decide what to observe from the promises users rely on.</li><li>Write structured log events that tools can search by field.</li><li>Count outcomes and reasons as metrics.</li><li>Write one alert rule that fires on a real problem, not on noise.</li></ol>
+    <p><strong>Plain idea:</strong> once the service runs without you watching, its logs and numbers are how you find out whether it keeps its promises.</p>
+    <p><strong>Difficulty:</strong> 🔴 Advanced<br><strong>Estimated Time:</strong> 40 minutes (15 reading + 25 hands-on)<br><strong>Module:</strong> 6 · Operate what you build (lesson 0021)</p>
+    <h3>📚 Core Concepts</h3>
+    <h4>Observe: the batch ran overnight. Did it work?</h4>
+    <p>The Company Enricher now runs as a nightly batch. In the morning, the review team says the queue looks "really long today". Is something broken? With the Module 5 code there is no way to tell: no record of how many companies were processed, how many went to review, or why.</p>
+    <p>Start from the promises, not from the code. What do the people who depend on the service care about?</p>
+    <table><thead><tr><th>Promise</th><th>What would show it is broken</th></tr></thead><tbody><tr><td>Most companies are categorised without a person</td><td>the share needing review jumps</td></tr><tr><td>Weak evidence goes to review, not to a wrong category</td><td>precision drops (Day 16 measures this offline)</td></tr><tr><td>A missing website does not stop the batch</td><td>many <code>no_<wbr>website</code> reasons at once</td></tr><tr><td>Each company is processed in reasonable time</td><td>per-company duration grows</td></tr></tbody></table>
+    <h4>Say it plainly: events, counts, and one alarm</h4>
+    <p>Stage 06 adds three things.</p>
+    <p><strong>A structured event per company.</strong> After every enrichment the service <span class="term" tabindex="0" data-definition="A timestamped record of an event. Source: Paraphrased from OpenTelemetry: Signals.">logs</span> one JSON line with named fields: the event name, a <span class="term" tabindex="0" data-definition="An identifier shared by every record about one request, so they can be found together. Source: Standard observability vocabulary; this plain definition is course-authored.">trace ID</span>, the company ID, the outcome, the reason, and the category. Because it is JSON, a tool can answer "show every <code>no_website</code> from last night" without parsing sentences. The <strong>trace ID</strong> is a random identifier for that one enrichment, so every line about it can be found together.</p>
+    <p><strong>Counters.</strong> <code>Metrics</code> counts outcomes and reasons and records each duration. From those, the review rate is one division.</p>
+    <p><strong>One <span class="term" tabindex="0" data-definition="A rule that notifies a person when an indicator crosses a threshold. Source: Standard operations vocabulary; this plain definition is course-authored.">alert</span>.</strong> <code>review_rate_alert</code> returns a message when more than 30% of results need review, the Day 16 target, but only after at least 20 results, so three unlucky companies at the start of a run do not wake anyone. The message includes the top reasons, so whoever reads it starts with a clue.</p>
+    <p>What not to log matters too. Log company IDs, outcomes, and reasons, not whole About pages or anything personal. OWASP's logging guidance warns against recording sensitive data in logs.</p>
+    <h4>Name it: logs, metrics, traces</h4>
+    <p>OpenTelemetry, a widely used open standard for this work, describes three main <strong>signals</strong>: <strong>logs</strong> are timestamped records of events, <strong><span class="term" tabindex="0" data-definition="A measurement captured and aggregated over time, such as a count of outcomes. Source: Paraphrased from OpenTelemetry: Signals.">metrics</span></strong> are measurements aggregated over time, and <strong>traces</strong> follow one request through a system. This project keeps all three small and in-process: JSON log lines through Python's <code>logging</code> module, counters in a <code>Metrics</code> object, and a trace ID on each event. OpenTelemetry's own libraries are the next step when the service has more than one process.</p>
+    <p><strong><span class="term" tabindex="0" data-definition="Writing log events as named fields, such as JSON, instead of free text. Source: Standard software vocabulary; this plain definition is course-authored.">Structured logging</span></strong> means writing events as fields rather than free text. An <strong>alert</strong> is a rule that tells a person when an indicator crosses a threshold.</p>
+    <p>None of the three books' freely available material covers logging, metrics, or alerting, so this lesson relies on official documentation only.</p>
+    <div class="callout-accent"><span class="callout-icon">💡</span><div class="callout-content"><strong>Key Insight:</strong> Observe the promises users depend on. Every log field and counter should help answer "is it keeping them, and if not, why?".</div></div>
+    <h3>🔑 Key Terminology</h3>
+    <dl class="term-grid"><div class="term-card"><dt><strong>Observability</strong></dt><dd>How well you can understand what a running system is doing from the data it produces.<br><em>Paraphrased from <a href="https://opentelemetry.io/docs/concepts/observability-primer/" target="_blank" rel="noopener">OpenTelemetry: Observability primer</a></em></dd></div><div class="term-card"><dt><strong>Log</strong></dt><dd>A timestamped record of an event.<br><em>Paraphrased from <a href="https://opentelemetry.io/docs/concepts/signals/" target="_blank" rel="noopener">OpenTelemetry: Signals</a></em></dd></div><div class="term-card"><dt><strong>Metric</strong></dt><dd>A measurement captured and aggregated over time, such as a count of outcomes.<br><em>Paraphrased from <a href="https://opentelemetry.io/docs/concepts/signals/" target="_blank" rel="noopener">OpenTelemetry: Signals</a></em></dd></div><div class="term-card"><dt><strong>Trace ID</strong></dt><dd>An identifier shared by every record about one request, so they can be found together.<br><em>Standard observability vocabulary; this plain definition is course-authored</em></dd></div><div class="term-card"><dt><strong>Structured logging</strong></dt><dd>Writing log events as named fields, such as JSON, instead of free text.<br><em>Standard software vocabulary; this plain definition is course-authored</em></dd></div><div class="term-card"><dt><strong>Alert</strong></dt><dd>A rule that notifies a person when an indicator crosses a threshold.<br><em>Standard operations vocabulary; this plain definition is course-authored</em></dd></div></dl>
+    <h3>💻 Code Examples</h3>
+    <h4>Example 1: One event, one JSON line</h4>
+    <div class="code-block" data-lang="python"><div class="code-header"><span class="filename">stage 06 · enricher/observability.py</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code>def log_event(logger, event, **fields):
+    """Log one event as a single JSON line, so tools can search it by field."""
+    logger.info(json.dumps({"event": event, **fields}, sort_keys=True))</code></pre></div>
+    <h4>Example 2: What the service records after each company</h4>
+    <div class="code-block" data-lang="python"><div class="code-header"><span class="filename">stage 06 · enricher/core/enrich.py</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code>self.metrics.record(result, duration_ms=(time.perf_counter() - started) * 1000)
+log_event(
+    logger,
+    "enrichment_finished",
+    trace_id=trace_id,
+    company_id=company.company_id,
+    outcome=result.outcome.value,
+    reason=result.reason.value if result.reason else None,
+    category=result.suggestion.category.value if result.suggestion else None,
+)</code></pre></div>
+    <p><strong>What's happening:</strong> every enrichment produces one counter update and one event, with exactly the fields the promise table needs.</p>
+    <h4>Example 3: An alert that ignores noise</h4>
+    <div class="code-block" data-lang="python"><div class="code-header"><span class="filename">stage 06 · enricher/observability.py</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code>def review_rate_alert(metrics, threshold=0.30, minimum_results=20):
+    """Return an alert message when too many results need a person, else None.
+
+    The minimum avoids alerting on a handful of unlucky results.
+    """
+    if metrics.total &lt; minimum_results or metrics.review_rate &lt;= threshold:
+        return None
+    return (
+        f"review rate {metrics.review_rate:.0%} is above {threshold:.0%} "
+        f"over {metrics.total} results; top reasons: {dict(metrics.reasons.most_common(3))}"
+    )</code></pre></div>
+    <h4>Example 4: Testing what gets logged</h4>
+    <div class="code-block" data-lang="python"><div class="code-header"><span class="filename">stage 06 · tests/test_observability.py</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code>def test_each_enrichment_logs_one_json_line(enricher, caplog):
+    with caplog.at_level(logging.INFO, logger="enricher"):
+        enricher.enrich(company("Lantern Lane Bakery"))
+
+    event = json.loads(caplog.records[-1].getMessage())
+    assert event["event"] == "enrichment_finished"
+    assert event["outcome"] == "needs_review"
+    assert event["reason"] == "weak_evidence"
+    assert len(event["trace_id"]) == 32</code></pre></div>
+    <div class="callout-info"><span class="callout-icon">ℹ️</span><div class="callout-content"><strong>💡 Try it:</strong> in <code>stages/06-operate</code>, run <code>ENRICHER_DB_PATH=:memory: python -m enricher</code> and read the JSON lines it prints.</div></div>
+    <h3>✏️ Hands-On Exercises</h3>
+    <h4>Exercise 1 · Check (⏱️ ~3 min)</h4>
+    <div class="quiz-card"><p class="quiz-question"><strong>Q1:</strong> Why log JSON fields instead of a sentence like "Lantern Lane Bakery needs review"?</p><div class="quiz-options"><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is C. Structured fields make questions like &quot;how many no_website reasons last night?&quot; a simple filter.">JSON is shorter.</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is C. Structured fields make questions like &quot;how many no_website reasons last night?&quot; a simple filter.">Python cannot log sentences.</button><button class="quiz-option" data-correct="true" data-explanation-correct="Correct. Structured fields make questions like &quot;how many no_website reasons last night?&quot; a simple filter.">Tools can filter and count by field without parsing text.</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is C. Structured fields make questions like &quot;how many no_website reasons last night?&quot; a simple filter.">Sentences are less accurate.</button></div></div>
+    <div class="quiz-card"><p class="quiz-question"><strong>Q2:</strong> Why does the alert wait for at least 20 results?</p><div class="quiz-options"><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is D. Small samples are noisy. Alerts that fire on noise get ignored, which defeats them.">To save memory</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is D. Small samples are noisy. Alerts that fire on noise get ignored, which defeats them.">Because the classifier needs warming up</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is D. Small samples are noisy. Alerts that fire on noise get ignored, which defeats them.">Python requires it</button><button class="quiz-option" data-correct="true" data-explanation-correct="Correct. Small samples are noisy. Alerts that fire on noise get ignored, which defeats them.">So a few unlucky companies at the start do not raise a false alarm</button></div></div>
+    <div class="quiz-card"><p class="quiz-question"><strong>Q3:</strong> Which field should NOT go into the enrichment log event?</p><div class="quiz-options"><button class="quiz-option" data-correct="true" data-explanation-correct="Correct. Logs are copied widely and kept long. Log identifiers and outcomes; keep page content in the store, where access is controlled.">The full About-page text</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is A. Logs are copied widely and kept long. Log identifiers and outcomes; keep page content in the store, where access is controlled.">The outcome</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is A. Logs are copied widely and kept long. Log identifiers and outcomes; keep page content in the store, where access is controlled.">The review reason</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is A. Logs are copied widely and kept long. Log identifiers and outcomes; keep page content in the store, where access is controlled.">The trace ID</button></div></div>
+    <h4>Exercise 2 · Change: a second alert (⏱️ ~20 min)</h4>
+    <p><strong>Goal:</strong> Turn another promise into an alert.</p>
+    <p><strong>Instructions:</strong></p>
+    <ol><li>Promise: "a missing website does not stop the batch" holds, but many <code>no_website</code> results at once usually means the website source is broken.</li><li>Write <code>no_website_alert(metrics, threshold=0.5, minimum_results=10)</code> in <code>observability.py</code>.</li><li>Write two tests: one where it fires, one where it stays quiet.</li><li>Call it from <code>__main__.py</code> next to the review-rate alert.</li></ol>
+    <details class="exercise-hints"><summary>Hint</summary><p><code>metrics.reasons["no_website"] / metrics.total</code> is the share. Reuse the shape of <code>review_rate_alert</code>.</p></details>
+    <h4>Exercise 3 · Transfer: from promise to signal (⏱️ ~10 min)</h4>
+    <p>Pick a service you rely on. Write two promises it makes to you, and for each, the log field or metric that would show it breaking.</p>
+    <h3>📖 Curated Resources</h3>
+    <ol><li><strong><a href="https://opentelemetry.io/docs/concepts/observability-primer/" target="_blank" rel="noopener">OpenTelemetry: Observability primer</a></strong> and <strong><a href="https://opentelemetry.io/docs/concepts/signals/" target="_blank" rel="noopener">Signals</a></strong><br>Why: logs, metrics, and traces explained by the standard's authors.</li><li><strong><a href="https://docs.python.org/3/library/logging.html" target="_blank" rel="noopener">Python documentation: logging</a></strong><br>Why: loggers, levels, and handlers used by <code>log_event</code>.</li><li><strong><a href="https://docs.pytest.org/en/stable/how-to/logging.html" target="_blank" rel="noopener">pytest: how to manage logging</a></strong><br>Why: the <code>caplog</code> fixture in Example 4.</li><li><strong><a href="https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP: Logging Cheat Sheet</a></strong><br>Why: what not to log, and why.</li><li><strong>Book coverage:</strong> none in the three books' freely available material; official documentation only.<br>Why: a book source should be chosen when the full books are available.</li></ol>
+    <h3>🤔 Reflection Questions</h3>
+    <ol><li><strong>Comprehension:</strong> What is the difference between a log and a metric?</li><li><strong>Application:</strong> The review team says the queue is long. Which log query would you run first?</li><li><strong>Connection:</strong> How does Day 16's review-rate target become today's alert threshold?</li><li><strong>Critical Thinking:</strong> What could make the service look healthy in its metrics while it is actually wrong?</li></ol>
+    <p>Stop and ask whenever a word feels harder than the idea.</p>
+    <h3>➡️ Next Steps</h3>
+    <p><strong>Tomorrow:</strong> <a href="https://github.com/CeciliaW888/software-fundamentals/blob/main/week-04/day-22-deploy-reversibly.md" target="_blank" rel="noopener">Day 22: Deploy reversibly</a>. You can see problems now; next you make sure any change can be undone quickly.</p>
+    <p><strong>Before moving on, make sure you can:</strong></p>
+    <div class="checklist"><label><input type="checkbox"> Choose log fields from the service's promises.</label><label><input type="checkbox"> Count outcomes and compute a rate.</label><label><input type="checkbox"> Write an alert that avoids noise.</label></div>
+    <p><a href="https://github.com/CeciliaW888/software-fundamentals/blob/main/week-04/day-21-observe-promises.md" target="_blank" rel="noopener">Read this guide as Markdown on GitHub →</a></p>
+  </div>
+</section>

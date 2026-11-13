@@ -1,0 +1,39 @@
+{
+  "day": 6,
+  "title": "Split by information, not length",
+  "questions": [
+    {
+      "question": "Why does the Module 1 classifier break DRY even though no line is copied?",
+      "options": [
+        "It uses two methods.",
+        "Two methods both rely on the fact that probabilities follow CATEGORIES order.",
+        "It has a docstring.",
+        "It counts keywords."
+      ],
+      "answer": 1,
+      "explanation": "DRY is about knowledge. The order rule is needed in both methods, so changing it means changing both."
+    },
+    {
+      "question": "Which pair is orthogonal in the Module 2 code?",
+      "options": [
+        "total_hits and confidence_for",
+        "CATEGORIES and CATEGORY_KEYWORDS",
+        "The classifier and the website module",
+        "best_category and suggest_category"
+      ],
+      "answer": 2,
+      "explanation": "You can change how websites are read without touching keyword counting, and the reverse. The other pairs share knowledge."
+    },
+    {
+      "question": "When is splitting a function a good idea?",
+      "options": [
+        "When it is longer than ten lines",
+        "When it has more than one if",
+        "Always, because short functions are simpler",
+        "When the parts use different knowledge and can be understood alone"
+      ],
+      "answer": 3,
+      "explanation": "A split pays off when each part can be read and changed on its own. Length alone is not a reason."
+    }
+  ]
+}

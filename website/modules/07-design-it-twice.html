@@ -1,0 +1,103 @@
+<section class="module" id="module-7" data-day="7">
+  <div class="module-inner">
+    <h2>Design it twice</h2>
+    <div class="callout-accent"><span class="callout-icon">📍</span><div class="callout-content"><strong>Where we are in the story:</strong> Week 1 · You can read the script now. Before it grows, you learn to tame its complexity.</div></div>
+    <h3>🎯 Learning Objectives</h3>
+    <p>By the end of today, you will be able to:</p>
+    <ol><li>Sketch two different interfaces for the same job before writing either.</li><li>Compare them with explicit criteria instead of taste.</li><li>Choose the Company Enricher's public operation and explain the choice.</li><li>Run the whole service end to end as a tracer bullet.</li></ol>
+    <p><strong>Plain idea:</strong> your first design is rarely your best; a second one gives you something to compare.</p>
+    <p><strong>Difficulty:</strong> 🟡 Intermediate<br><strong>Estimated Time:</strong> 35 minutes (15 reading + 20 hands-on)<br><strong>Module:</strong> 2 · Control complexity (lesson 0007)</p>
+    <h3>📚 Core Concepts</h3>
+    <h4>Observe: two ways to ask for a category</h4>
+    <p>The service needs one public operation that the rest of a system will call. Here are two candidates, both able to use the deep modules from Days 5 and 6.</p>
+    <p><strong>Design A:</strong> <code>enrich(company_name)</code> returns a <code>CategorySuggestion</code> when confident, <code>None</code> when not, and raises <code>WebsiteUnavailable</code> when there is no website. This is the Module 1 shape.</p>
+    <p><strong>Design B:</strong> <code>enrich(company_name)</code> always returns an <code>EnrichmentResult</code> with a <span class="term" tabindex="0" data-definition="A field on a result that says which outcome happened, such as accepted or needs review. Source: Course-authored plain definition.">status</span> (<code>"accepted"</code> or <code>"needs_review"</code>), the suggestion, and the evidence: the URL and the sentence it came from.</p>
+    <p>Imagine the code that calls each design. A reviewer screen needs to show weak cases with their evidence. With Design A, <code>None</code> carries no evidence and no category, so the screen would have to call the website and classifier again. With Design B, every result already has what the screen needs.</p>
+    <h4>Say it plainly: compare with criteria</h4>
+    <p>Write the criteria down before you choose:</p>
+    <table><thead><tr><th>Criterion</th><th>Design A: suggestion or <code>None</code></th><th>Design B: always a result</th></tr></thead><tbody><tr><td>What a caller must handle</td><td>three cases: value, <code>None</code>, exception</td><td>one type, with a status field</td></tr><tr><td>Evidence for reviewers</td><td>lost on <code>None</code></td><td>always included</td></tr><tr><td>Room to grow</td><td>new outcomes need new return shapes</td><td>new statuses fit the same type</td></tr><tr><td>Cost to build</td><td>a little less code</td><td>one extra small class</td></tr></tbody></table>
+    <p>Design B wins on everything that callers feel, and loses only on a few lines of code. That trade is almost always worth it, because a module is built once and used many times.</p>
+    <h4>Name it: design it twice, tracer bullets, prototypes</h4>
+    <p>John Ousterhout's <em>A Philosophy of Software Design</em>, Chapter 11, "<span class="term" tabindex="0" data-definition="Considering two or more substantially different designs before choosing one. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 11 (to verify against book).">Design it Twice</span>" (to verify against book), recommends considering at least two radically different designs for each major decision, and comparing them on what matters most, such as the simplicity of the interface. Even when the first idea wins, the comparison shows you why.</p>
+    <p><em>The Pragmatic Programmer</em> offers two ways to test a design cheaply. Topic 12, "<span class="term" tabindex="0" data-definition="A thin, working path through every layer of a system, kept and filled in over time. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 12, &quot;Tracer Bullets&quot; (to verify against book).">Tracer Bullets</span>" (to verify against book) describes building a thin version that runs end to end through every part of the system, then filling it in. Topic 13, "<span class="term" tabindex="0" data-definition="A throwaway experiment built to answer one specific question. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 13, &quot;Prototypes and Post-it Notes&quot; (to verify against book).">Prototypes</span> and Post-it Notes" (to verify against book) describes throwaway experiments that answer one question and are then discarded.</p>
+    <p>The Module 2 project has a tracer bullet: <code>python -m enricher</code> runs every sample company through the real website module, classifier, and store, and prints one line each. It is small, but it is real code you keep and grow.</p>
+    <p>Three tips in the publisher's <a href="https://pragprog.com/tips/" target="_blank" rel="noopener">official list of the book's tips</a> sum up today's methods: Tip 20 (p. 51), "Use Tracer Bullets to Find the Target", Tip 21 (p. 57), "Prototype to Learn", and Tip 68 (p. 218), "Build End-To-End, Not Top-Down or Bottom Up".</p>
+    <div class="callout-accent"><span class="callout-icon">💡</span><div class="callout-content"><strong>Key Insight:</strong> Write the caller's code for each design before choosing; the better interface is the one that makes calling code simpler.</div></div>
+    <h3>🔑 Key Terminology</h3>
+    <dl class="term-grid"><div class="term-card"><dt><strong>Design it twice</strong></dt><dd>Considering two or more substantially different designs before choosing one.<br><em>Paraphrased from John Ousterhout, <em>A Philosophy of Software Design</em>, 2nd ed., Chapter 11 (to verify against book)</em></dd></div><div class="term-card"><dt><strong>Tracer bullet</strong></dt><dd>A thin, working path through every layer of a system, kept and filled in over time.<br><em>Paraphrased from Thomas and Hunt, <em>The Pragmatic Programmer</em>, 20th Anniversary Edition, Topic 12, "Tracer Bullets" (to verify against book)</em></dd></div><div class="term-card"><dt><strong>Prototype</strong></dt><dd>A throwaway experiment built to answer one specific question.<br><em>Paraphrased from Thomas and Hunt, <em>The Pragmatic Programmer</em>, 20th Anniversary Edition, Topic 13, "Prototypes and Post-it Notes" (to verify against book)</em></dd></div><div class="term-card"><dt><strong>Result object</strong></dt><dd>A value that always comes back from an operation and describes what happened.<br><em>Course-authored plain definition</em></dd></div><div class="term-card"><dt><strong>Status</strong></dt><dd>A field on a result that says which outcome happened, such as accepted or needs review.<br><em>Course-authored plain definition</em></dd></div></dl>
+    <h3>💻 Code Examples</h3>
+    <h4>Example 1: Design B, the chosen result type</h4>
+    <div class="code-block" data-lang="python"><div class="code-header"><span class="filename">stage 02 · enricher/enricher.py</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code>@dataclass(frozen=True)
+class EnrichmentResult:
+    company_name: str
+    status: str
+    suggestion: CategorySuggestion
+    evidence_url: str
+    evidence_text: str</code></pre></div>
+    <p><strong>What's happening:</strong> every call returns this, so a reviewer screen, a report, and a log line can all use the same fields.</p>
+    <h4>Example 2: The public operation</h4>
+    <div class="code-block" data-lang="python"><div class="code-header"><span class="filename">stage 02 · enricher/enricher.py</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code>def enrich(self, company_name):
+    """Suggest a category for one company, with its evidence.
+
+    Always returns an EnrichmentResult. Its status is "accepted" when
+    confidence reaches the minimum, and the result is then saved;
+    otherwise it is "needs_review" and nothing is saved.
+    Raises WebsiteUnavailable when no About page can be read.
+    """
+    page = self._websites.about_page(company_name)
+    suggestion = self._classifier.suggest(page.main_activity)
+    accepted = suggestion.confidence &gt;= self._minimum_confidence
+    result = EnrichmentResult(
+        company_name=company_name,
+        status=ACCEPTED if accepted else NEEDS_REVIEW,
+        suggestion=suggestion,
+        evidence_url=page.url,
+        evidence_text=page.main_activity,
+    )
+    if accepted:
+        self._store.save(result)
+    return result</code></pre></div>
+    <p><strong>What's happening:</strong> one missing website still raises an exception here. That is a deliberate loose end: Day 8 decides what that failure should mean.</p>
+    <h3>✏️ Hands-On Exercises</h3>
+    <h4>Exercise 1 · Check (⏱️ ~3 min)</h4>
+    <div class="quiz-card"><p class="quiz-question"><strong>Q1:</strong> Why does a reviewer screen favour Design B?</p><div class="quiz-options"><button class="quiz-option" data-correct="true" data-explanation-correct="Correct. With Design A a weak case returns None and the evidence is lost. Design B keeps it on every result.">Weak results still carry the suggestion and its evidence.</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is A. With Design A a weak case returns None and the evidence is lost. Design B keeps it on every result.">It runs faster.</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is A. With Design A a weak case returns None and the evidence is lost. Design B keeps it on every result.">It never needs a website.</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is A. With Design A a weak case returns None and the evidence is lost. Design B keeps it on every result.">It has fewer classes.</button></div></div>
+    <div class="quiz-card"><p class="quiz-question"><strong>Q2:</strong> What is the main difference between a tracer bullet and a prototype?</p><div class="quiz-options"><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is B. Tracer-bullet code is the real skeleton of the system. A prototype answers one question and is discarded.">A prototype runs end to end; a tracer bullet does not.</button><button class="quiz-option" data-correct="true" data-explanation-correct="Correct. Tracer-bullet code is the real skeleton of the system. A prototype answers one question and is discarded.">A tracer bullet is kept and grown; a prototype is thrown away.</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is B. Tracer-bullet code is the real skeleton of the system. A prototype answers one question and is discarded.">Only prototypes have tests.</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is B. Tracer-bullet code is the real skeleton of the system. A prototype answers one question and is discarded.">There is no difference.</button></div></div>
+    <div class="quiz-card"><p class="quiz-question"><strong>Q3:</strong> What should you write first when comparing two interfaces?</p><div class="quiz-options"><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is C. The caller&#x27;s code shows the cost of an interface directly. Implementations can wait until you have chosen.">The full implementation of both</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is C. The caller&#x27;s code shows the cost of an interface directly. Implementations can wait until you have chosen.">A performance benchmark</button><button class="quiz-option" data-correct="true" data-explanation-correct="Correct. The caller&#x27;s code shows the cost of an interface directly. Implementations can wait until you have chosen.">The calling code each design would need</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is C. The caller&#x27;s code shows the cost of an interface directly. Implementations can wait until you have chosen.">The database schema</button></div></div>
+    <h4>Exercise 2 · Change: write the calling code twice (⏱️ ~15 min)</h4>
+    <p><strong>Goal:</strong> Let the caller decide.</p>
+    <p><strong>Instructions:</strong></p>
+    <ol><li>Write a function <code>print_review_list(company_names)</code> that prints every company needing review with the sentence that was used as evidence.</li><li>Write it once against Design A (use <code>suggest_company_category</code> from <code>stages/01-read-code</code>) and once against Design B (<code>Enricher.enrich</code> from <code>stages/02-control-complexity</code>).</li><li>Compare the two functions line by line.</li><li>Run the tracer bullet: <code>cd stages/02-control-complexity &amp;&amp; python -m enricher</code>.</li></ol>
+    <details class="exercise-hints"><summary>Hint</summary><p>With Design A you will find you need to call <code>read_about_page</code> again for every <code>None</code>, because the evidence was thrown away.</p></details>
+    <h4>Exercise 3 · Transfer: two designs for one decision (⏱️ ~10 min)</h4>
+    <p>Pick a function you are about to write. Sketch two signatures that differ in what they return, not just in names. Write the three-line caller for each and pick one.</p>
+    <h3>🔁 Module 2 · Before / After</h3>
+    <p><strong>Before:</strong> after Module 1 the code was readable but tangled: category knowledge in several places, a three-step website chain that every caller had to follow, and a main function whose <code>None</code> threw away the evidence.</p>
+    <div class="code-block" data-lang="python"><div class="code-header"><span class="filename">stage 01 · enricher.py</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code>website = find_official_website(
+    company_name
+)
+about_text = read_about_page(website)
+activity_summary = (
+    summarise_business_activity(
+        about_text
+    )
+)
+suggestion = classifier.suggest(
+    activity_summary
+)</code></pre></div>
+    <p><strong>After:</strong> category knowledge lives in <code>categories.py</code>, websites sit behind one deep module, the classifier is one readable function, and the public operation always returns a result with evidence. The decisions for every sample company are unchanged, and a tracer bullet runs the whole service.</p>
+    <div class="code-block" data-lang="python"><div class="code-header"><span class="filename">stage 02 · enricher/__main__.py</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code>enricher = Enricher(CompanyWebsites(), KeywordCategoryClassifier(), InMemoryResultStore())
+for company_name in SAMPLE_WEB:
+    result = enricher.enrich(company_name)
+    print(f"{company_name:22} {result.status:13} {result.suggestion.category} ({result.suggestion.confidence:.2f})")</code></pre></div>
+    <h3>📖 Curated Resources</h3>
+    <ol><li><strong>Main design reading:</strong> John Ousterhout, <em>A Philosophy of Software Design</em>, 2nd ed., Chapter 11, "Design it Twice" (to verify against book).<br>🔗 <a href="https://web.stanford.edu/~ouster/cgi-bin/book.php" target="_blank" rel="noopener">Official book page</a><br>Why: how and why to compare alternatives.</li><li><strong>Practice reading:</strong> David Thomas and Andrew Hunt, <em>The Pragmatic Programmer</em>, 20th Anniversary Edition, Topics 12, "Tracer Bullets" and 13, "Prototypes and Post-it Notes" (to verify against book).<br>🔗 <a href="https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/" target="_blank" rel="noopener">Publisher page</a><br>Why: two cheap ways to test a design.</li><li><strong><a href="https://docs.python.org/3/library/__main__.html" target="_blank" rel="noopener">Python documentation: <code>__main__</code></a></strong><br>Why: how <code>python -m enricher</code> finds and runs the tracer bullet.</li></ol>
+    <h3>🤔 Reflection Questions</h3>
+    <ol><li><strong>Comprehension:</strong> Which criterion in the comparison table mattered most to you, and why?</li><li><strong>Application:</strong> Design C returns a list of results for a list of names. When would that beat Design B?</li><li><strong>Connection:</strong> How did Days 5 and 6 make Design B cheap to build?</li><li><strong>Personal:</strong> Think of an interface you use that you wish had been designed twice. What would the second design have been?</li></ol>
+    <p>Stop and ask whenever a word feels harder than the idea.</p>
+    <h3>➡️ Next Steps</h3>
+    <p><strong>Tomorrow:</strong> <a href="https://github.com/CeciliaW888/software-fundamentals/blob/main/week-02/day-08-what-each-failure-means.md" target="_blank" rel="noopener">Day 8: Decide what each failure means</a>. Module 3 begins: you learn to change the service without breaking what works.</p>
+    <p><strong>Before moving on, make sure you can:</strong></p>
+    <div class="checklist"><label><input type="checkbox"> Compare two interfaces with written criteria.</label><label><input type="checkbox"> Explain why Design B returns a result even when confidence is low.</label><label><input type="checkbox"> Run the tracer bullet and read its output.</label></div>
+    <p><a href="https://github.com/CeciliaW888/software-fundamentals/blob/main/week-01/day-07-design-it-twice.md" target="_blank" rel="noopener">Read this guide as Markdown on GitHub →</a></p>
+  </div>
+</section>

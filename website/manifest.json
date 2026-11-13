@@ -1,0 +1,20 @@
+{
+  "name": "Software Fundamentals",
+  "short_name": "Software Fun",
+  "description": "Learn to understand, design, test, and change reliable software, one Python service at a time",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#c4825a",
+  "background_color": "#f5f0eb",
+  "icons": [
+    { "src": "icons/icon-192.png",          "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-192-maskable.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon-512.png",          "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/apple-touch-icon.png",  "sizes": "180x180", "type": "image/png" }
+  ],
+  "categories": ["education"],
+  "lang": "en"
+}

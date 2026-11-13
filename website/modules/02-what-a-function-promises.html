@@ -1,0 +1,238 @@
+<section class="module" id="module-2" data-day="2">
+  <div class="module-inner">
+    <h2>Know what a function promises</h2>
+    <div class="callout-accent"><span class="callout-icon">📍</span><div class="callout-content"><strong>Where we are in the story:</strong> Week 1 · You’ve just inherited the script. Before changing anything, you learn to read it.</div></div>
+    <p>Before reading every line of a <span class="term" tabindex="0" data-definition="A named block of code that performs a job and can be used from other code. Source: official Python terminology, explained in the Python tutorial.">function</span>, find what goes in, what may come back, what else changes, and what can fail.</p>
+
+    <h3>🎯 Learning Objectives</h3>
+    <ul class="objective-list">
+      <li>Before reading every line of a function, find what goes in, what may come back, what else changes, and what can fail.</li>
+      <li>Describe one function clearly.</li>
+      <li>Test what other code is allowed to rely on.</li>
+    </ul>
+    <p><span class="difficulty-badge">🟢 Beginner</span> <span class="time-estimate">⏱️ 12 minutes · Module 1 · Lesson 0002</span></p>
+
+    <div class="callout-accent">
+      <span class="callout-icon">💡</span>
+      <div class="callout-content"><strong>Plain idea:</strong> other code should depend on a function’s promised result, not on the temporary steps inside it.</div>
+    </div>
+
+    <h3>📚 Core Concepts</h3>
+
+    <h4>Observe: start with a real question</h4>
+    <p>Our service receives a company name, finds the official website, reads its About page, summarises the business activity, and suggests a business category from a short, plain <span class="term" tabindex="0" data-definition="The short, plain list of about ten business categories the Company Enricher can suggest, such as Retail, Manufacturing, or Software &amp; IT. Source: course domain term, defined in the practice project.">category list</span>.</p>
+    <p>If another part of the service uses that suggestion, what does it need to know?</p>
+    <div class="pattern-cards">
+      <div class="pattern-card"><strong>01 · IN</strong><h4>What goes in?</h4><p>A company name, a category <span class="term" tabindex="0" data-definition="A component that assigns an input to a category. In this course it proposes a business category from website evidence. Source: standard data and machine-learning term, specialised for this course.">classifier</span>, and a place to save results.</p></div>
+      <div class="pattern-card"><strong>02 · OUT</strong><h4>What may come back?</h4><p>A category suggestion, or <code class="term" tabindex="0" data-definition="Python’s built-in object for representing the absence of a value. Source: official Python documentation.">None</code> when the evidence is not strong enough.</p></div>
+      <div class="pattern-card"><strong>03 · ELSE</strong><h4>What else happens?</h4><p>An accepted suggestion is saved; website or classification work may fail.</p></div>
+    </div>
+
+    <h4>Say it plainly: read the work once</h4>
+    <p>This function shows the whole flow:</p>
+    <div class="code-block" data-lang="python">
+      <div class="code-header"><span class="filename">How the work happens today</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div>
+      <pre><code>def suggest_company_category(
+    company_name,
+    classifier,
+    store,
+):
+    website = find_official_website(
+        company_name
+    )
+    about_text = read_about_page(website)
+    activity_summary = (
+        summarise_business_activity(
+            about_text
+        )
+    )
+    suggestion = classifier.suggest(
+        activity_summary
+    )
+
+    if suggestion.confidence &lt; 0.82:
+        return None
+
+    store.save(company_name, suggestion)
+    return suggestion</code></pre>
+    </div>
+    <p>Some facts affect other code. A weak suggestion returns <code>None</code>. A returned suggestion has already been saved.</p>
+    <p>Other facts are only today’s method: which service finds the website, which tool reads the page, which model suggests the category, how often the service tries again, and where it saves the result.</p>
+
+    <h4>Name it: write down the promise</h4>
+    <p>Python lets us place an explanation directly under the function name. This is called a <strong class="term" tabindex="0" data-definition="Text placed as the first statement inside a function, class, or module to explain it. Source: paraphrased from Python PEP 257.">docstring</strong>.</p>
+
+    <h4>Quick reference: four questions</h4>
+    <p>Understand the result before getting lost in the steps used to produce it. Quick test: can you use the function correctly without reading every line inside it?</p>
+    <table>
+          <thead><tr><th>Ask</th><th>Company Enricher example</th></tr></thead>
+          <tbody>
+            <tr><td>What goes in?</td><td>A company name, a category classifier, and a place to save results.</td></tr>
+            <tr><td>What can come back?</td><td>A <span class="term" tabindex="0" data-definition="A proposed business category that still carries its evidence, confidence, and review status. Source: course domain term, not a definition taken from the books.">category suggestion</span>, or <code>None</code> when evidence is weak.</td></tr>
+            <tr><td>What else changes?</td><td>An accepted suggestion is saved before it is returned.</td></tr>
+            <tr><td>What can fail?</td><td>The official website or About page may not be found or read.</td></tr>
+          </tbody>
+        </table>
+    <p>Do not promise temporary details: a particular search engine, a particular HTML-reading library, private helper names and call order, retry count unless another part of the system must rely on it, or a database or AI vendor that can be replaced.</p>
+
+    <h3>🔑 Key Terminology</h3>
+    <dl class="term-grid">
+      <div class="term-card"><dt>Function</dt><dd>A named block of code that performs a job.<br><em>Official Python vocabulary</em></dd></div>
+      <div class="term-card"><dt>Docstring</dt><dd>Text inside a function that explains how to use it.<br><em>Official Python vocabulary</em></dd></div>
+      <div class="term-card"><dt>None</dt><dd>Python’s built-in marker for “no value here.”<br><em>Official Python vocabulary</em></dd></div>
+      <div class="term-card"><dt><span class="term" tabindex="0" data-definition="Everything someone working elsewhere must know to use the module. It describes what the module does, not how it does it. Source: paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 4 (to verify against book).">Interface</span></dt><dd>What other code must know to use a function or module.<br><em>Standard software vocabulary; central in Ousterhout Chapter 4 (to verify against book)</em></dd></div>
+      <div class="term-card"><dt><span class="term" tabindex="0" data-definition="The code that carries out the promises made by the interface. Source: John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 4 (to verify against book).">Implementation</span></dt><dd>The steps currently used to do the work.<br><em>Standard software vocabulary; central in Ousterhout Chapter 4 (to verify against book)</em></dd></div>
+      <div class="term-card"><dt><span class="term" tabindex="0" data-definition="A change outside the returned value, such as saving data, sending a message, or modifying an input. Source: standard software term; PEP 257 says function documentation should describe side effects.">Side effect</span></dt><dd>An outside change, such as saving data or sending a message.<br><em>Standard software and Python documentation vocabulary</em></dd></div>
+    </dl>
+    <details class="exercise-hints">
+      <summary>Two words you do not need yet</summary>
+      <p><strong class="term" tabindex="0" data-definition="Shorthand used in broader software engineering for behaviour that other code is allowed to rely on. Source: not used in the reviewed Ousterhout chapters; optional course terminology.">Contract</strong> appears in broader software-engineering writing as shorthand for promised behaviour. The reviewed Ousterhout chapters do not use it, and this course does not require it.</p>
+      <p><strong class="term" tabindex="0" data-definition="Any Python object that can be used with function-call syntax, including functions, classes, and some other objects. Source: official Python glossary.">Callable</strong> is official Python vocabulary for anything that can be used with function-call syntax. This lesson uses the narrower word <strong>function</strong>.</p>
+    </details>
+
+    <h3>💻 Code Examples</h3>
+    <div class="code-block" data-lang="python">
+      <div class="code-header"><span class="filename">Understand the function without opening its body</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div>
+      <pre><code>def suggest_company_category(
+    company_name,
+    classifier,
+    store,
+):
+    """Suggest a business category.
+
+    Find the official website.
+    Read its About page.
+    Use classifier to propose a category.
+    Use store to save an accepted result.
+    Return the saved result when its
+    confidence is at least 0.82.
+    Return None when evidence is weaker.
+
+    Raise WebsiteUnavailable when no
+    suitable page can be read.
+    """
+    ...</code></pre>
+      <p class="code-explanation">This explanation states the result, the low-confidence case, the saved change, and one failure. <code>WebsiteUnavailable</code> is a course-authored name for the error raised when no suitable page can be read. It leaves out replaceable details: which service finds the website, which tool reads the page, which model suggests the category, how often it tries again, and where it saves the result.</p>
+    </div>
+    <p>A useful test checks what other code can observe. It does not check which helper or library was used.</p>
+    <div class="code-block" data-lang="python">
+      <div class="code-header"><span class="filename">A test that can survive an internal rewrite</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div>
+      <pre><code>def test_weak_suggestion_is_not_saved():
+    classifier = classifier_returning(
+        category="Manufacturing",
+        confidence=0.61,
+    )
+    store = recording_store()
+
+    result = suggest_company_category(
+        "Lantern Lane Bakery",
+        classifier,
+        store,
+    )
+
+    assert result is None
+    assert store.saved_suggestions == []</code></pre>
+      <p class="code-explanation">The test checks two visible results: the function returns <code>None</code>, and the store remains unchanged.</p>
+    </div>
+
+    <h3>✏️ Hands-On Exercises</h3>
+
+    <h4>Check: quick check</h4>
+    <div class="quiz-card">
+      <p class="quiz-question"><strong>Q1:</strong> Which fact must code using this function be able to rely on?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="true" data-explanation-correct="Correct. Saving the accepted suggestion changes the state that other code can observe.">A returned suggestion has already been saved.</button>
+        <button class="quiz-option" data-correct="false" data-explanation-wrong="The search provider can change without changing the function’s useful result.">Google is used to find the official website.</button>
+        <button class="quiz-option" data-correct="false" data-explanation-wrong="The page-reading tool can change while the promised result stays the same.">A particular tool reads the About page.</button>
+        <button class="quiz-option" data-correct="false" data-explanation-wrong="The number of attempts is an internal choice unless the function promises it.">The classifier tries exactly two times.</button>
+      </div>
+    </div>
+
+    <h4>Change: promise or temporary detail?</h4>
+    <p>Three promises and two temporary details are mixed together. Decide which is which, one fact at a time.</p>
+    <div class="quiz-card">
+      <p class="quiz-question">Returns a saved category suggestion when confidence meets the threshold.</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="true" data-explanation-correct="Correct. Other code relies on what comes back and on the save having happened.">Promise</button>
+        <button class="quiz-option" data-correct="false" data-explanation-wrong="Other code relies on what comes back and on the save having happened, so this is a promise.">Temporary detail</button>
+      </div>
+    </div>
+    <div class="quiz-card">
+      <p class="quiz-question">Returns <code>None</code> when the website evidence is not strong enough.</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="true" data-explanation-correct="Correct. Callers must handle the weak-evidence case.">Promise</button>
+        <button class="quiz-option" data-correct="false" data-explanation-wrong="Callers must handle the weak-evidence case, so this is a promise.">Temporary detail</button>
+      </div>
+    </div>
+    <div class="quiz-card">
+      <p class="quiz-question">Raises <code>WebsiteUnavailable</code> when no suitable page can be read.</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="true" data-explanation-correct="Correct. A failure other code must handle is part of the promise.">Promise</button>
+        <button class="quiz-option" data-correct="false" data-explanation-wrong="A failure other code must handle is part of the promise.">Temporary detail</button>
+      </div>
+    </div>
+    <div class="quiz-card">
+      <p class="quiz-question">Uses one named search engine to find every company website.</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="false" data-explanation-wrong="The search provider can change without changing the function’s useful result.">Promise</button>
+        <button class="quiz-option" data-correct="true" data-explanation-correct="Correct. The search provider can change without changing the function’s useful result.">Temporary detail</button>
+      </div>
+    </div>
+    <div class="quiz-card">
+      <p class="quiz-question">Uses one named tool to read every About page.</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="false" data-explanation-wrong="The page-reading tool can change while the promised result stays the same.">Promise</button>
+        <button class="quiz-option" data-correct="true" data-explanation-correct="Correct. The page-reading tool can change while the promised result stays the same.">Temporary detail</button>
+      </div>
+    </div>
+
+    <div class="exercise-card">
+      <div class="exercise-header"><h4>Transfer: try it elsewhere</h4><span class="time-estimate">⏱️ ~8 min</span></div>
+      <p>Choose one function you did not write. Before opening its body, write four lines: input, possible result, other change, and failure. Then read the body to check whether your list is complete.</p>
+    </div>
+
+    <p><em>The Pragmatic Programmer</em>’s Topic 23, “Design by Contract” (to verify against book), frames the same idea as a contract: what a routine expects before it runs, what it guarantees when it finishes, and what stays true throughout.</p>
+    <p>Its Tip 37 (p. 107 in the publisher’s <a href="https://pragprog.com/tips/" target="_blank" rel="noopener">official tip list</a>) is “Design with Contracts”. This course uses the plainer word <em>promise</em> until the idea is familiar.</p>
+
+    <div class="callout-accent">
+      <span class="callout-icon">💡</span>
+      <div class="callout-content"><strong>Key Insight:</strong> Before reading how a function works, list what goes in, what can come back, what else changes, and what can fail.</div>
+    </div>
+
+    <h3>📖 Curated Resources</h3>
+    <div class="resource-cards">
+      <a class="resource-card" href="https://web.stanford.edu/~ouster/cgi-bin/book.php" target="_blank" rel="noopener">
+        <span class="resource-type">📘 Main design reading</span>
+        <span class="resource-title">A Philosophy of Software Design</span>
+        <span class="resource-meta">John Ousterhout · Chapter 4 on interface versus implementation and Chapter 13 on useful function documentation (to verify against book)</span>
+      </a>
+      <a class="resource-card" href="https://peps.python.org/pep-0257/#multi-line-docstrings" target="_blank" rel="noopener">
+        <span class="resource-type">🐍 Python convention</span>
+        <span class="resource-title">PEP 257: Multi-line Docstrings</span>
+        <span class="resource-meta">A function docstring should cover behaviour, arguments, returns, outside changes, errors, and calling restrictions when applicable.</span>
+      </a>
+      <a class="resource-card" href="https://pragprog.com/tips/" target="_blank" rel="noopener">
+        <span class="resource-type">📗 Practice reading</span>
+        <span class="resource-title">The Pragmatic Programmer, 20th Anniversary Edition</span>
+        <span class="resource-meta">Thomas and Hunt · Topic 23, “Design by Contract” (to verify against book) · Tip 37 in the official tip list</span>
+      </a>
+    </div>
+
+    <h3>🤔 Reflection Questions</h3>
+    <ol>
+      <li><strong>Comprehension:</strong> Why does the test above still pass if the service switches to a different search engine?</li>
+      <li><strong>Application:</strong> Which of the four questions does a missing <code>Raises</code> line in a docstring leave unanswered?</li>
+      <li><strong>Connection:</strong> How does a clear name from Day 1 make a function’s promise easier to state?</li>
+    </ol>
+    <p>Stop and ask whenever a word feels harder than the idea.</p>
+
+    <h3>➡️ Next Steps</h3>
+    <p><strong>Next:</strong> Day 3, Follow the data and outside changes (outline).</p>
+    <div class="checklist">
+      <label><input type="checkbox"> I can list a function’s input, possible result, other change, and failure.</label>
+      <label><input type="checkbox"> I can tell a promise from a temporary detail.</label>
+      <label><input type="checkbox"> I can write a test that checks what other code can observe.</label>
+    </div>
+    <p><a href="https://github.com/CeciliaW888/software-fundamentals/blob/main/week-01/day-02-what-a-function-promises.md" target="_blank" rel="noopener">Read the full guide as Markdown on GitHub →</a></p>
+  </div>
+</section>

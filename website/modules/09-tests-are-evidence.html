@@ -1,0 +1,84 @@
+<section class="module" id="module-9" data-day="9">
+  <div class="module-inner">
+    <h2>Tests are executable evidence</h2>
+    <div class="callout-accent"><span class="callout-icon">📍</span><div class="callout-content"><strong>Where we are in the story:</strong> Week 2 · The structure is clearer. Now you learn to change it without breaking what already works.</div></div>
+    <h3>🎯 Learning Objectives</h3>
+    <p>By the end of today, you will be able to:</p>
+    <ol><li>Turn each promise in a docstring into one focused test.</li><li>Use pytest fixtures to build the service once for many tests.</li><li>Pin current behaviour with a parametrized characterization test.</li><li>Write a property-style test that checks a rule for many generated inputs.</li></ol>
+    <p><strong>Plain idea:</strong> a test is a promise you can run; if it passes, you have evidence, not just hope.</p>
+    <p><strong>Difficulty:</strong> 🟡 Intermediate<br><strong>Estimated Time:</strong> 40 minutes (15 reading + 25 hands-on)<br><strong>Module:</strong> 3 · Change safely (lesson 0009)</p>
+    <h3>📚 Core Concepts</h3>
+    <h4>Observe: one docstring, four tests</h4>
+    <p>The docstring of <code>Enricher.enrich</code> in stage 03 makes four promises:</p>
+    <ol><li>A confident suggestion is accepted and saved.</li><li>Weak evidence needs review and is not saved.</li><li>A missing website needs review instead of crashing.</li><li>Every result records when it was checked.</li></ol>
+    <p>Open <code>tests/test_promises.py</code>. It has exactly four <span class="term" tabindex="0" data-definition="Code that runs other code and checks one expected behaviour. Source: Course-authored plain definition.">tests</span>, one per promise, and each test's name reads like the promise. None of them checks which helper was called, how keywords are counted, or what the page URL looks like. They check what a caller can observe: the status, the reason, and what the store contains.</p>
+    <h4>Say it plainly: three kinds of evidence</h4>
+    <p>The stage 03 tests come in three kinds, and each answers a different question.</p>
+    <ul><li><strong>Promise tests</strong> answer "does it do what the docstring says?". One test per promise.</li><li><strong><span class="term" tabindex="0" data-definition="A test that pins what the code does today, so a change that alters it fails. Source: Standard software vocabulary; this plain definition is course-authored.">Characterization tests</span></strong> answer "did my change alter any decision?". <code>test_same_decisions.py</code> lists every sample company with the category it should get, and runs one test per company.</li><li><strong>Property tests</strong> answer "does a rule hold for inputs nobody thought of?". <code>test_properties.py</code> builds 200 random texts from category keywords and checks that every suggestion has a known category and a confidence between 0 and 1.</li></ul>
+    <p>A good suite needs all three. Promise tests explain the design, characterization tests guard refactoring, and property tests find the cases your examples missed.</p>
+    <p>Tests are only evidence if they cannot be fooled by the outside world. That is why the tests use a fixed clock time and the sample website source: they give the same answer on every machine, every day.</p>
+    <h4>Name it: fixtures, parametrize, properties</h4>
+    <p>pytest calls the shared setup a <strong><span class="term" tabindex="0" data-definition="A pytest function that prepares something tests need and passes it to them by name. Source: Official pytest vocabulary (fixtures).">fixture</span></strong>: a function marked with <code>@pytest.fixture</code> whose return value is passed to any test that names it as a parameter. <code>@pytest.mark.parametrize</code> runs one test function once for each set of arguments.</p>
+    <p><em>The Pragmatic Programmer</em>'s Topic 41, "Test to Code" (to verify against book) argues that thinking about how to test a piece of code improves its design, because testable code tends to be decoupled code. You saw that happen: the injectable clock exists because a test needed a fixed time. Topic 42, "Property-Based Testing" (to verify against book) describes checking invariants with generated inputs rather than hand-picked examples. The book's examples use a dedicated library; this project uses Python's <code>random</code> module with fixed seeds so it needs nothing beyond pytest, and the Hypothesis library is a good next step.</p>
+    <p>The book's testing tips in the publisher's <a href="https://pragprog.com/tips/" target="_blank" rel="noopener">official list of the book's tips</a> add two angles worth remembering. Tip 67 (p. 216), "A Test Is the First User of Your Code": a test is the first caller to feel how easy or awkward an interface is. Tip 69 (p. 221), "Design to Test": code that is hard to test is usually telling you something about its design.</p>
+    <div class="callout-accent"><span class="callout-icon">💡</span><div class="callout-content"><strong>Key Insight:</strong> Test what callers can observe. Tests of internal steps break when you improve the code; tests of promises protect you while you do.</div></div>
+    <h3>🔑 Key Terminology</h3>
+    <dl class="term-grid"><div class="term-card"><dt><strong>Test</strong></dt><dd>Code that runs other code and checks one expected behaviour.<br><em>Course-authored plain definition</em></dd></div><div class="term-card"><dt><strong>Fixture</strong></dt><dd>A pytest function that prepares something tests need and passes it to them by name.<br><em>Official pytest vocabulary (<a href="https://docs.pytest.org/en/stable/how-to/fixtures.html" target="_blank" rel="noopener">fixtures</a>)</em></dd></div><div class="term-card"><dt><strong>Parametrized test</strong></dt><dd>One test function run once for each set of arguments.<br><em>Official pytest vocabulary (<a href="https://docs.pytest.org/en/stable/how-to/parametrize.html" target="_blank" rel="noopener">parametrize</a>)</em></dd></div><div class="term-card"><dt><strong>Characterization test</strong></dt><dd>A test that pins what the code does today, so a change that alters it fails.<br><em>Standard software vocabulary; this plain definition is course-authored</em></dd></div><div class="term-card"><dt><strong>Property-based test</strong></dt><dd>A test that checks a rule holds for many generated inputs.<br><em>Paraphrased from Thomas and Hunt, <em>The Pragmatic Programmer</em>, 20th Anniversary Edition, Topic 42, "Property-Based Testing" (to verify against book)</em></dd></div><div class="term-card"><dt><strong>Deterministic</strong></dt><dd>Giving the same result every time it runs with the same inputs.<br><em>Course-authored plain definition</em></dd></div></dl>
+    <h3>💻 Code Examples</h3>
+    <h4>Example 1: A fixture that builds the service</h4>
+    <div class="code-block" data-lang="python"><div class="code-header"><span class="filename">stage 03 · tests/conftest.py</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code>FIXED_TIME = datetime(2026, 1, 5, 9, 30, tzinfo=timezone.utc)
+
+
+@pytest.fixture
+def store():
+    return InMemoryResultStore()
+
+
+@pytest.fixture
+def enricher(store):
+    return Enricher(SampleWebsiteSource(), KeywordCategoryClassifier(), store, clock=lambda: FIXED_TIME)</code></pre></div>
+    <p><strong>What's happening:</strong> every test that asks for <code>enricher</code> gets a fresh service with a fixed clock, and can also ask for the same <code>store</code> to inspect what was saved.</p>
+    <h4>Example 2: One promise, one test</h4>
+    <div class="code-block" data-lang="python"><div class="code-header"><span class="filename">stage 03 · tests/test_promises.py</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code>def test_missing_website_needs_review_instead_of_crashing(enricher, store):
+    result = enricher.enrich("Ghost Gum Traders")
+
+    assert result.status == NEEDS_REVIEW
+    assert result.reason == NO_WEBSITE
+    assert store.saved_results == []</code></pre></div>
+    <p><strong>What's happening:</strong> the test reads like Day 8's decision. If someone removes the <code>try</code>/<code>except</code>, this test fails with a clear name.</p>
+    <h4>Example 3: A property that must always hold</h4>
+    <div class="code-block" data-lang="python"><div class="code-header"><span class="filename">stage 03 · tests/test_properties.py</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code>@pytest.mark.parametrize("seed", range(200))
+def test_any_text_gets_a_known_category_and_a_confidence_between_0_and_1(seed):
+    rng = random.Random(seed)
+    text = " ".join(rng.choice(VOCABULARY) for _ in range(rng.randint(0, 12)))
+
+    suggestion = KeywordCategoryClassifier().suggest(text)
+
+    assert suggestion.category in CATEGORIES
+    assert 0.0 &lt;= suggestion.confidence &lt;= 1.0</code></pre></div>
+    <p><strong>What's happening:</strong> 200 different texts, including empty ones, each checked against the same rule. Each seed always produces the same text, so a failure can be reproduced exactly.</p>
+    <div class="callout-info"><span class="callout-icon">ℹ️</span><div class="callout-content"><strong>💡 Try it:</strong> in <code>stages/03-change-safely</code>, run <code>python -m pytest -q</code>. You should see 220 tests pass in well under a second.</div></div>
+    <h3>✏️ Hands-On Exercises</h3>
+    <h4>Exercise 1 · Check (⏱️ ~3 min)</h4>
+    <div class="quiz-card"><p class="quiz-question"><strong>Q1:</strong> Which test is most likely to break when you improve the code without changing behaviour?</p><div class="quiz-options"><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is C. Call order is an internal step. The other three check what callers can observe, which a refactoring keeps the same.">A test that the result's status is <code>needs_review</code></button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is C. Call order is an internal step. The other three check what callers can observe, which a refactoring keeps the same.">A test that the store is empty after weak evidence</button><button class="quiz-option" data-correct="true" data-explanation-correct="Correct. Call order is an internal step. The other three check what callers can observe, which a refactoring keeps the same.">A test that <code>about_page</code> was called before <code>suggest</code></button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is C. Call order is an internal step. The other three check what callers can observe, which a refactoring keeps the same.">A test that confidence is between 0 and 1</button></div></div>
+    <div class="quiz-card"><p class="quiz-question"><strong>Q2:</strong> Why does the fixture use a fixed clock?</p><div class="quiz-options"><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is D. A real clock gives a different time on every run. Injecting a fixed time makes the test deterministic.">To make tests run faster</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is D. A real clock gives a different time on every run. Injecting a fixed time makes the test deterministic.">Because Python has no clock</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is D. A real clock gives a different time on every run. Injecting a fixed time makes the test deterministic.">To test time zones</button><button class="quiz-option" data-correct="true" data-explanation-correct="Correct. A real clock gives a different time on every run. Injecting a fixed time makes the test deterministic.">So <code>checked_at</code> is the same on every run and can be asserted</button></div></div>
+    <div class="quiz-card"><p class="quiz-question"><strong>Q3:</strong> What does the property test find that example tests usually miss?</p><div class="quiz-options"><button class="quiz-option" data-correct="true" data-explanation-correct="Correct. Generated inputs explore cases beyond the hand-picked examples, such as text with no words at all.">Inputs nobody thought to write down, such as empty text</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is A. Generated inputs explore cases beyond the hand-picked examples, such as text with no words at all.">Slow code</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is A. Generated inputs explore cases beyond the hand-picked examples, such as text with no words at all.">Spelling mistakes in names</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is A. Generated inputs explore cases beyond the hand-picked examples, such as text with no words at all.">Missing documentation</button></div></div>
+    <h4>Exercise 2 · Change: test a new promise (⏱️ ~20 min)</h4>
+    <p><strong>Goal:</strong> Add a promise and prove it.</p>
+    <p><strong>Instructions:</strong></p>
+    <ol><li>New promise: "the evidence text of every result that has a suggestion is the first sentence of the About page".</li><li>Add one line to the docstring of <code>Enricher.enrich</code> stating it.</li><li>Write one test for it in <code>tests/test_promises.py</code>, using the <code>enricher</code> fixture and a company of your choice.</li><li>Write a property-style test that checks the promise for every company in <code>SAMPLE_WEB</code>.</li><li>Run <code>python -m pytest -q</code> and make sure both pass.</li></ol>
+    <details class="exercise-hints"><summary>Hint</summary><p><code>SAMPLE_WEB[name]["about"].split(".")[0]</code> is the expected evidence. Parametrize over <code>SAMPLE_WEB.keys()</code>.</p></details>
+    <h4>Exercise 3 · Transfer: map promises to tests (⏱️ ~10 min)</h4>
+    <p>Pick a function with a docstring in a project you know. List its promises, then list its tests. Mark each promise that has no test, and each test that checks an internal step instead of a promise.</p>
+    <h3>📖 Curated Resources</h3>
+    <ol><li><strong>Practice reading:</strong> David Thomas and Andrew Hunt, <em>The Pragmatic Programmer</em>, 20th Anniversary Edition, Topics 41, "Test to Code" and 42, "Property-Based Testing" (to verify against book).<br>🔗 <a href="https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/" target="_blank" rel="noopener">Publisher page</a><br>Why: why testing shapes design, and testing with generated inputs.</li><li><strong><a href="https://docs.pytest.org/en/stable/how-to/fixtures.html" target="_blank" rel="noopener">pytest: how to use fixtures</a></strong><br>Why: everything behind <code>conftest.py</code>.</li><li><strong><a href="https://docs.pytest.org/en/stable/how-to/parametrize.html" target="_blank" rel="noopener">pytest: how to parametrize</a></strong><br>Why: one test function, many cases.</li><li><strong><a href="https://hypothesis.readthedocs.io/en/latest/" target="_blank" rel="noopener">Hypothesis documentation</a></strong><br>Why: a library for property-based testing in Python, for when the hand-rolled version runs out.</li></ol>
+    <h3>🤔 Reflection Questions</h3>
+    <ol><li><strong>Comprehension:</strong> What is the difference between a promise test and a characterization test?</li><li><strong>Application:</strong> Which test would fail first if someone changed the threshold from 0.82 to 0.6?</li><li><strong>Connection:</strong> How does Day 2's advice to test what callers can observe show up in <code>test_promises.py</code>?</li><li><strong>Critical Thinking:</strong> Can a suite of passing tests still miss a real bug? Give one example for this service.</li></ol>
+    <p>Stop and ask whenever a word feels harder than the idea.</p>
+    <h3>➡️ Next Steps</h3>
+    <p><strong>Tomorrow:</strong> <a href="https://github.com/CeciliaW888/software-fundamentals/blob/main/week-02/day-10-volatile-dependencies.md" target="_blank" rel="noopener">Day 10: Put volatile dependencies at boundaries</a>. You will put the website and the clock behind narrow adapters.</p>
+    <p><strong>Before moving on, make sure you can:</strong></p>
+    <div class="checklist"><label><input type="checkbox"> Write one test per docstring promise.</label><label><input type="checkbox"> Use a fixture and a parametrized test.</label><label><input type="checkbox"> Explain why tests must be deterministic.</label></div>
+    <p><a href="https://github.com/CeciliaW888/software-fundamentals/blob/main/week-02/day-09-tests-are-evidence.md" target="_blank" rel="noopener">Read this guide as Markdown on GitHub →</a></p>
+  </div>
+</section>

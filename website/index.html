@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Software Fundamentals</title>
+  <meta name="description" content="From AI-written script to software you trust: a beginner-first, practice-led course in which every lesson improves one Python service, the Company Enricher.">
+  <meta name="theme-color" content="#c4825a">
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Software Fun">
+
+  <!-- Fonts -->
+  <!-- English default: -->
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"> -->
+  <!-- Chinese: add &family=Noto+Serif+SC:wght@400;600;700 to the URL above -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Framework CSS (for interactive module elements) -->
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* ── Accent palette - replace all four ACCENT_* tokens ── */
+    :root {
+      /* Tab layout vars */
+      --accent:       #c4825a;
+      --accent-hover: #b07149;
+      --accent-light: rgba(196,130,90,0.12);
+      --accent-muted: rgba(196,130,90,0.06);
+      /* styles.css compat: module files use --color-accent-* and --color-text-* */
+      --color-accent:       #c4825a;
+      --color-accent-hover: #b07149;
+      --color-accent-light: rgba(196,130,90,0.12);
+      --color-accent-muted: rgba(196,130,90,0.06);
+      --color-text-secondary: #6b5c52;
+      --color-text-muted: #9e8e84;
+      --color-surface: #ffffff;
+      --color-border: #e8e0d8;
+      --accent-green: #4a7c59;
+      --accent-red:   #c86b5a;
+
+      --cream: #f5f0eb; --white: #ffffff; --border: #e8e0d8;
+      --shadow: rgba(0,0,0,0.08); --text-primary: #2c2420;
+      --text-secondary: #6b5c52; --text-muted: #9e8e84;
+      --radius: 12px; --max-w: 860px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --cream: #1a1614; --white: #242220; --border: #3a3430;
+        --shadow: rgba(0,0,0,0.3); --text-primary: #e8e0d8;
+        --text-secondary: #a09890; --text-muted: #706860;
+        /* styles.css tokens used inside modules: the template's dark palette leaves these light,
+           which puts light text on light module backgrounds. */
+        --bg-base: #1a1614; --bg-warm: #1f1b18; --bg-card: #242220; --bg-hover: #2c2724;
+        --border-light: #2e2925; --color-surface: #242220; --color-border: #3a3430;
+        --color-text-secondary: #a09890; --color-text-muted: #706860;
+      }
+      .hero { background: linear-gradient(135deg, var(--cream) 0%, #221e1a 100%) !important; }
+    }
+
+    /* Optional: paste font-family overrides here for non-Latin courses */
+    
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', system-ui, sans-serif; background: var(--cream); color: var(--text-primary); line-height: 1.6; }
+
+    /* ── Tab Nav ── */
+    .tab-nav { position: sticky; top: 0; z-index: 100; background: var(--white); border-bottom: 1px solid var(--border); box-shadow: 0 1px 4px var(--shadow); }
+    .tab-nav-inner { max-width: var(--max-w); margin: 0 auto; display: flex; overflow-x: auto; scrollbar-width: none; }
+    .tab-nav-inner::-webkit-scrollbar { display: none; }
+    .tab-btn { flex-shrink: 0; padding: 14px 20px; border: none; background: none; color: var(--text-secondary); font-size: 0.9rem; font-weight: 500; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.2s; white-space: nowrap; }
+    .tab-btn:hover { color: var(--text-primary); }
+    .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+
+    /* ── Layout ── */
+    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 20px; }
+    main > .section { display: none; padding: 32px 20px 64px; } /* keep the side gutter: this rule otherwise wipes .container padding */
+    main > .section.active { display: block; }
+    .section-heading { font-family: 'Crimson Pro', serif; font-size: 1.6rem; font-weight: 700; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+
+    /* ── Hero ── */
+    .hero { background: linear-gradient(135deg, var(--cream) 0%, color-mix(in srgb, var(--accent) 8%, var(--cream)) 100%); padding: 48px 20px 40px; text-align: center; }
+    .hero-emoji { font-size: 3.5rem; margin-bottom: 16px; }
+    .hero h1 { font-family: 'Crimson Pro', serif; font-size: clamp(1.8rem, 5vw, 2.8rem); font-weight: 700; margin-bottom: 12px; }
+    .hero-subtitle { color: var(--text-secondary); font-size: 1.05rem; margin-bottom: 20px; }
+    .hero-promise { font-family: 'Crimson Pro', serif; font-style: italic; font-size: clamp(1.25rem, 3.5vw, 1.6rem); color: var(--accent); margin-bottom: 12px; }
+    .hero-arc { max-width: 640px; margin: 0 auto 20px; color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; }
+    .hero-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 24px; }
+    .hero-tag { background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent-light); border-radius: 20px; padding: 4px 14px; font-size: 0.85rem; font-weight: 500; }
+    .install-btn-hero { background: var(--accent); color: white; border: none; border-radius: 8px; padding: 10px 24px; font-size: 0.95rem; font-weight: 600; cursor: pointer; display: none; transition: background 0.2s; }
+    .install-btn-hero:hover { background: var(--accent-hover); }
+    .install-btn-hero.visible { display: inline-block; }
+
+    /* ── Progress Card - donut ring + streak grid ── */
+    .progress-card { background: var(--white); border-radius: var(--radius); border: 1px solid var(--border); padding: 20px 24px; margin: 24px 20px 0; max-width: var(--max-w); margin-inline: auto; display: flex; align-items: center; gap: 24px; }
+    .progress-card { width: min(var(--max-w), calc(100% - 32px)); } /* side gutter on phones; margin-inline:auto alone gives none */
+    .progress-ring-wrap { flex-shrink: 0; position: relative; width: 90px; height: 90px; }
+    .progress-ring { transform: rotate(-90deg); }
+    .ring-bg { fill: none; stroke: var(--border); stroke-width: 6; }
+    .ring-fg { fill: none; stroke: var(--accent); stroke-width: 6; stroke-linecap: round; stroke-dasharray: 232.5; stroke-dashoffset: 232.5; transition: stroke-dashoffset 0.5s ease; }
+    .progress-ring-text { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+    .progress-ring-pct { font-size: 20px; font-weight: 700; color: var(--text-primary); line-height: 1; }
+    .progress-ring-days { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+    .streak-wrap { flex: 1; min-width: 0; }
+    .streak-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+    .streak-title { font-size: 0.85rem; font-weight: 600; }
+    .streak-count { font-size: 0.8rem; color: var(--text-muted); }
+    .streak-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+    .streak-cell { height: 23px; border-radius: 3px; border: none; background: var(--cream); cursor: pointer; font-size: 10px; color: var(--text-muted); transition: background 0.15s; }
+    .streak-cell:hover { background: var(--accent-light); }
+    .streak-cell.done { background: var(--accent); color: white; }
+    .week-row-labels { display: flex; gap: 3px; margin-top: 4px; }
+    .week-row-labels span { flex: 1; font-size: 0.65rem; color: var(--text-muted); text-align: center; }
+
+    /* ── Accordion (Learning Content) ── */
+    .week-section { margin-bottom: 32px; }
+    .week-section h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--accent); color: var(--accent); }
+    .day-card { background: var(--white); border-radius: 10px; border: 1px solid var(--border); margin-bottom: 8px; overflow: hidden; }
+    .day-card-header { display: flex; justify-content: space-between; align-items: center; padding: 14px 18px; cursor: pointer; user-select: none; transition: background 0.15s; }
+    .day-card-header:hover { background: var(--accent-muted); }
+    .day-card-title { font-weight: 600; font-size: 0.95rem; }
+    .day-card-meta { display: flex; align-items: center; gap: 10px; }
+    .day-type { font-size: 0.75rem; padding: 2px 8px; border-radius: 10px; font-weight: 500; }
+    .type-foundations { background: #d1fae5; color: #065f46; }
+    .type-concepts   { background: #fef3c7; color: #92400e; }
+    .type-advanced   { background: #ffe4e6; color: #9f1239; }
+    .type-project    { background: #ede9fe; color: #5b21b6; }
+    .type-review     { background: #e0f2fe; color: #075985; }
+    .chevron { font-size: 0.8rem; color: var(--text-muted); transition: transform 0.2s; }
+    .day-card.open .chevron { transform: rotate(180deg); }
+    .day-card-body { display: none; border-top: 1px solid var(--border); }
+    .day-card.open .day-card-body { display: block; }
+
+    /* ── Module overrides (embedded in accordion card, not full-viewport) ── */
+    .module { display: block !important; min-height: auto !important; padding: 32px 18px; border: none; }
+    .module-inner { max-width: 100%; }
+    pre { color: #e0def4; }
+    code { color: inherit; }
+
+    /* ── Course additions: readable prose inside injected modules (the reset above removes all margins) ── */
+    .module p, .module ol, .module ul, .module table, .module figure, .module details { margin-bottom: 12px; }
+    .module ol, .module ul:not(.objective-list) { padding-left: 1.5em; }
+    .module li { margin-bottom: 4px; }
+    .module code, .module pre { font-variant-ligatures: none; } /* show >= as typed, not as a ligature */
+    .module table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .module th, .module td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    .module th { font-weight: 600; color: var(--text-secondary); }
+    .module td code { word-break: normal; } /* names break only at the <wbr> after each underscore */
+    .module .diagram-container img { display: block; width: 100%; height: auto; }
+    .quiz-option:not(.correct):not(.incorrect) { color: var(--text-primary); } /* buttons do not inherit text colour */
+    .module .code-header { flex-wrap: wrap; gap: 4px 12px; }
+    .module .code-header .filename { min-width: 0; overflow-wrap: anywhere; }
+    .module .copy-btn { flex-shrink: 0; }
+    .term:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+
+    /* ── Flashcards (tab) ── */
+    .flashcard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+    .fc { perspective: 800px; height: 180px; cursor: pointer; }
+    .fc-inner { position: relative; width: 100%; height: 100%; transition: transform 0.5s; transform-style: preserve-3d; }
+    .fc.flipped .fc-inner { transform: rotateY(180deg); }
+    .fc-front, .fc-back { position: absolute; inset: 0; border-radius: var(--radius); border: 1px solid var(--border); padding: 20px; backface-visibility: hidden; display: flex; flex-direction: column; justify-content: center; }
+    .fc-front { background: var(--white); }
+    .fc-back { background: var(--accent); color: white; transform: rotateY(180deg); }
+    .fc-term { font-weight: 700; font-size: 1.05rem; margin-bottom: 8px; }
+    .fc-hint { font-size: 0.8rem; color: var(--text-muted); margin-top: auto; }
+
+    /* ── Quiz (tab) ── */
+    .quiz-block { background: var(--white); border-radius: var(--radius); border: 1px solid var(--border); padding: 24px; margin-bottom: 20px; }
+    .quiz-q { font-weight: 600; margin-bottom: 16px; line-height: 1.5; }
+    .quiz-opts { display: flex; flex-direction: column; gap: 8px; }
+    .quiz-opt { background: var(--cream); border: 2px solid var(--border); border-radius: 8px; padding: 10px 16px; text-align: left; cursor: pointer; transition: all 0.15s; font-size: 0.9rem; }
+    .quiz-opt:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-muted); }
+    .quiz-opt.correct { border-color: #10b981; background: #d1fae5; color: #065f46; }
+    .quiz-opt.wrong   { border-color: #ef4444; background: #fee2e2; color: #991b1b; }
+    .quiz-explanation { margin-top: 12px; padding: 12px; background: var(--accent-muted); border-radius: 8px; font-size: 0.875rem; display: none; }
+    .quiz-explanation.visible { display: block; }
+
+    /* ── Diagrams ── */
+    .diagram-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+    .diagram-card { background: var(--white); border-radius: var(--radius); border: 1px solid var(--border); overflow: hidden; cursor: pointer; }
+    .diagram-card img { width: 100%; height: 200px; object-fit: contain; background: white; padding: 12px; }
+    .diagram-label { padding: 12px 16px; font-weight: 600; font-size: 0.9rem; border-top: 1px solid var(--border); }
+
+    /* ── Resources ── */
+    .resource-group { margin-bottom: 32px; }
+    .resource-group h3 { font-size: 1rem; font-weight: 700; margin-bottom: 12px; color: var(--accent); }
+    .resource-link { display: flex; align-items: flex-start; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border); text-decoration: none; color: inherit; transition: opacity 0.15s; }
+    .resource-link:hover { opacity: 0.75; }
+    .resource-link:last-child { border-bottom: none; }
+    .resource-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+    .resource-text strong { display: block; font-weight: 600; font-size: 0.95rem; margin-bottom: 2px; }
+    .resource-text span { font-size: 0.85rem; color: var(--text-secondary); }
+
+    /* ── Utility ── */
+    .empty-state { text-align: center; padding: 48px 20px; color: var(--text-muted); }
+  </style>
+
+  <script src="main.js" defer></script>
+</head>
+<body>
+
+<!-- ── Tab Nav ── -->
+<nav class="tab-nav" aria-label="Course sections">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" data-tab="modules"     id="tab-modules">📖 Learning Content</button>
+    <button class="tab-btn"        data-tab="diagrams"    id="tab-diagrams">🗺 Diagrams</button>
+    <button class="tab-btn"        data-tab="flashcards"  id="tab-flashcards">🃏 Flashcards</button>
+    <button class="tab-btn"        data-tab="quiz"        id="tab-quiz">✅ Quiz</button>
+    <button class="tab-btn"        data-tab="resources"   id="tab-resources">🔗 Resources</button>
+  </div>
+</nav>
+
+<!-- ── Hero ── -->
+<div class="hero">
+  <div class="hero-emoji">🧱</div>
+  <h1>Software Fundamentals</h1>
+  <p class="hero-promise">From AI-written script to software you trust</p>
+  <p class="hero-arc">An AI assistant wrote a working script that finds a company’s website and suggests its business category. Over six modules you <strong>inherit it</strong>, <strong>tame its complexity</strong>, <strong>change it safely</strong>, <strong>model the business</strong>, <strong>design data that evolves</strong>, and <strong>operate it</strong>, until it is software you would trust in production.</p>
+  <p class="hero-subtitle">24 lessons in 4 weeks · about 30-45 minutes each · one Python service throughout</p>
+  <div class="hero-tags">
+    <span class="hero-tag">🌱 No background needed</span>
+    <span class="hero-tag">🐍 Python</span>
+    <span class="hero-tag">📚 Source-labelled</span>
+    <span class="hero-tag">🏷️ Company → category</span>
+  </div>
+  <button class="install-btn-hero" id="install-btn-hero">📲 Install App</button>
+</div>
+
+<!-- ── Progress Card - donut ring + streak grid ── -->
+<div class="progress-card">
+  <div class="progress-ring-wrap">
+    <svg class="progress-ring" width="90" height="90" viewBox="0 0 90 90">
+      <circle class="ring-bg" cx="45" cy="45" r="37"/>
+      <circle class="ring-fg" id="progress-ring-fg" cx="45" cy="45" r="37"/>
+    </svg>
+    <div class="progress-ring-text">
+      <span class="progress-ring-pct" id="progress-pct">0%</span>
+      <span class="progress-ring-days" id="progress-ring-days">0 / 24</span>
+    </div>
+  </div>
+  <div class="streak-wrap">
+    <div class="streak-header">
+      <span class="streak-title">Daily Progress</span>
+      <span class="streak-count" id="streak-count">0 / 24 days</span>
+    </div>
+    <div class="streak-grid" id="day-grid"></div>
+    <div class="week-row-labels"></div>
+  </div>
+</div>
+
+<main>
+  <!-- ── 1. Learning Content (accordion, lazy-loaded per card) ── -->
+  <section class="section active container" id="section-modules" aria-labelledby="tab-modules">
+    <div id="modules-container"></div>
+    <div class="empty-state" id="modules-loading">Loading…</div>
+  </section>
+
+  <!-- ── 2. Diagrams ── -->
+  <section class="section container" id="section-diagrams" aria-labelledby="tab-diagrams">
+    <h2 class="section-heading">Diagrams</h2>
+    <div class="diagram-grid" id="diagram-grid"></div>
+  </section>
+
+  <!-- ── 3. Flashcards ── -->
+  <section class="section container" id="section-flashcards" aria-labelledby="tab-flashcards">
+    <h2 class="section-heading">Flashcards</h2>
+    <div class="flashcard-grid" id="flashcard-grid"><p class="empty-state">Loading…</p></div>
+  </section>
+
+  <!-- ── 4. Quiz ── -->
+  <section class="section container" id="section-quiz" aria-labelledby="tab-quiz">
+    <h2 class="section-heading">Knowledge Check</h2>
+    <div id="quiz-container"><p class="empty-state">Loading…</p></div>
+  </section>
+
+  <!-- ── 5. Resources ── -->
+  <section class="section container" id="section-resources" aria-labelledby="tab-resources">
+    <h2 class="section-heading">Resources</h2>
+    <p style="margin-bottom:24px;color:var(--text-secondary)">Official documentation defines behaviour. Books provide design lenses. Domain authorities define business classifications. No source is treated as a universal rulebook. Where none of the three main books fits a lesson, the book source is marked <strong>TBC</strong>.</p>
+    <div class="resource-group"><h3>Main books</h3>
+    <a class="resource-link" href="https://web.stanford.edu/~ouster/cgi-bin/book.php" target="_blank" rel="noopener"><span class="resource-icon">📘</span><span class="resource-text"><strong>A Philosophy of Software Design, 2nd Edition</strong><span>John Ousterhout. The design spine: complexity, modules, information hiding, errors, comments, naming, and performance.</span></span></a>
+    <a class="resource-link" href="https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/" target="_blank" rel="noopener"><span class="resource-icon">📗</span><span class="resource-text"><strong>The Pragmatic Programmer, 20th Anniversary Edition (2019)</strong><span>David Thomas and Andrew Hunt. Everyday habits and tools: duplication, contracts, failing early, testing, debugging, version control, and the shell.</span></span></a>
+    <a class="resource-link" href="https://www.domainlanguage.com/ddd/" target="_blank" rel="noopener"><span class="resource-icon">📙</span><span class="resource-text"><strong>Domain-Driven Design</strong><span>Eric Evans. Selected business-language and modeling lessons. Its tactical patterns are not a default architecture.</span></span></a>
+    </div>
+    <div class="resource-group"><h3>Behavioural and domain authority</h3>
+    <a class="resource-link" href="https://docs.python.org/3/" target="_blank" rel="noopener"><span class="resource-icon">🐍</span><span class="resource-text"><strong>Python documentation</strong><span>Language and standard-library behaviour.</span></span></a>
+    <a class="resource-link" href="https://docs.python.org/3/glossary.html" target="_blank" rel="noopener"><span class="resource-icon">📖</span><span class="resource-text"><strong>Python glossary</strong><span>Python-specific vocabulary.</span></span></a>
+    <a class="resource-link" href="https://peps.python.org/pep-0008/" target="_blank" rel="noopener"><span class="resource-icon">📏</span><span class="resource-text"><strong>PEP 8</strong><span>Python naming and readability conventions.</span></span></a>
+    <a class="resource-link" href="https://peps.python.org/pep-0257/" target="_blank" rel="noopener"><span class="resource-icon">📝</span><span class="resource-text"><strong>PEP 257</strong><span>Python docstring conventions.</span></span></a>
+    <a class="resource-link" href="https://docs.pytest.org/" target="_blank" rel="noopener"><span class="resource-icon">✅</span><span class="resource-text"><strong>pytest documentation</strong><span>Tests and failure feedback.</span></span></a>
+    </div>
+    <div class="resource-group"><h3>When later modules need them</h3>
+    <a class="resource-link" href="https://fastapi.tiangolo.com/" target="_blank" rel="noopener"><span class="resource-icon">⚡</span><span class="resource-text"><strong>FastAPI documentation</strong><span>When an HTTP boundary is introduced.</span></span></a>
+    <a class="resource-link" href="https://opentelemetry.io/docs/" target="_blank" rel="noopener"><span class="resource-icon">📡</span><span class="resource-text"><strong>OpenTelemetry documentation</strong><span>When monitoring is introduced.</span></span></a>
+    </div>
+  </section>
+
+</main>
+
+<script>
+/* ── Configuration: replace all tokens per course ── */
+const DAY_COUNT     = 24;       /* integer, e.g. 21 */
+const MODULE_FILES  = ["modules/01-names-that-explain-the-job.html", "modules/02-what-a-function-promises.html", "modules/03-follow-the-data.html", "modules/04-complexity-symptoms.html", "modules/05-deep-modules.html", "modules/06-split-by-information.html", "modules/07-design-it-twice.html", "modules/08-what-each-failure-means.html", "modules/09-tests-are-evidence.html", "modules/10-volatile-dependencies.html", "modules/11-refactor-under-evidence.html", "modules/12-language-from-examples.html", "modules/13-entities-values-services.html", "modules/14-context-boundaries.html", "modules/15-distil-the-core.html", "modules/16-measurable-requirements.html", "modules/17-data-model-from-access.html", "modules/18-storage-trade-offs.html", "modules/19-evolve-schemas.html", "modules/20-invariants-under-concurrency.html", "modules/21-observe-promises.html", "modules/22-deploy-reversibly.html", "modules/23-measure-before-optimizing.html", "modules/24-design-for-failure.html"];    /* array of file paths, e.g. ['modules/01-intro.html', ...] */
+const MODULE_TITLES = ["Use names that explain the job", "Know what a function promises", "Follow the data and outside changes", "Recognise complexity by its symptoms", "Build deep modules", "Split by information, not length", "Design it twice", "Decide what each failure means", "Tests are executable evidence", "Put volatile dependencies at boundaries", "Refactor under evidence", "Build language from examples", "Choose entities, values, and services deliberately", "Protect context boundaries", "Distil the core", "Turn qualities into measurable requirements", "Choose a data model from access patterns", "Understand storage trade-offs", "Evolve schemas without coordinated deployment", "Protect invariants under concurrency", "Observe promises and failures", "Deploy reversibly", "Measure before optimizing", "Design for expected failure"];   /* array of day title strings, e.g. ['What is an AI Agent?', ...] */
+const MODULE_TYPES  = ["foundations", "foundations", "foundations", "concepts", "concepts", "concepts", "concepts", "concepts", "concepts", "concepts", "concepts", "advanced", "advanced", "advanced", "advanced", "advanced", "advanced", "advanced", "advanced", "advanced", "project", "project", "project", "project"];    /* array of type strings per day: 'foundations'|'concepts'|'advanced'|'project'|'review' */
+const WEEK_NAMES    = ["🧭 Week 1: Read code and control complexity", "🛡️ Week 2: Change safely and model the domain", "🗄️ Week 3: Design data that can evolve", "🚀 Week 4: Operate what you build"];      /* array of week headings, e.g. ['🧠 Week 1: Foundations', ...] */
+const WEEK_RANGES   = [[0, 6], [7, 14], [15, 19], [20, 23]];     /* array of [startIdx, endIdx] pairs (0-based), e.g. [[0,6],[7,13],[14,20]] */
+const DIAGRAM_FILES = ["diagrams/company-enricher.svg"];   /* array of SVG paths, e.g. ['diagrams/overview.svg'] or [] */
+const STORAGE_KEY   = 'course-software-fundamentals-progress'; /* unique string, e.g. 'course-ai-agents-progress' */
+
+/* ── Tab switching ── */
+const tabs     = document.querySelectorAll('.tab-btn');
+const sections = document.querySelectorAll('.section');
+let modulesLoaded = false;
+
+tabs.forEach(btn => {
+  btn.addEventListener('click', async () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    sections.forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('section-' + btn.dataset.tab).classList.add('active');
+    if (btn.dataset.tab === 'modules'    && !modulesLoaded) { loadModules(); modulesLoaded = true; }
+    if (btn.dataset.tab === 'flashcards') loadFlashcards();
+    if (btn.dataset.tab === 'quiz')       loadQuiz();
+    if (btn.dataset.tab === 'diagrams')   renderDiagrams();
+  });
+});
+
+/* ── Day grid + donut ring progress ── */
+function buildDayGrid() {
+  const grid = document.getElementById('day-grid');
+  const done = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  for (let i = 1; i <= DAY_COUNT; i++) {
+    const cell = document.createElement('button');
+    cell.className = 'streak-cell' + (done.includes(i) ? ' done' : '');
+    cell.textContent = i;
+    cell.title = 'Day ' + i;
+    cell.addEventListener('click', () => toggleDay(i, cell));
+    grid.appendChild(cell);
+  }
+  updateProgress(done.length);
+}
+function toggleDay(n, el) {
+  const done = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  const idx = done.indexOf(n);
+  if (idx === -1) done.push(n); else done.splice(idx, 1);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(done));
+  el.classList.toggle('done');
+  updateProgress(done.length);
+}
+function updateProgress(count) {
+  const pct = DAY_COUNT ? Math.round(count / DAY_COUNT * 100) : 0;
+  const circ = 232.5; /* 2 * π * r=37 */
+  document.getElementById('progress-pct').textContent = pct + '%';
+  document.getElementById('progress-ring-days').textContent = count + ' / ' + DAY_COUNT;
+  document.getElementById('progress-ring-fg').style.strokeDashoffset = circ - (circ * pct / 100);
+  document.getElementById('streak-count').textContent = count + ' / ' + DAY_COUNT + ' days';
+}
+buildDayGrid();
+
+/* ── Build accordion + lazy-load each card on click ── */
+function loadModules() {
+  const container = document.getElementById('modules-container');
+  const loading   = document.getElementById('modules-loading');
+
+  WEEK_RANGES.forEach(([start, end], wi) => {
+    const section = document.createElement('div');
+    section.className = 'week-section';
+    section.innerHTML = `<h3>${WEEK_NAMES[wi]}</h3>`;
+
+    for (let i = start; i <= end; i++) {
+      const title = MODULE_TITLES[i] || ('Day ' + (i + 1));
+      const type  = MODULE_TYPES[i]  || '';
+      const card  = document.createElement('div');
+      card.className = 'day-card';
+      card.id = 'day-' + (i + 1);
+      card.innerHTML = `
+        <div class="day-card-header">
+          <span class="day-card-title">Day ${i + 1} · ${title}</span>
+          <div class="day-card-meta">
+            ${type ? `<span class="day-type type-${type}">${type}</span>` : ''}
+            <span class="chevron">▾</span>
+          </div>
+        </div>
+        <div class="day-card-body"></div>`;
+
+      let loaded = false;
+      const header = card.querySelector('.day-card-header');
+      const body   = card.querySelector('.day-card-body');
+
+      header.addEventListener('click', async () => {
+        const opening = !card.classList.contains('open');
+        card.classList.toggle('open');
+        if (opening && !loaded) {
+          body.innerHTML = '<p style="padding:16px;color:var(--text-muted)">Loading…</p>';
+          try {
+            const resp = await fetch(MODULE_FILES[i]);
+            if (resp.ok) {
+              body.innerHTML = await resp.text();
+              loaded = true;
+              /* Init interactive elements in the newly loaded content */
+              if (typeof initIndexQuizzes === 'function') initIndexQuizzes();
+              if (typeof initChatWindows  === 'function') initChatWindows();
+              setupChatAutoPlay(body);
+            } else {
+              body.innerHTML = '<p style="padding:16px;color:var(--text-muted)">Content not found.</p>';
+            }
+          } catch(e) {
+            body.innerHTML = '<p style="padding:16px;color:var(--text-muted)">Failed to load.</p>';
+          }
+        }
+      });
+
+      section.appendChild(card);
+    }
+    container.appendChild(section);
+  });
+
+  loading.style.display = 'none';
+}
+loadModules();
+modulesLoaded = true;
+
+/* ── Deep links: #day-N opens that day's card (old lesson URLs redirect here) ── */
+function openDayFromHash() {
+  const match = location.hash.match(/^#day-(\d+)$/);
+  const card = match && document.getElementById('day-' + match[1]);
+  if (!card) return;
+  if (!card.classList.contains('open')) card.querySelector('.day-card-header').click();
+  card.scrollIntoView({ block: 'start' });
+}
+openDayFromHash();
+window.addEventListener('hashchange', openDayFromHash);
+
+/* ── Chat auto-play: advances messages automatically when window scrolls into view ── */
+function setupChatAutoPlay(container) {
+  container.querySelectorAll('.chat-window').forEach(win => {
+    if (win.dataset.autoplay) return;
+    win.dataset.autoplay = '1';
+    const nextBtn = win.querySelector('.chat-next-btn');
+    if (!nextBtn) return;
+    const total = win.querySelectorAll('[data-msg]').length;
+    let shown = 0;
+
+    const obs = new IntersectionObserver(entries => {
+      if (!entries[0].isIntersecting) return;
+      obs.disconnect();
+      function advance() {
+        if (shown >= total) return;
+        nextBtn.click();
+        shown++;
+        setTimeout(advance, 1600);
+      }
+      setTimeout(advance, 600);
+    }, { threshold: 0.3 });
+
+    obs.observe(win);
+  });
+}
+
+/* ── Module interactive elements (event delegation for lazy-loaded content) ── */
+
+/* Standalone .flashcard flip (main.js only handles .flashcard-deck) */
+document.addEventListener('click', function(e) {
+  const card = e.target.closest('.flashcard');
+  if (card && !card.closest('.flashcard-deck')) card.classList.toggle('flipped');
+});
+
+/* .quiz-option immediate feedback on click */
+document.addEventListener('click', function(e) {
+  const btn = e.target.closest('.quiz-option');
+  if (!btn) return;
+  const card = btn.closest('.quiz-card');
+  if (!card || card.classList.contains('answered')) return;
+  card.classList.add('answered');
+  const correct = btn.dataset.correct === 'true';
+  card.querySelectorAll('.quiz-option').forEach(o => {
+    if (o.dataset.correct === 'true') o.classList.add('correct');
+    else if (o === btn) o.classList.add('incorrect');
+  });
+  const explanation = correct ? btn.dataset.explanationCorrect : btn.dataset.explanationWrong;
+  if (explanation) {
+    const fb = document.createElement('p');
+    fb.className = 'quiz-feedback';
+    fb.style.cssText = `background:${correct ? '#d1fae5' : '#fee2e2'};border-left:3px solid ${correct ? '#10b981' : '#ef4444'};color:${correct ? '#065f46' : '#991b1b'};`;
+    fb.textContent = explanation;
+    card.appendChild(fb);
+  }
+});
+
+/* ── Flashcards tab ── */
+let flashcardsLoaded = false;
+async function loadFlashcards() {
+  if (flashcardsLoaded) return;
+  const grid = document.getElementById('flashcard-grid');
+  try {
+    const cards = await (await fetch('./data/flashcards.json')).json();
+    grid.innerHTML = '';
+    cards.forEach(c => {
+      const el = document.createElement('div');
+      el.className = 'fc';
+      el.innerHTML = `<div class="fc-inner">
+        <div class="fc-front"><div class="fc-term">${c.term}</div><div class="fc-hint">Click to reveal</div></div>
+        <div class="fc-back"><div class="fc-term">${c.definition}</div></div>
+      </div>`;
+      el.addEventListener('click', () => el.classList.toggle('flipped'));
+      grid.appendChild(el);
+    });
+    flashcardsLoaded = true;
+  } catch(e) { grid.innerHTML = '<p class="empty-state">No flashcards found - add data/flashcards.json</p>'; }
+}
+
+/* ── Quiz tab ── */
+let quizLoaded = false;
+async function loadQuiz() {
+  if (quizLoaded) return;
+  const container = document.getElementById('quiz-container');
+  const urls = MODULE_FILES.map((_, i) => `./data/quiz-${String(i+1).padStart(2,'0')}.json`);
+  let allQ = [];
+  for (const url of urls) {
+    try { const r = await fetch(url); if (r.ok) { const d = await r.json(); allQ = allQ.concat(d.questions || d); } } catch(e) {}
+  }
+  if (!allQ.length) { container.innerHTML = '<p class="empty-state">No quiz data - add data/quiz-01.json etc.</p>'; return; }
+  container.innerHTML = '';
+  allQ.forEach((q, qi) => {
+    const block = document.createElement('div');
+    block.className = 'quiz-block';
+    const opts = q.options.map((o, oi) => `<button class="quiz-opt" data-idx="${oi}">${o}</button>`).join('');
+    block.innerHTML = `<div class="quiz-q">Q${qi+1}: ${q.question}</div><div class="quiz-opts">${opts}</div><div class="quiz-explanation"></div>`;
+    block.querySelectorAll('.quiz-opt').forEach(btn => {
+      btn.addEventListener('click', () => {
+        block.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
+        const correct = parseInt(btn.dataset.idx) === q.answer;
+        btn.classList.add(correct ? 'correct' : 'wrong');
+        if (!correct) block.querySelectorAll('.quiz-opt')[q.answer].classList.add('correct');
+        const exp = block.querySelector('.quiz-explanation');
+        exp.textContent = q.explanation || (correct ? '✓ Correct!' : '✗ Incorrect.');
+        exp.classList.add('visible');
+      });
+    });
+    container.appendChild(block);
+  });
+  quizLoaded = true;
+}
+
+/* ── Diagrams tab ── */
+function renderDiagrams() {
+  const grid = document.getElementById('diagram-grid');
+  if (grid.children.length > 0) return;
+  if (!DIAGRAM_FILES.length) { grid.innerHTML = '<p class="empty-state">No diagrams yet - add SVGs to website/diagrams/</p>'; return; }
+  DIAGRAM_FILES.forEach(f => {
+    const label = f.replace(/.*\//, '').replace(/\.[^.]+$/, '').replace(/-/g, ' ');
+    const card = document.createElement('div');
+    card.className = 'diagram-card';
+    card.innerHTML = `<img src="${f}" alt="${label}" loading="lazy"><div class="diagram-label">${label}</div>`;
+    card.addEventListener('click', () => openLightbox(f, label));
+    grid.appendChild(card);
+  });
+}
+
+function openLightbox(src, label) {
+  const lb = document.createElement('div');
+  lb.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:zoom-out;padding:24px;';
+  lb.innerHTML = `<img src="${src}" alt="${label}" style="max-width:100%;max-height:100%;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,0.5);">`;
+  lb.addEventListener('click', () => lb.remove());
+  document.addEventListener('keydown', function esc(e) { if (e.key === 'Escape') { lb.remove(); document.removeEventListener('keydown', esc); } });
+  document.body.appendChild(lb);
+}
+
+/* ── PWA install prompt ── */
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault(); deferredPrompt = e;
+  document.getElementById('install-btn-hero').classList.add('visible');
+});
+document.getElementById('install-btn-hero').addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  if (outcome === 'accepted') document.getElementById('install-btn-hero').classList.remove('visible');
+  deferredPrompt = null;
+});
+
+/* ── Glossary tooltips for lazy-loaded modules ──
+   main.js initialises .term[data-definition] only at page load, before any module is
+   fetched, and does not expose initGlossary. This delegated version covers terms in
+   injected modules: hover, keyboard focus, and tap. Uses the .tooltip styles in styles.css. */
+(function () {
+  const tip = document.createElement('div');
+  tip.className = 'tooltip';
+  tip.setAttribute('role', 'tooltip');
+  tip.id = 'term-tooltip';
+  tip.style.display = 'none';
+  const arrow = document.createElement('div');
+  arrow.className = 'tooltip-arrow';
+  const text = document.createElement('div');
+  tip.append(text, arrow);
+  document.body.appendChild(tip);
+  let active = null;
+
+  let shownAt = 0;
+  function show(el) {
+    if (active !== el) shownAt = Date.now();
+    active = el;
+    text.textContent = el.dataset.definition;
+    el.setAttribute('aria-describedby', 'term-tooltip');
+    tip.style.display = 'block';
+    const r = el.getBoundingClientRect();
+    const tw = tip.offsetWidth, th = tip.offsetHeight;
+    const left = Math.max(8, Math.min(r.left + r.width / 2 - tw / 2, window.innerWidth - tw - 8));
+    const above = r.top - th - 12;
+    tip.classList.toggle('flip', above < 8);
+    tip.style.top = (above < 8 ? r.bottom + 12 : above) + 'px';
+    tip.style.left = left + 'px';
+    arrow.style.left = Math.max(12, Math.min(r.left + r.width / 2 - left, tw - 12)) + 'px';
+  }
+  function hide() {
+    if (active) active.removeAttribute('aria-describedby');
+    active = null;
+    tip.style.display = 'none';
+  }
+  const termOf = e => e.target.closest && e.target.closest('.term[data-definition]');
+  /* Hover only for real mice: after a tap, scrolling moves content under the old touch point and fires stray mouse events. */
+  let lastPointer = 'mouse';
+  document.addEventListener('pointerdown', e => { lastPointer = e.pointerType; }, true);
+  document.addEventListener('mouseover', e => { const t = termOf(e); if (t && t !== active && lastPointer === 'mouse') show(t); });
+  document.addEventListener('mouseout', e => { const t = termOf(e); if (t && t === active && lastPointer === 'mouse' && !t.contains(e.relatedTarget)) hide(); });
+  document.addEventListener('focusin', e => { const t = termOf(e); if (t) show(t); });
+  document.addEventListener('focusout', e => { if (termOf(e)) hide(); });
+  /* A tap fires mouseover and focus before click, so the click only closes a tooltip opened by an earlier tap. */
+  document.addEventListener('click', e => {
+    const t = termOf(e);
+    if (!t) { if (active) hide(); return; }
+    if (active === t && Date.now() - shownAt > 400) hide(); else show(t);
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') hide(); });
+  window.addEventListener('scroll', () => { if (active) show(active); }, { passive: true });
+})();
+
+/* ── Service worker ── */
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch(console.warn);
+}
+</script>
+</body>
+</html>

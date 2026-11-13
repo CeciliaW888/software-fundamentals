@@ -1,0 +1,39 @@
+{
+  "day": 3,
+  "title": "Follow the data and outside changes",
+  "questions": [
+    {
+      "question": "Which of these is an input to find_official_website even though it is not a parameter?",
+      "options": [
+        "The SAMPLE_WEB dictionary",
+        "The company name",
+        "The classifier",
+        "The return value"
+      ],
+      "answer": 0,
+      "explanation": "The function reads SAMPLE_WEB from the module, so it is a hidden input. The name is a parameter, the classifier is not used here, and the return value is an output."
+    },
+    {
+      "question": "Which line in suggest_company_category makes a change outside the return value?",
+      "options": [
+        "about_text = read_about_page(website)",
+        "store.save(company_name, suggestion)",
+        "if suggestion.confidence < 0.82:",
+        "return suggestion"
+      ],
+      "answer": 1,
+      "explanation": "Saving to the store is a side effect: it changes state that other code can see later. The other lines read data, compare values, or return."
+    },
+    {
+      "question": "Why is it a problem that both find_official_website and read_about_page know the shape of SAMPLE_WEB?",
+      "options": [
+        "It makes the code run twice as slowly.",
+        "Python forbids two functions reading one variable.",
+        "A change to the data's shape must be made in two places.",
+        "It hides the return value from the caller."
+      ],
+      "answer": 2,
+      "explanation": "Shared design knowledge is information leakage: one change to the shape now touches two functions. Speed is not the issue here, and Python allows shared reads."
+    }
+  ]
+}

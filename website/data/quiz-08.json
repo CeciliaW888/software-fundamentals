@@ -1,0 +1,39 @@
+{
+  "day": 8,
+  "title": "Decide what each failure means",
+  "questions": [
+    {
+      "question": "A company's About page has no category keywords. What does the service do?",
+      "options": [
+        "Raise an exception",
+        "Retry the website",
+        "Skip the company silently",
+        "Return Other with confidence 0.0, which goes to review"
+      ],
+      "answer": 3,
+      "explanation": "The situation is defined out of existence: it is a normal, weak suggestion, not an error."
+    },
+    {
+      "question": "Why does an impossible confidence raise instead of being sent to review?",
+      "options": [
+        "It can only come from a bug, and continuing would spread bad data.",
+        "Reviewers are too busy.",
+        "Python cannot store numbers above 1.",
+        "Exceptions are faster than results."
+      ],
+      "answer": 0,
+      "explanation": "Impossible states mean the program is wrong. Crashing early stops the damage and points straight at the cause."
+    },
+    {
+      "question": "Which failure does the service deliberately leave unhandled?",
+      "options": [
+        "No website",
+        "A failed save to the store",
+        "No keywords",
+        "Weak evidence"
+      ],
+      "answer": 1,
+      "explanation": "Hiding a failed save would silently lose a result, so it is left to report itself to the caller."
+    }
+  ]
+}

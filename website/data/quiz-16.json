@@ -1,0 +1,39 @@
+{
+  "day": 16,
+  "title": "Turn qualities into measurable requirements",
+  "questions": [
+    {
+      "question": "Why does precision count only suggested results?",
+      "options": [
+        "Review results are too slow to count.",
+        "Python cannot count review results.",
+        "To make the number look better.",
+        "Sending a hard case to review is correct behaviour, not a wrong answer."
+      ],
+      "answer": 3,
+      "explanation": "Precision asks \"when the service commits to an answer, is it right?\". Review cases are measured separately by the review rate."
+    },
+    {
+      "question": "Why use the 95th percentile instead of the average for latency?",
+      "options": [
+        "Averages hide the slow calls that people notice.",
+        "It is easier to compute.",
+        "Percentiles are always smaller.",
+        "Python has no average function."
+      ],
+      "answer": 0,
+      "explanation": "One very slow call can hide behind many fast ones in an average. The 95th percentile shows what nearly every caller experiences."
+    },
+    {
+      "question": "Which statement is a measurable requirement?",
+      "options": [
+        "The service should be fast.",
+        "At most 30% of companies in the labelled sample need review.",
+        "Reviewers should be happy.",
+        "The service should rarely be wrong."
+      ],
+      "answer": 1,
+      "explanation": "It names the indicator, the target, and where it is measured. The others cannot be checked."
+    }
+  ]
+}

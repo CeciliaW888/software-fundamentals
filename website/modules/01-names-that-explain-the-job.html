@@ -1,0 +1,195 @@
+<section class="module" id="module-1" data-day="1">
+  <div class="module-inner">
+    <h2>Use names that explain the job</h2>
+    <div class="callout-accent"><span class="callout-icon">📍</span><div class="callout-content"><strong>Where we are in the story:</strong> Week 1 · You’ve just inherited the script. Before changing anything, you learn to read it.</div></div>
+    <p>Rename one small Python <span class="term" tabindex="0" data-definition="A named block of code that performs a job and can be used from other code. Source: official Python terminology, explained in the Python tutorial.">function</span> so you can understand its purpose without guessing.</p>
+
+    <h3>🎯 Learning Objectives</h3>
+    <ul class="objective-list">
+      <li>Rename one small Python function so you can understand its purpose without guessing.</li>
+      <li>Make a company-category decision visible without changing what the code does.</li>
+      <li>Name the thing, the stage it is at, and the choice the code makes.</li>
+    </ul>
+    <p><span class="difficulty-badge">🟢 Beginner</span> <span class="time-estimate">⏱️ 10 minutes · Module 1 · Lesson 0001</span></p>
+
+    <div class="callout-accent">
+      <span class="callout-icon">💡</span>
+      <div class="callout-content"><strong>Plain idea:</strong> a name should tell you what a value represents and why the code needs it.</div>
+    </div>
+
+    <h3>📚 Core Concepts</h3>
+
+    <h4>Observe: meet the service</h4>
+    <p>The course follows one <span class="term" tabindex="0" data-definition="A higher-level unit of software with an interface and an implementation. Source: paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 4 (to verify against book).">service</span>, the Company Enricher. An AI assistant wrote its first version; it works, and now you maintain it.</p>
+    <div class="step-cards">
+      <div class="step-card"><span class="step-num">1</span><div class="step-body"><strong>Start with a company name.</strong></div></div>
+      <div class="step-card"><span class="step-num">2</span><div class="step-body"><strong>Find the official website.</strong></div></div>
+      <div class="step-card"><span class="step-num">3</span><div class="step-body"><strong>Read the About page.</strong></div></div>
+      <div class="step-card"><span class="step-num">4</span><div class="step-body"><strong>Summarise the business’s main activity.</strong></div></div>
+      <div class="step-card"><span class="step-num">5</span><div class="step-body"><strong>Suggest a business category.</strong><p>A category from a short, plain list, with evidence and <span class="term" tabindex="0" data-definition="A score used here to show how strongly the chosen model supports a suggestion. Its exact meaning depends on that model. Source: course domain definition, not a definition taken from the books.">confidence</span>.</p></div></div>
+    </div>
+    <figure class="diagram-container">
+      <img class="diagram-img" src="diagrams/company-enricher.svg" alt="The Company Enricher: company name, official website, About page, activity summary, category suggestion with evidence, confidence, and review status" loading="lazy">
+    </figure>
+    <p>This lesson starts near the end of that flow. The service has About-page text and must decide which category suggestions are confident enough to return.</p>
+
+    <h4>Say it plainly: why short names create work</h4>
+    <p>Look at <code>xs</code>, <code>m</code>, <code>r</code>, and <code>t</code>. Python can run them, but a person must reconstruct their meaning.</p>
+    <p>A clearer name may be longer to type once, but it saves guessing every time the code is read, tested, or changed.</p>
+    <div class="pattern-cards">
+      <div class="pattern-card"><strong>01 · THING</strong><h4>Name the thing</h4><p>Say <code>about_page_texts</code>, not <code>xs</code> or <code>data</code>.</p></div>
+      <div class="pattern-card"><strong>02 · STAGE</strong><h4>Name where it is</h4><p>Say whether a website is a candidate, verified, scraped, or classified.</p></div>
+      <div class="pattern-card"><strong>03 · DECISION</strong><h4>Name the choice</h4><p>Say <code>select</code>, <code>reject</code>, or <code>suggest</code>, not merely <code>run</code>.</p></div>
+    </div>
+
+    <h4>Name it: what a good name answers</h4>
+    <p>The second version below tells you that About-page text enters, a category <span class="term" tabindex="0" data-definition="A component that assigns an input to a category. In this course it proposes a business category from website evidence. Source: standard data and machine-learning term, specialised for this course.">classifier</span> produces probabilities, and a confidence rule selects a result.</p>
+
+    <h4>Quick reference: five questions</h4>
+    <p>Choose names that answer the next reader’s questions before they need a comment or debugger.</p>
+    <table>
+      <thead><tr><th>Ask</th><th>Unclear</th><th>Clearer</th></tr></thead>
+      <tbody>
+        <tr><td>What real thing is this?</td><td><code>data</code></td><td><code>about_<wbr>page_<wbr>text</code></td></tr>
+        <tr><td>Where is it in the process?</td><td><code>website</code></td><td><code>verified_<wbr>company_<wbr>website</code></td></tr>
+        <tr><td>What does the number measure?</td><td><code>score</code></td><td><code>classification_<wbr>confidence</code></td></tr>
+        <tr><td>What choice does this function make?</td><td><code>process()</code></td><td><code>suggest_<wbr>company_<wbr>category()</code></td></tr>
+        <tr><td>Who supplied the value?</td><td><code>result</code></td><td><code>website_<wbr>search_<wbr>result</code></td></tr>
+      </tbody>
+    </table>
+    <p>Fast review: replace <code>run</code>, <code>handle</code>, and <code>process</code> with the actual job. Put a unit in a number’s name when confusion is possible. Distinguish candidate, verified, scraped, summarised, suggested, and accepted data. Use one word for one idea throughout the service. Rename when your understanding improves.</p>
+
+    <h3>🔑 Key Terminology</h3>
+    <dl class="term-grid">
+      <div class="term-card"><dt>Function</dt><dd>A named block of code that performs a job.<br><em>Official Python vocabulary</em></dd></div>
+      <div class="term-card"><dt>Classifier</dt><dd>Something that assigns an input to a category.<br><em>Standard data and machine-learning vocabulary</em></dd></div>
+      <div class="term-card"><dt>Confidence</dt><dd>A score used here to show how strongly the model supports a suggestion.<br><em>Course domain term; its exact meaning must be defined by the chosen model</em></dd></div>
+      <div class="term-card"><dt>Category list</dt><dd>The short, plain list of about ten business categories the Company Enricher can suggest.<br><em>Course domain term, defined in the practice project</em></dd></div>
+      <div class="term-card"><dt>Category suggestion</dt><dd>A proposed business category that still carries evidence and review status.<br><em>Domain language for this course</em></dd></div>
+      <div class="term-card"><dt>Stage</dt><dd>Where a value is in a sequence of work.<br><em>Course-authored teaching word</em></dd></div>
+      <div class="term-card"><dt>Domain</dt><dd>The real business problem the software works on.<br><em>Standard software vocabulary; important in DDD</em></dd></div>
+      <div class="term-card"><dt>Boundary</dt><dd>The point where this code meets another system or responsibility.<br><em>Standard software vocabulary</em></dd></div>
+      <div class="term-card"><dt>Ubiquitous language</dt><dd>Words agreed and used by one domain’s experts and developers.<br><em>Eric Evans’s DDD term; not universal software vocabulary</em></dd></div>
+    </dl>
+
+    <h3>💻 Code Examples</h3>
+    <p>Both functions do the same thing. Only the names change.</p>
+    <div class="code-block" data-lang="python">
+      <div class="code-header"><span class="filename">You have to guess</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div>
+      <pre><code>def run(xs, m, t=0.82):
+    r = m.predict_proba(xs)
+    return [
+        x for x, p in zip(xs, r)
+        if max(p) &gt;= t
+    ]</code></pre>
+    </div>
+    <div class="code-block" data-lang="python">
+      <div class="code-header"><span class="filename">The job is visible</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div>
+      <pre><code>def select_confident_category_suggestions(
+    about_page_texts,
+    category_classifier,
+    minimum_confidence=0.82,
+):
+    probabilities_by_page = (
+        category_classifier.predict_proba(
+            about_page_texts
+        )
+    )
+    return [
+        about_text
+        for about_text, probabilities
+        in zip(
+            about_page_texts,
+            probabilities_by_page,
+        )
+        if max(probabilities)
+        &gt;= minimum_confidence
+    ]</code></pre>
+      <p class="code-explanation">What’s happening: About-page text enters, a category classifier produces probabilities, and a confidence rule selects a result.</p>
+    </div>
+
+    <h3>✏️ Hands-On Exercises</h3>
+
+    <h4>Check: quick check</h4>
+    <div class="quiz-card">
+      <p class="quiz-question"><strong>Q1:</strong> Why is <code>minimum_confidence</code> better than <code>t</code>?</p>
+      <div class="quiz-options">
+        <button class="quiz-option" data-correct="false" data-explanation-wrong="Style is secondary. The missing meaning is the real problem.">It follows a style rule.</button>
+        <button class="quiz-option" data-correct="true" data-explanation-correct="Correct. The name tells you what the number measures and how it affects the decision.">It explains the decision.</button>
+        <button class="quiz-option" data-correct="false" data-explanation-wrong="Longer names can still be vague. Length is not the goal.">It makes the code longer.</button>
+        <button class="quiz-option" data-correct="false" data-explanation-wrong="A type such as float cannot tell confidence from price or temperature.">It replaces a type hint.</button>
+      </div>
+    </div>
+
+    <div class="exercise-card">
+      <div class="exercise-header"><h4>Change: change only the names</h4><span class="time-estimate">⏱️ ~5 min</span></div>
+      <p class="exercise-goal">Do not change the calculation. Rename the function and values so they reveal the About-page input, category-classifier role, confidence measure, and selection decision.</p>
+      <div class="code-block" data-lang="python">
+        <div class="code-header"><span class="filename">rename_me.py</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div>
+        <pre><code>def run(xs, m, t=0.82):
+    r = m.predict_proba(xs)
+    return [
+        x for x, p in zip(xs, r)
+        if max(p) &gt;= t
+    ]</code></pre>
+      </div>
+      <p>Five pieces of meaning are still hidden. Tick each one your rename reveals:</p>
+      <div class="checklist">
+        <label><input type="checkbox"> The function says that it selects or filters a result.</label>
+        <label><input type="checkbox"> The input names About-page text or company records.</label>
+        <label><input type="checkbox"> The model’s category-classifier job is explicit.</label>
+        <label><input type="checkbox"> The threshold names confidence and its meaning.</label>
+        <label><input type="checkbox"> Probabilities or predictions replace <code>r</code> and <code>p</code>.</label>
+      </div>
+    </div>
+
+    <div class="exercise-card">
+      <div class="exercise-header"><h4>Transfer: try it elsewhere</h4><span class="time-estimate">⏱️ ~5 min</span></div>
+      <p>Find one name that makes you ask “what kind?” or “at which stage?”. Rename it before adding a comment.</p>
+    </div>
+
+    <p><em>The Pragmatic Programmer</em>’s Topic 44, “Naming Things” (to verify against book), gives the same advice from the practice side.</p>
+    <p>Its Tip 74 (p. 242 in the publisher’s <a href="https://pragprog.com/tips/" target="_blank" rel="noopener">official tip list</a>) is “Name Well; Rename When Needed”: when your understanding of the code changes, the names should change with it.</p>
+
+    <div class="callout-accent">
+      <span class="callout-icon">💡</span>
+      <div class="callout-content"><strong>Key Insight:</strong> A useful name removes a question from the next reader’s mind.</div>
+    </div>
+
+    <h3>📖 Curated Resources</h3>
+    <div class="resource-cards">
+      <a class="resource-card" href="https://web.stanford.edu/~ouster/cgi-bin/book.php" target="_blank" rel="noopener">
+        <span class="resource-type">📘 Main design reading</span>
+        <span class="resource-title">A Philosophy of Software Design</span>
+        <span class="resource-meta">John Ousterhout · Chapter 14, “Choosing Names” (to verify against book)</span>
+      </a>
+      <a class="resource-card" href="https://peps.python.org/pep-0008/#function-and-variable-names" target="_blank" rel="noopener">
+        <span class="resource-type">🐍 Python convention</span>
+        <span class="resource-title">PEP 8: Function and Variable Names</span>
+        <span class="resource-meta">Defines Python’s lowercase naming convention. Ousterhout supplies design advice; PEP 8 supplies Python convention.</span>
+      </a>
+      <a class="resource-card" href="https://pragprog.com/tips/" target="_blank" rel="noopener">
+        <span class="resource-type">📗 Practice reading</span>
+        <span class="resource-title">The Pragmatic Programmer, 20th Anniversary Edition</span>
+        <span class="resource-meta">Thomas and Hunt · Topic 44, “Naming Things” (to verify against book) · Tip 74 in the official tip list</span>
+      </a>
+    </div>
+
+    <h3>🤔 Reflection Questions</h3>
+    <ol>
+      <li><strong>Comprehension:</strong> What does <code>select_confident_category_suggestions</code> tell a reader that <code>run</code> does not?</li>
+      <li><strong>Application:</strong> Which of the five quick-reference questions does the name <code>t</code> fail to answer?</li>
+      <li><strong>Personal:</strong> Which name in code you read recently made you stop and guess?</li>
+    </ol>
+    <p>Stop and ask whenever a word feels harder than the idea.</p>
+
+    <h3>➡️ Next Steps</h3>
+    <p><strong>Next:</strong> Day 2, Know what a function promises.</p>
+    <div class="checklist">
+      <label><input type="checkbox"> I can say what real thing a value represents from its name.</label>
+      <label><input type="checkbox"> I can rename a function without changing its behaviour.</label>
+      <label><input type="checkbox"> I can name the thing, the stage, and the decision.</label>
+    </div>
+    <p><a href="https://github.com/CeciliaW888/software-fundamentals/blob/main/week-01/day-01-names-that-explain-the-job.md" target="_blank" rel="noopener">Read the full guide as Markdown on GitHub →</a></p>
+  </div>
+</section>

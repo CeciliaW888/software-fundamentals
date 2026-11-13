@@ -1,0 +1,39 @@
+{
+  "day": 10,
+  "title": "Put volatile dependencies at boundaries",
+  "questions": [
+    {
+      "question": "Which dependency is NOT volatile for this service?",
+      "options": [
+        "The source of About pages",
+        "The keyword-counting rule",
+        "The current time",
+        "The store"
+      ],
+      "answer": 1,
+      "explanation": "Keyword counting is the service's own stable logic. Websites, time, and storage either change, fail, or are unpredictable."
+    },
+    {
+      "question": "Why does HttpWebsiteSource turn OSError into WebsiteUnavailable?",
+      "options": [
+        "Because OSError cannot be caught",
+        "To hide every bug",
+        "So the core only needs to know its own exception",
+        "Because Python requires it"
+      ],
+      "answer": 2,
+      "explanation": "The adapter translates the outside world's errors into the core's vocabulary, so the core's try/except from Day 8 keeps working with any source."
+    },
+    {
+      "question": "What does a Protocol let Enricher accept?",
+      "options": [
+        "Only subclasses of WebsiteSource",
+        "Only objects from the standard library",
+        "Only real HTTP sources",
+        "Any object with a matching about_page method"
+      ],
+      "answer": 3,
+      "explanation": "Protocols describe shape, not ancestry, so a test fake works without inheriting anything."
+    }
+  ]
+}

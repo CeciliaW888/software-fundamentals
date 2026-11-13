@@ -1,0 +1,92 @@
+<section class="module" id="module-13" data-day="13">
+  <div class="module-inner">
+    <h2>Choose entities, values, and services deliberately</h2>
+    <div class="callout-accent"><span class="callout-icon">📍</span><div class="callout-content"><strong>Where we are in the story:</strong> Week 2 · The code is safe to change. Now you make it speak the business's language.</div></div>
+    <h3>🎯 Learning Objectives</h3>
+    <p>By the end of today, you will be able to:</p>
+    <ol><li>Decide whether a concept is defined by its identity or by its values.</li><li>Make a value object that refuses impossible values.</li><li>Give an entity an identity that survives a change of name.</li><li>Put a rule that belongs to no single object in a domain service.</li></ol>
+    <p><strong>Plain idea:</strong> some things are "the same one" over time, some things are just their values, and some rules belong to neither.</p>
+    <p><strong>Difficulty:</strong> 🔴 Advanced<br><strong>Estimated Time:</strong> 40 minutes (15 reading + 25 hands-on)<br><strong>Module:</strong> 4 · Model the domain (lesson 0013)</p>
+    <h3>📚 Core Concepts</h3>
+    <h4>Observe: three questions about three concepts</h4>
+    <p>Take three concepts from the Day 12 language and ask the same questions of each.</p>
+    <p><strong>A confidence of 0.6.</strong> Is one 0.6 different from another 0.6? No; they are interchangeable. Can a confidence change? It shouldn't; a new estimate is a new value. Can it be 1.7? Never.</p>
+    <p><strong>A company.</strong> Saltwater Kitchen renames itself Saltwater Kitchen &amp; Bar. Is it the same company? Yes; its history, its suggestions, and its reviews all still belong to it. Two different companies called "Northgate Builders" in two states? Different companies, same name.</p>
+    <p><strong>The rule "suggest only when confident and not contradicted by the partner directory".</strong> Does it belong to the suggestion? It needs the company's directory hint. To the company? It needs the suggestion's confidence. It belongs to neither.</p>
+    <h4>Say it plainly: three shapes for three kinds of concept</h4>
+    <p>The answers point to three shapes.</p>
+    <ul><li><strong>Things defined by their values</strong> are compared by value and never change. In stage 04: <code>Confidence</code>, <code>Evidence</code>, and <code>CategorySuggestion</code>, all frozen dataclasses. <code>Confidence</code> also checks itself: creating <code>Confidence(1.7)</code> raises <code>ValueError</code>, so an impossible confidence cannot exist anywhere in the service. That replaces Day 8's separate <code>check_confidence</code> call; the rule now lives where the value is made.</li><li><strong>Things defined by their <span class="term" tabindex="0" data-definition="What makes an entity the same one over time; here, company_id. Source: Course-authored plain definition.">identity</span></strong> have an ID that stays the same while other attributes change. <code>Company</code> compares equal by <code>company_id</code> only, so a renamed company is still the same company, and two companies with the same name are not.</li><li><strong>Rules that involve several objects</strong> go in a separate object named for the rule. <code>SuggestionPolicy.decide(suggestion, company)</code> holds the confidence threshold and the conflicting-sources rule.</li></ul>
+    <p>The category list itself is an enum, <code>Category</code>, because the business agreed on a fixed list.</p>
+    <p>Not everything needs one of these shapes. The keyword classifier is still a plain class with one method; giving it identity or value semantics would add nothing.</p>
+    <h4>Name it: value objects, entities, domain services</h4>
+    <p>Eric Evans's <em>Domain-Driven Design</em>, Chapter 5, "A Model Expressed in Software" (to verify against book), names these shapes. An <strong><span class="term" tabindex="0" data-definition="An object defined by its identity and continuity over time, not by its attributes. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 5 (to verify against book).">entity</span></strong> is an object defined by a thread of continuity and identity rather than by its attributes. A <strong><span class="term" tabindex="0" data-definition="An object that describes something, has no identity of its own, and is usually immutable. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 5 (to verify against book).">value object</span></strong> describes something and has no conceptual identity; it is often best made <span class="term" tabindex="0" data-definition="Unable to change after it is created. Source: Standard software vocabulary; Python&#x27;s frozen dataclasses provide it.">immutable</span>. A <strong>service</strong> is an operation that stands alone in the model because it does not belong naturally to any entity or value object.</p>
+    <p>Chapter 4, "Isolating the Domain" (to verify against book), explains why these objects live in their own layer, away from storage and user interface code. Chapter 6, "The Life Cycle of a Domain Object" (to verify against book), discusses keeping such objects consistent; Day 20 uses its idea of an aggregate.</p>
+    <p>Evans's free <a href="https://www.domainlanguage.com/ddd/reference/" target="_blank" rel="noopener"><em>DDD Reference</em></a> gives the same three shapes in brief, and adds a warning that fits the two companies called Northgate Builders: mistaken identity between entities can corrupt data.</p>
+    <div class="callout-accent"><span class="callout-icon">💡</span><div class="callout-content"><strong>Key Insight:</strong> Ask "is this the same one, or just the same value?" before choosing a shape. The answer decides equality, mutability, and where rules live.</div></div>
+    <h3>🔑 Key Terminology</h3>
+    <dl class="term-grid"><div class="term-card"><dt><strong>Entity</strong></dt><dd>An object defined by its identity and continuity over time, not by its attributes.<br><em>Paraphrased from Eric Evans, <em>Domain-Driven Design</em>, Chapter 5 (to verify against book)</em></dd></div><div class="term-card"><dt><strong>Value object</strong></dt><dd>An object that describes something, has no identity of its own, and is usually immutable.<br><em>Paraphrased from Eric Evans, <em>Domain-Driven Design</em>, Chapter 5 (to verify against book)</em></dd></div><div class="term-card"><dt><strong>Domain service</strong></dt><dd>An operation in the model that does not belong naturally to any entity or value object.<br><em>Paraphrased from Eric Evans, <em>Domain-Driven Design</em>, Chapter 5 (to verify against book)</em></dd></div><div class="term-card"><dt><strong>Immutable</strong></dt><dd>Unable to change after it is created.<br><em>Standard software vocabulary; Python's <a href="https://docs.python.org/3/library/dataclasses.html#frozen-instances" target="_blank" rel="noopener">frozen dataclasses</a> provide it</em></dd></div><div class="term-card"><dt><strong>Identity</strong></dt><dd>What makes an entity the same one over time; here, <code>company_id</code>.<br><em>Course-authored plain definition</em></dd></div><div class="term-card"><dt><strong>Invariant</strong></dt><dd>A rule that must always be true, such as "confidence is between 0 and 1".<br><em>Standard software vocabulary; this plain definition is course-authored</em></dd></div></dl>
+    <h3>💻 Code Examples</h3>
+    <h4>Example 1: A value object that guards its own rule</h4>
+    <div class="code-block" data-lang="python"><div class="code-header"><span class="filename">stage 04 · enricher/core/model.py</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code>@dataclass(frozen=True)
+class Confidence:
+    value: float
+
+    def __post_init__(self):
+        if not 0.0 &lt;= self.value &lt;= 1.0:
+            raise ValueError(f"confidence must be between 0 and 1, got {self.value!r}")
+
+    def at_least(self, minimum):
+        return self.value &gt;= minimum</code></pre></div>
+    <p><strong>What's happening:</strong> the check runs every time a <code>Confidence</code> is created, so no code anywhere can hold an impossible one.</p>
+    <h4>Example 2: An entity equal by identity</h4>
+    <div class="code-block" data-lang="python"><div class="code-header"><span class="filename">stage 04 · enricher/core/model.py</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code>@dataclass(eq=False)
+class Company:
+    company_id: str
+    name: str
+    directory_hint: Category | None = field(default=None)
+
+    def __eq__(self, other):
+        return isinstance(other, Company) and other.company_id == self.company_id
+
+    def __hash__(self):
+        return hash(self.company_id)</code></pre></div>
+    <p><strong>What's happening:</strong> <code>eq=False</code> stops the dataclass from comparing every field; the explicit <code>__eq__</code> compares only the identity.</p>
+    <h4>Example 3: A rule that belongs to no single object</h4>
+    <div class="code-block" data-lang="python"><div class="code-header"><span class="filename">stage 04 · enricher/core/policy.py</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code>def decide(self, suggestion, company):
+    """Return (Outcome, ReviewReason or None)."""
+    if not suggestion.confidence.at_least(self._minimum_confidence):
+        return Outcome.NEEDS_REVIEW, ReviewReason.WEAK_EVIDENCE
+    if company.directory_hint and company.directory_hint != suggestion.category:
+        return Outcome.NEEDS_REVIEW, ReviewReason.CONFLICTING_SOURCES
+    return Outcome.SUGGESTED, None</code></pre></div>
+    <p><strong>What's happening:</strong> the policy reads like the reviewers' rule, and it is the only place the threshold is used.</p>
+    <h4>Example 4: Tests in the business's terms</h4>
+    <div class="code-block" data-lang="python"><div class="code-header"><span class="filename">stage 04 · tests/test_model.py</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code>def test_company_keeps_its_identity_when_renamed():
+    before = Company(company_id="tradeline:TL-0042", name="Saltwater Kitchen")
+    after = Company(company_id="tradeline:TL-0042", name="Saltwater Kitchen &amp; Bar")
+    assert before == after
+    assert Company("a", "Same Name") != Company("b", "Same Name")</code></pre></div>
+    <h3>✏️ Hands-On Exercises</h3>
+    <h4>Exercise 1 · Check (⏱️ ~3 min)</h4>
+    <div class="quiz-card"><p class="quiz-question"><strong>Q1:</strong> Which concept should be a value object?</p><div class="quiz-options"><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is C. Two pieces of evidence with the same URL and excerpt are interchangeable. The others have identities that persist over time.">A company</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is C. Two pieces of evidence with the same URL and excerpt are interchangeable. The others have identities that persist over time.">A reviewer's account</button><button class="quiz-option" data-correct="true" data-explanation-correct="Correct. Two pieces of evidence with the same URL and excerpt are interchangeable. The others have identities that persist over time.">A piece of evidence: a URL and an excerpt</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is C. Two pieces of evidence with the same URL and excerpt are interchangeable. The others have identities that persist over time.">A batch run with its own history</button></div></div>
+    <div class="quiz-card"><p class="quiz-question"><strong>Q2:</strong> Two <code>Company</code> objects have the same name but different IDs. Are they equal?</p><div class="quiz-options"><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is D. Entities are equal by identity, so two different companies with one name stay distinct.">Yes, because names match</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is D. Entities are equal by identity, so two different companies with one name stay distinct.">Only if they have the same directory hint</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is D. Entities are equal by identity, so two different companies with one name stay distinct.">Python cannot compare them</button><button class="quiz-option" data-correct="true" data-explanation-correct="Correct. Entities are equal by identity, so two different companies with one name stay distinct.">No, because identity is the company ID</button></div></div>
+    <div class="quiz-card"><p class="quiz-question"><strong>Q3:</strong> Why is <code>SuggestionPolicy</code> a service rather than a method on <code>Company</code>?</p><div class="quiz-options"><button class="quiz-option" data-correct="true" data-explanation-correct="Correct. A rule spanning several objects reads more clearly as its own named operation.">The rule needs both a suggestion and a company, and belongs naturally to neither.</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is A. A rule spanning several objects reads more clearly as its own named operation.">Services run faster.</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is A. A rule spanning several objects reads more clearly as its own named operation.">Companies cannot have methods.</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is A. A rule spanning several objects reads more clearly as its own named operation.">Evans forbids methods on entities.</button></div></div>
+    <h4>Exercise 2 · Change: a new value object (⏱️ ~20 min)</h4>
+    <p><strong>Goal:</strong> Give a concept the right shape.</p>
+    <p><strong>Instructions:</strong></p>
+    <ol><li>Reviewers want evidence excerpts limited to 200 characters, and never empty.</li><li>Make <code>Evidence</code> enforce both rules in <code>__post_init__</code>, as <code>Confidence</code> does.</li><li>Write two tests in <code>tests/test_model.py</code>: one for an empty excerpt, one for a too-long excerpt.</li><li>Run <code>python -m pytest -q</code> and check that every scenario still passes.</li></ol>
+    <details class="exercise-hints"><summary>Hint</summary><p>Check <code>len(self.excerpt)</code> and <code>self.excerpt.strip()</code>. All sample first sentences are well under 200 characters.</p></details>
+    <h4>Exercise 3 · Transfer: identity or value? (⏱️ ~10 min)</h4>
+    <p>List five concepts from a system you know. For each, answer: "is it the same one over time, or just its values?". Find one that is modelled the wrong way round.</p>
+    <h3>📖 Curated Resources</h3>
+    <ol><li><strong>Domain reading:</strong> Eric Evans, <em>Domain-Driven Design</em>, Chapter 5, "A Model Expressed in Software", with Chapters 4 and 6 (to verify against book) for context.<br>🔗 <a href="https://www.domainlanguage.com/ddd/" target="_blank" rel="noopener">DDD resources from Domain Language</a><br>Why: the source of entities, value objects, and services.</li><li><strong><a href="https://docs.python.org/3/library/dataclasses.html" target="_blank" rel="noopener">Python documentation: dataclasses</a></strong><br>Why: <code>frozen=True</code>, <code>eq=False</code>, and <code>__post_init__</code>.</li><li><strong><a href="https://docs.python.org/3/reference/datamodel.html#object.__hash__" target="_blank" rel="noopener">Python documentation: object.__hash__</a></strong><br>Why: why an object that defines <code>__eq__</code> should also define <code>__hash__</code>.</li><li><strong>Free source:</strong> Evans's free <a href="https://www.domainlanguage.com/ddd/reference/" target="_blank" rel="noopener"><em>DDD Reference</em></a>.<br>Why: short definitions of entities, value objects, and services.</li></ol>
+    <h3>🤔 Reflection Questions</h3>
+    <ol><li><strong>Comprehension:</strong> Why are value objects usually immutable?</li><li><strong>Application:</strong> Is a category suggestion an entity or a value? What would change if reviewers could comment on one?</li><li><strong>Connection:</strong> How does <code>Confidence</code> move Day 8's crash-early check closer to the data?</li><li><strong>Critical Thinking:</strong> When would modelling everything as entities, values, and services be overengineering?</li></ol>
+    <p>Stop and ask whenever a word feels harder than the idea.</p>
+    <h3>➡️ Next Steps</h3>
+    <p><strong>Tomorrow:</strong> <a href="https://github.com/CeciliaW888/software-fundamentals/blob/main/week-02/day-14-context-boundaries.md" target="_blank" rel="noopener">Day 14: Protect context boundaries</a>. A partner's data arrives with its own model; you keep it out of yours.</p>
+    <p><strong>Before moving on, make sure you can:</strong></p>
+    <div class="checklist"><label><input type="checkbox"> Tell an entity from a value object with one question.</label><label><input type="checkbox"> Write a value object that rejects impossible values.</label><label><input type="checkbox"> Explain when a rule deserves its own domain service.</label></div>
+    <p><a href="https://github.com/CeciliaW888/software-fundamentals/blob/main/week-02/day-13-entities-values-services.md" target="_blank" rel="noopener">Read this guide as Markdown on GitHub →</a></p>
+  </div>
+</section>

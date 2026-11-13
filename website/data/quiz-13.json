@@ -1,0 +1,39 @@
+{
+  "day": 13,
+  "title": "Choose entities, values, and services deliberately",
+  "questions": [
+    {
+      "question": "Which concept should be a value object?",
+      "options": [
+        "A company",
+        "A reviewer's account",
+        "A piece of evidence: a URL and an excerpt",
+        "A batch run with its own history"
+      ],
+      "answer": 2,
+      "explanation": "Two pieces of evidence with the same URL and excerpt are interchangeable. The others have identities that persist over time."
+    },
+    {
+      "question": "Two Company objects have the same name but different IDs. Are they equal?",
+      "options": [
+        "Yes, because names match",
+        "Only if they have the same directory hint",
+        "Python cannot compare them",
+        "No, because identity is the company ID"
+      ],
+      "answer": 3,
+      "explanation": "Entities are equal by identity, so two different companies with one name stay distinct."
+    },
+    {
+      "question": "Why is SuggestionPolicy a service rather than a method on Company?",
+      "options": [
+        "The rule needs both a suggestion and a company, and belongs naturally to neither.",
+        "Services run faster.",
+        "Companies cannot have methods.",
+        "Evans forbids methods on entities."
+      ],
+      "answer": 0,
+      "explanation": "A rule spanning several objects reads more clearly as its own named operation."
+    }
+  ]
+}

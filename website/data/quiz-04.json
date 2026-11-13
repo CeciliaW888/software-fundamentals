@@ -1,0 +1,39 @@
+{
+  "day": 4,
+  "title": "Recognise complexity by its symptoms",
+  "questions": [
+    {
+      "question": "The threshold 0.82 appears in two functions. Which symptom is that?",
+      "options": [
+        "Cognitive load",
+        "Unknown unknowns",
+        "Obscurity only",
+        "Change amplification"
+      ],
+      "answer": 3,
+      "explanation": "One decision, the threshold, needs edits in two places: change amplification. It also adds some cognitive load, but the defining symptom is the extra edit."
+    },
+    {
+      "question": "Why is the 1 / len(CATEGORIES) check an unknown unknown?",
+      "options": [
+        "Someone adding a category has no hint that this line depends on the count.",
+        "It runs slowly on large lists.",
+        "Python cannot divide by a list length.",
+        "It is covered by a test."
+      ],
+      "answer": 0,
+      "explanation": "The dependency is invisible from where you make the change, so you do not know you need to know it. Speed and syntax are not the problem."
+    },
+    {
+      "question": "What makes adding a category cheaper in the Module 2 code?",
+      "options": [
+        "Shorter variable names",
+        "Category knowledge lives in one module and the list is derived from it",
+        "More comments in every file",
+        "Removing the Other category"
+      ],
+      "answer": 1,
+      "explanation": "Putting the knowledge in one place removes the extra edits and the hidden order rule. Comments and names help reading but do not remove edits."
+    }
+  ]
+}

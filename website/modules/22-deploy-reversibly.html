@@ -1,0 +1,94 @@
+<section class="module" id="module-22" data-day="22">
+  <div class="module-inner">
+    <h2>Deploy reversibly</h2>
+    <div class="callout-accent"><span class="callout-icon">📍</span><div class="callout-content"><strong>Where we are in the story:</strong> Week 4 · The service is almost ready for production. Now you run it, watch it, and recover when it fails.</div></div>
+    <h3>🎯 Learning Objectives</h3>
+    <p>By the end of today, you will be able to:</p>
+    <ol><li>Move settings out of code into the environment, with safe defaults and validation.</li><li>Ship new behaviour behind a feature flag that is off by default.</li><li>Run every stage's tests automatically on each push.</li><li>Plan the rollback for a change before you ship it.</li></ol>
+    <p><strong>Plain idea:</strong> every change you ship should have a quick, boring way to undo it.</p>
+    <p><strong>Difficulty:</strong> 🔴 Advanced<br><strong>Estimated Time:</strong> 40 minutes (15 reading + 25 hands-on)<br><strong>Module:</strong> 6 · Operate what you build (lesson 0022)</p>
+    <h3>📚 Core Concepts</h3>
+    <h4>Observe: four ways a release can go wrong</h4>
+    <p>Imagine the next release of the Company Enricher: it switches from the sample websites to real HTTP pages and lowers the threshold to 0.8. List what could go wrong, and how long each would take to undo with the Module 5 code.</p>
+    <table><thead><tr><th>Problem</th><th>Undo with the Module 5 code</th></tr></thead><tbody><tr><td>Real websites time out</td><td>change code, review, release again</td></tr><tr><td>The new threshold sends wrong categories through</td><td>change a constant in code, release again</td></tr><tr><td>A bug in the new code</td><td>find the commit, revert, release again</td></tr><tr><td>A migration breaks the old version</td><td>restore the database from a backup</td></tr></tbody></table>
+    <p>Every undo is a code change or worse. At 2 a.m., that is slow and risky.</p>
+    <h4>Say it plainly: make undo a switch, not a project</h4>
+    <p>Stage 06 makes each of those undos faster.</p>
+    <p><strong>Settings from the environment.</strong> <code>Settings.from_env</code> reads <code>ENRICHER_MIN_CONFIDENCE</code>, <code>ENRICHER_DB_PATH</code>, <code>ENRICHER_USE_HTTP_SOURCE</code>, and <code>ENRICHER_RETRY_ATTEMPTS</code>, with safe defaults. Changing the threshold is restarting with a different value; undoing it is restarting with the old one. Bad values, such as a threshold of 1.5, stop the service at startup with a clear message instead of running with nonsense.</p>
+    <p><strong>A <span class="term" tabindex="0" data-definition="A setting that turns a piece of behaviour on or off without a code change. Source: Standard software vocabulary; this plain definition is course-authored.">feature flag</span>.</strong> <code>ENRICHER_USE_HTTP_SOURCE</code> is off by default. <code>build_enricher</code> is the one place that reads it and wires either the sample source or the HTTP source. The new code ships switched off, is switched on when ready, and is switched off again in seconds if it misbehaves.</p>
+    <p><strong>Expand-only migrations.</strong> Day 19's rule means the previous version of the code still works on the new schema, so rolling back the code never needs rolling back the database.</p>
+    <p><strong>Automated tests on every push.</strong> A GitHub Actions workflow runs <code>run_all_tests.sh</code>, every stage's tests, whenever the project changes. A broken change is caught before it is merged, and <code>git revert</code> remains a one-command undo for anything that slips through.</p>
+    <p>Secrets, such as a future API key, follow the same path into settings but never into the repository. OWASP's secrets guidance explains why and how.</p>
+    <h4>Name it: configuration, feature flags, reversibility</h4>
+    <p><em>The Pragmatic Programmer</em>, Topic 11, "<span class="term" tabindex="0" data-definition="How easily a decision can be changed or undone later. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 11, &quot;Reversibility&quot; (to verify against book).">Reversibility</span>" (to verify against book), argues that decisions are rarely final, so designs should make them easy to change. Its Topic 32, "<span class="term" tabindex="0" data-definition="Values that control a program&#x27;s behaviour and can change without changing its code. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 32, &quot;Configuration&quot; (to verify against book).">Configuration</span>" (to verify against book) recommends keeping values that may change after release, such as thresholds and service addresses, outside the code.</p>
+    <p>A <strong>feature flag</strong> is a setting that switches a piece of behaviour on or off without a code change. A <strong><span class="term" tabindex="0" data-definition="Returning a system to its previous working state. Source: Standard software vocabulary; this plain definition is course-authored.">rollback</span></strong> returns a system to its previous working state. <strong><span class="term" tabindex="0" data-definition="Running the tests automatically on every change. Source: Standard software vocabulary; see GitHub Actions documentation.">Continuous integration</span></strong> runs the tests automatically on every change; GitHub Actions is one service that does this.</p>
+    <p>In the publisher's <a href="https://pragprog.com/tips/" target="_blank" rel="noopener">official list of the book's tips</a>, Tip 18 (p. 48) is "There Are No Final Decisions", Tip 55 (p. 166) is "Parameterize Your App Using External Configuration", Tip 89 (p. 274) is "Use Version Control to Drive Builds, Tests, and Releases", and Tip 90 (p. 275) is "Test Early, Test Often, Test Automatically". Topic 27, "Don't Outrun Your Headlights", available as the publisher's free excerpt on the <a href="https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/" target="_blank" rel="noopener">book page</a>, adds the habit underneath all of them: ship in small steps you can see the end of.</p>
+    <div class="callout-accent"><span class="callout-icon">💡</span><div class="callout-content"><strong>Key Insight:</strong> Before shipping, write down the undo. If the undo is "write more code", make it a setting or a flag first.</div></div>
+    <h3>🔑 Key Terminology</h3>
+    <dl class="term-grid"><div class="term-card"><dt><strong>Configuration</strong></dt><dd>Values that control a program's behaviour and can change without changing its code.<br><em>Paraphrased from Thomas and Hunt, <em>The Pragmatic Programmer</em>, 20th Anniversary Edition, Topic 32, "Configuration" (to verify against book)</em></dd></div><div class="term-card"><dt><strong>Reversibility</strong></dt><dd>How easily a decision can be changed or undone later.<br><em>Paraphrased from Thomas and Hunt, <em>The Pragmatic Programmer</em>, 20th Anniversary Edition, Topic 11, "Reversibility" (to verify against book)</em></dd></div><div class="term-card"><dt><strong>Environment variable</strong></dt><dd>A named value set outside a program that the program can read, such as <code>ENRICHER_DB_PATH</code>.<br><em>Official Python vocabulary (<a href="https://docs.python.org/3/library/os.html#os.environ" target="_blank" rel="noopener">os.environ</a>)</em></dd></div><div class="term-card"><dt><strong>Feature flag</strong></dt><dd>A setting that turns a piece of behaviour on or off without a code change.<br><em>Standard software vocabulary; this plain definition is course-authored</em></dd></div><div class="term-card"><dt><strong>Rollback</strong></dt><dd>Returning a system to its previous working state.<br><em>Standard software vocabulary; this plain definition is course-authored</em></dd></div><div class="term-card"><dt><strong>Continuous integration</strong></dt><dd>Running the tests automatically on every change.<br><em>Standard software vocabulary; see <a href="https://docs.github.com/en/actions" target="_blank" rel="noopener">GitHub Actions documentation</a></em></dd></div></dl>
+    <h3>💻 Code Examples</h3>
+    <h4>Example 1: Settings with defaults and validation</h4>
+    <div class="code-block" data-lang="python"><div class="code-header"><span class="filename">stage 06 · enricher/settings.py</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code>@classmethod
+def from_env(cls, environ=None):
+    environ = os.environ if environ is None else environ
+    defaults = cls()
+    settings = cls(
+        minimum_confidence=float(environ.get("ENRICHER_MIN_CONFIDENCE", defaults.minimum_confidence)),
+        database_path=environ.get("ENRICHER_DB_PATH", defaults.database_path),
+        use_http_source=environ.get("ENRICHER_USE_HTTP_SOURCE", "false").lower() == "true",
+        retry_attempts=int(environ.get("ENRICHER_RETRY_ATTEMPTS", defaults.retry_attempts)),
+    )
+    if not 0.0 &lt; settings.minimum_confidence &lt;= 1.0:
+        raise ValueError("ENRICHER_MIN_CONFIDENCE must be above 0 and at most 1")
+    if settings.retry_attempts &lt; 1:
+        raise ValueError("ENRICHER_RETRY_ATTEMPTS must be at least 1")
+    return settings</code></pre></div>
+    <p><strong>What's happening:</strong> <code>environ</code> can be passed in, so tests check settings without touching the real environment.</p>
+    <h4>Example 2: One place reads the flag</h4>
+    <div class="code-block" data-lang="python"><div class="code-header"><span class="filename">stage 06 · enricher/app.py</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code>if settings.use_http_source:
+    source = HttpWebsiteSource(about_urls or {})
+else:
+    source = SampleWebsiteSource()</code></pre></div>
+    <p><strong>What's happening:</strong> the rest of the service never knows which source it got, thanks to Day 10's boundary.</p>
+    <h4>Example 3: Tests on every push</h4>
+    <div class="code-block" data-lang="yaml"><div class="code-header"><span class="filename">.github/workflows/company-enricher-tests.yml</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code>jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pytest
+      - run: ./projects/company-enricher/run_all_tests.sh</code></pre></div>
+    <h4>Example 4: The rollback plan, written down</h4>
+    <div class="code-block" data-lang="bash"><div class="code-header"><span class="filename">bash</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code># Real websites misbehave: switch the flag off and restart.
+ENRICHER_USE_HTTP_SOURCE=false python -m enricher
+# The threshold change was wrong: restart with the old value.
+ENRICHER_MIN_CONFIDENCE=0.82 python -m enricher
+# A code change was wrong: undo that commit; the schema still works for old code.
+git revert --no-edit &lt;commit&gt;</code></pre></div>
+    <h3>✏️ Hands-On Exercises</h3>
+    <h4>Exercise 1 · Check (⏱️ ~3 min)</h4>
+    <div class="quiz-card"><p class="quiz-question"><strong>Q1:</strong> Why is <code>ENRICHER_USE_HTTP_SOURCE</code> off by default?</p><div class="quiz-options"><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is B. A flag that defaults to the old behaviour makes the safe state the default, and undo a setting change.">HTTP is slower.</button><button class="quiz-option" data-correct="true" data-explanation-correct="Correct. A flag that defaults to the old behaviour makes the safe state the default, and undo a setting change.">New behaviour ships switched off and is turned on deliberately, so turning it off is the rollback.</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is B. A flag that defaults to the old behaviour makes the safe state the default, and undo a setting change.">Python cannot read true.</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is B. A flag that defaults to the old behaviour makes the safe state the default, and undo a setting change.">The sample source is more accurate.</button></div></div>
+    <div class="quiz-card"><p class="quiz-question"><strong>Q2:</strong> Why does <code>from_env</code> refuse a threshold of 1.5 at startup?</p><div class="quiz-options"><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is C. A bad setting caught at startup is a clear, immediate failure, like Day 8&#x27;s impossible confidence.">Because floats cannot exceed 1</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is C. A bad setting caught at startup is a clear, immediate failure, like Day 8&#x27;s impossible confidence.">To save memory</button><button class="quiz-option" data-correct="true" data-explanation-correct="Correct. A bad setting caught at startup is a clear, immediate failure, like Day 8&#x27;s impossible confidence.">To crash early on a configuration mistake instead of running with nonsense</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is C. A bad setting caught at startup is a clear, immediate failure, like Day 8&#x27;s impossible confidence.">Because the tests require it</button></div></div>
+    <div class="quiz-card"><p class="quiz-question"><strong>Q3:</strong> Why can the code be rolled back without rolling back the database?</p><div class="quiz-options"><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is D. Day 19&#x27;s expand-before-contract rule is what makes code rollback safe.">SQLite has no schema.</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is D. Day 19&#x27;s expand-before-contract rule is what makes code rollback safe.">Rollbacks delete the database.</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is D. Day 19&#x27;s expand-before-contract rule is what makes code rollback safe.">The flag controls the schema.</button><button class="quiz-option" data-correct="true" data-explanation-correct="Correct. Day 19&#x27;s expand-before-contract rule is what makes code rollback safe.">Migrations are expand-only, so older code still works with the newer schema.</button></div></div>
+    <h4>Exercise 2 · Change: flag a new behaviour (⏱️ ~20 min)</h4>
+    <p><strong>Goal:</strong> Ship a change that can be switched off.</p>
+    <p><strong>Instructions:</strong></p>
+    <ol><li>New behaviour: when the partner directory hint and the website agree, accept at a lower threshold of 0.6.</li><li>Add a flag <code>ENRICHER_TRUST_AGREEING_SOURCES</code>, default off, to <code>Settings</code>.</li><li>Pass it into <code>SuggestionPolicy</code> from <code>build_enricher</code>, and implement the rule only when the flag is on.</li><li>Write tests for flag off (old behaviour unchanged) and flag on, then run <code>./run_all_tests.sh</code> from <code>projects/company-enricher</code>.</li></ol>
+    <details class="exercise-hints"><summary>Hint</summary><p>Keep the existing policy tests unchanged: if any of them fails with the flag off, the default behaviour changed.</p></details>
+    <h4>Exercise 3 · Transfer: write the undo (⏱️ ~10 min)</h4>
+    <p>For the last change you shipped or reviewed, write its rollback in three lines. If any line says "write code", decide which setting or flag would have shortened it.</p>
+    <h3>📖 Curated Resources</h3>
+    <ol><li><strong>Practice reading:</strong> David Thomas and Andrew Hunt, <em>The Pragmatic Programmer</em>, 20th Anniversary Edition, Topics 11, "Reversibility" and 32, "Configuration" (to verify against book).<br>🔗 <a href="https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/" target="_blank" rel="noopener">Publisher page</a><br>Why: keeping decisions changeable and values outside the code.</li><li><strong><a href="https://docs.github.com/en/actions" target="_blank" rel="noopener">GitHub Actions documentation</a></strong><br>Why: how the workflow in Example 3 runs.</li><li><strong><a href="https://git-scm.com/docs/git-revert" target="_blank" rel="noopener">Git documentation: git-revert</a></strong><br>Why: undoing a released commit.</li><li><strong><a href="https://cheatsheetseries.owasp.org/cheatsheets/Secrets_Management_Cheat_Sheet.html" target="_blank" rel="noopener">OWASP: Secrets Management Cheat Sheet</a></strong><br>Why: how secrets differ from ordinary settings.</li><li><strong><a href="https://docs.python.org/3/library/os.html#os.environ" target="_blank" rel="noopener">Python documentation: os.environ</a></strong><br>Why: how environment variables reach the program.</li></ol>
+    <h3>🤔 Reflection Questions</h3>
+    <ol><li><strong>Comprehension:</strong> What makes a rollback "boring", and why is that good?</li><li><strong>Application:</strong> Which of the service's settings would you never let change without a code review?</li><li><strong>Connection:</strong> Which earlier lessons made today's rollbacks possible?</li><li><strong>Critical Thinking:</strong> Can too many flags become a source of complexity? How would you retire one?</li></ol>
+    <p>Stop and ask whenever a word feels harder than the idea.</p>
+    <h3>➡️ Next Steps</h3>
+    <p><strong>Tomorrow:</strong> <a href="https://github.com/CeciliaW888/software-fundamentals/blob/main/week-04/day-23-measure-before-optimizing.md" target="_blank" rel="noopener">Day 23: Measure before optimizing</a>. The batch is getting slower; you will find out why before changing anything.</p>
+    <p><strong>Before moving on, make sure you can:</strong></p>
+    <div class="checklist"><label><input type="checkbox"> Read settings from the environment with defaults and validation.</label><label><input type="checkbox"> Ship behaviour behind a flag that defaults to off.</label><label><input type="checkbox"> Write the rollback for a change before shipping it.</label></div>
+    <p><a href="https://github.com/CeciliaW888/software-fundamentals/blob/main/week-04/day-22-deploy-reversibly.md" target="_blank" rel="noopener">Read this guide as Markdown on GitHub →</a></p>
+  </div>
+</section>

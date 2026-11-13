@@ -1,0 +1,39 @@
+{
+  "day": 5,
+  "title": "Build deep modules",
+  "questions": [
+    {
+      "question": "What makes the trio of website helpers shallow?",
+      "options": [
+        "Each function is fewer than ten lines.",
+        "They use a dictionary.",
+        "Together they make callers learn three names, an order, and a URL hand-off for little work.",
+        "They have docstrings."
+      ],
+      "answer": 2,
+      "explanation": "Shallowness is about the ratio of interface to functionality. Short functions are not the problem; the amount callers must learn is."
+    },
+    {
+      "question": "Where should the rule \"the first sentence states the main activity\" live?",
+      "options": [
+        "In every caller that needs the activity",
+        "In a comment at the top of the project",
+        "In the classifier's keyword list",
+        "In the module that owns the About page, as main_activity"
+      ],
+      "answer": 3,
+      "explanation": "Pulling the rule down into the page module means callers cannot forget or disagree about it."
+    },
+    {
+      "question": "Which change would make CompanyWebsites shallower?",
+      "options": [
+        "Making callers pass the page dictionary to every about_page call",
+        "Adding caching inside about_page",
+        "Raising WebsiteUnavailable for unknown companies",
+        "Returning an AboutPage instead of a dictionary"
+      ],
+      "answer": 0,
+      "explanation": "Pushing the data back out to every call grows the interface without adding functionality. Caching inside the module would make it deeper, not shallower."
+    }
+  ]
+}

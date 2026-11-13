@@ -1,0 +1,39 @@
+{
+  "day": 22,
+  "title": "Deploy reversibly",
+  "questions": [
+    {
+      "question": "Why is ENRICHER_USE_HTTP_SOURCE off by default?",
+      "options": [
+        "HTTP is slower.",
+        "New behaviour ships switched off and is turned on deliberately, so turning it off is the rollback.",
+        "Python cannot read true.",
+        "The sample source is more accurate."
+      ],
+      "answer": 1,
+      "explanation": "A flag that defaults to the old behaviour makes the safe state the default, and undo a setting change."
+    },
+    {
+      "question": "Why does from_env refuse a threshold of 1.5 at startup?",
+      "options": [
+        "Because floats cannot exceed 1",
+        "To save memory",
+        "To crash early on a configuration mistake instead of running with nonsense",
+        "Because the tests require it"
+      ],
+      "answer": 2,
+      "explanation": "A bad setting caught at startup is a clear, immediate failure, like Day 8's impossible confidence."
+    },
+    {
+      "question": "Why can the code be rolled back without rolling back the database?",
+      "options": [
+        "SQLite has no schema.",
+        "Rollbacks delete the database.",
+        "The flag controls the schema.",
+        "Migrations are expand-only, so older code still works with the newer schema."
+      ],
+      "answer": 3,
+      "explanation": "Day 19's expand-before-contract rule is what makes code rollback safe."
+    }
+  ]
+}

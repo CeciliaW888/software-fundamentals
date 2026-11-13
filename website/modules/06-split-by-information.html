@@ -1,0 +1,98 @@
+<section class="module" id="module-6" data-day="6">
+  <div class="module-inner">
+    <h2>Split by information, not length</h2>
+    <div class="callout-accent"><span class="callout-icon">📍</span><div class="callout-content"><strong>Where we are in the story:</strong> Week 1 · You can read the script now. Before it grows, you learn to tame its complexity.</div></div>
+    <h3>🎯 Learning Objectives</h3>
+    <p>By the end of today, you will be able to:</p>
+    <ol><li>Decide whether two pieces of code belong together by asking what knowledge they share.</li><li>Compare a short-function design with a deep-function design of the same classifier.</li><li>Recognise duplicated knowledge, not just duplicated text.</li><li>Explain orthogonality with an example from the Company Enricher.</li></ol>
+    <p><strong>Plain idea:</strong> keep code together when it shares knowledge, and apart when it does not, whatever the line count says.</p>
+    <p><strong>Difficulty:</strong> 🟡 Intermediate<br><strong>Estimated Time:</strong> 35 minutes (15 reading + 20 hands-on)<br><strong>Module:</strong> 2 · Control complexity (lesson 0006)</p>
+    <h3>📚 Core Concepts</h3>
+    <h4>Observe: one classifier, two shapes</h4>
+    <p>The project holds two versions of the same classifier, and a test proves they give identical answers for every sample company.</p>
+    <p>The first, in <code>exercises/day06_short_functions.py</code>, is split into six short functions: <code>tokenize</code>, <code>count_hits</code>, <code>total_hits</code>, <code>best_category</code>, <code>confidence_for</code>, and <code>suggest_category</code>. Each one is two or three lines.</p>
+    <p>The second, <code>KeywordCategoryClassifier.suggest</code> in <code>classifier.py</code>, is one function of about ten lines.</p>
+    <p>Read both and ask a different question from "which is shorter?". Ask: to change how confidence is calculated, how many functions must I read? In the short version, confidence depends on <code>count_hits</code>, <code>total_hits</code>, and <code>confidence_for</code>, and the zero-hit rule sits in a fourth function. In the deep version, all of that is on one screen.</p>
+    <h4>Say it plainly: split by what code knows</h4>
+    <p>A rule that keeps showing up: code that shares knowledge should live together. The six short functions all share one piece of knowledge, "a hit count per category decides the answer", so splitting them does not separate anything. It only makes the reader jump between them and makes callers responsible for the order.</p>
+    <p>Now the opposite case. The classifier knows nothing about websites, and the website module knows nothing about keywords. That split is worth keeping: you can change one without reading the other.</p>
+    <p>Duplication follows the same rule. In the Module 1 code, <code>predict_proba</code> returned probabilities in <code>CATEGORIES</code> order and <code>suggest</code> turned a position back into a name. The text was not duplicated, but the knowledge "probabilities follow list order" was needed in two places. The Module 2 classifier counts hits in a <span class="term" tabindex="0" data-definition="A Python mapping from keys to values, such as category to hit count. Source: Official Python vocabulary (Python tutorial: dictionaries).">dictionary</span> keyed by category, so no code has to know about positions at all.</p>
+    <h4>Name it: better together, DRY, orthogonality</h4>
+    <p>John Ousterhout's <em>A Philosophy of Software Design</em>, Chapter 9, "Better Together Or Better Apart?" (to verify against book), argues that pieces of code should be combined when they share information, when combining simplifies the interface, or when it removes duplication. He also warns against splitting a method only to make it shorter, because readers then have to understand several pieces at once.</p>
+    <p><em>The Pragmatic Programmer</em> states the duplication rule as <span class="term" tabindex="0" data-definition="Each piece of knowledge in a system should be expressed in exactly one authoritative place. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 9, &quot;DRY - The Evils of Duplication&quot;, checked in the publisher&#x27;s free excerpt.">DRY</span> in Topic 9, "DRY - The Evils of Duplication": each piece of knowledge in a system should be expressed in exactly one place that everything else defers to. The authors stress that DRY is about knowledge and intent, not just copied text.</p>
+    <p>The same book's Topic 10, "<span class="term" tabindex="0" data-definition="Two parts are orthogonal when a change to one does not affect the other. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 10, &quot;Orthogonality&quot; (to verify against book).">Orthogonality</span>" (to verify against book) describes the other half: two parts are orthogonal when changing one does not affect the other. The classifier and the website module are orthogonal; the six short functions are not.</p>
+    <p>The publisher's free excerpt of Topic 9 makes the knowledge point in detail: the acid test for duplication is whether one change in the world forces edits in more than one place, and two pieces of code that merely look alike are not duplication if they could change for different reasons. Ousterhout's free extract also contains section 9.8, his comparison with <em>Clean Code</em>: he agrees that very long functions are hard to read, but argues that splitting purely by length pushes readers to understand several functions at once.</p>
+    <div class="callout-accent"><span class="callout-icon">💡</span><div class="callout-content"><strong>Key Insight:</strong> The right question is not "is this function too long?" but "what does this code know, and who else knows it?".</div></div>
+    <h3>🔑 Key Terminology</h3>
+    <dl class="term-grid"><div class="term-card"><dt><strong>DRY</strong></dt><dd>Each piece of knowledge in a system should be expressed in exactly one authoritative place.<br><em>Paraphrased from Thomas and Hunt, <em>The Pragmatic Programmer</em>, 20th Anniversary Edition, Topic 9, "DRY - The Evils of Duplication", checked in the publisher's free excerpt</em></dd></div><div class="term-card"><dt><strong>Orthogonality</strong></dt><dd>Two parts are orthogonal when a change to one does not affect the other.<br><em>Paraphrased from Thomas and Hunt, <em>The Pragmatic Programmer</em>, 20th Anniversary Edition, Topic 10, "Orthogonality" (to verify against book)</em></dd></div><div class="term-card"><dt><strong>Duplicated knowledge</strong></dt><dd>The same fact or rule needed in more than one place, even if the code text differs.<br><em>Course-authored plain definition, following <em>The Pragmatic Programmer</em>'s DRY topic</em></dd></div><div class="term-card"><dt><strong>Shared information</strong></dt><dd>Knowledge two pieces of code must both have, which is a reason to keep them together.<br><em>Paraphrased from John Ousterhout, <em>A Philosophy of Software Design</em>, 2nd ed., Chapter 9 (to verify against book)</em></dd></div><div class="term-card"><dt><strong>Dictionary</strong></dt><dd>A Python mapping from keys to values, such as category to hit count.<br><em>Official Python vocabulary (<a href="https://docs.python.org/3/tutorial/datastructures.html#dictionaries" target="_blank" rel="noopener">Python tutorial: dictionaries</a>)</em></dd></div></dl>
+    <h3>💻 Code Examples</h3>
+    <h4>Example 1: Six short functions</h4>
+    <div class="code-block" data-lang="python"><div class="code-header"><span class="filename">stage 02 · exercises/day06_short_functions.py</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code>def total_hits(hits):
+    return sum(hits.values())
+
+
+def best_category(hits):
+    return max(hits, key=hits.get)
+
+
+def confidence_for(hits, category):
+    return hits[category] / total_hits(hits)
+
+
+def suggest_category(text):
+    hits = count_hits(tokenize(text))
+    if total_hits(hits) == 0:
+        return OTHER, 0.0
+    category = best_category(hits)
+    return category, confidence_for(hits, category)</code></pre></div>
+    <p><strong>What's happening:</strong> each function is tiny, but to understand <code>suggest_category</code> you must read four others, and the zero-hit rule is separated from the confidence rule it protects.</p>
+    <h4>Example 2: One deep function</h4>
+    <div class="code-block" data-lang="python"><div class="code-header"><span class="filename">stage 02 · enricher/classifier.py</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code>class KeywordCategoryClassifier:
+    """Suggests the category whose keywords appear most often.
+
+    Confidence is the share of keyword hits that belong to the winning
+    category. Text with no keywords is "Other" with confidence 0.0.
+    """
+
+    def suggest(self, text):
+        words = re.findall(r"[a-z]+", text.lower())
+        hits = {
+            category: sum(1 for word in words if word in keywords)
+            for category, keywords in CATEGORY_KEYWORDS.items()
+        }
+        total_hits = sum(hits.values())
+        if total_hits == 0:
+            return CategorySuggestion(OTHER, 0.0)
+        best = max(hits, key=hits.get)
+        return CategorySuggestion(best, hits[best] / total_hits)</code></pre></div>
+    <p><strong>What's happening:</strong> the whole rule, including the zero-hit case, reads top to bottom. The docstring states the rule in one sentence, which is only possible because the rule lives in one place.</p>
+    <h4>Example 3: The test that keeps the comparison honest</h4>
+    <div class="code-block" data-lang="python"><div class="code-header"><span class="filename">stage 02 · tests/test_designs_agree.py</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code>@pytest.mark.parametrize("about", [page["about"] for page in SAMPLE_WEB.values()])
+def test_both_designs_suggest_the_same_category(about):
+    deep = KeywordCategoryClassifier().suggest(about)
+    assert suggest_category(about) == (deep.category, deep.confidence)</code></pre></div>
+    <p><strong>What's happening:</strong> both designs are correct, so the choice between them is about who has to understand what, not about behaviour.</p>
+    <h3>✏️ Hands-On Exercises</h3>
+    <h4>Exercise 1 · Check (⏱️ ~3 min)</h4>
+    <div class="quiz-card"><p class="quiz-question"><strong>Q1:</strong> Why does the Module 1 classifier break DRY even though no line is copied?</p><div class="quiz-options"><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is B. DRY is about knowledge. The order rule is needed in both methods, so changing it means changing both.">It uses two methods.</button><button class="quiz-option" data-correct="true" data-explanation-correct="Correct. DRY is about knowledge. The order rule is needed in both methods, so changing it means changing both.">Two methods both rely on the fact that probabilities follow <code>CATEGORIES</code> order.</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is B. DRY is about knowledge. The order rule is needed in both methods, so changing it means changing both.">It has a docstring.</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is B. DRY is about knowledge. The order rule is needed in both methods, so changing it means changing both.">It counts keywords.</button></div></div>
+    <div class="quiz-card"><p class="quiz-question"><strong>Q2:</strong> Which pair is orthogonal in the Module 2 code?</p><div class="quiz-options"><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is C. You can change how websites are read without touching keyword counting, and the reverse. The other pairs share knowledge."><code>total_hits</code> and <code>confidence_for</code></button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is C. You can change how websites are read without touching keyword counting, and the reverse. The other pairs share knowledge."><code>CATEGORIES</code> and <code>CATEGORY_KEYWORDS</code></button><button class="quiz-option" data-correct="true" data-explanation-correct="Correct. You can change how websites are read without touching keyword counting, and the reverse. The other pairs share knowledge.">The classifier and the website module</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is C. You can change how websites are read without touching keyword counting, and the reverse. The other pairs share knowledge."><code>best_category</code> and <code>suggest_category</code></button></div></div>
+    <div class="quiz-card"><p class="quiz-question"><strong>Q3:</strong> When is splitting a function a good idea?</p><div class="quiz-options"><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is D. A split pays off when each part can be read and changed on its own. Length alone is not a reason.">When it is longer than ten lines</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is D. A split pays off when each part can be read and changed on its own. Length alone is not a reason.">When it has more than one <code>if</code></button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is D. A split pays off when each part can be read and changed on its own. Length alone is not a reason.">Always, because short functions are simpler</button><button class="quiz-option" data-correct="true" data-explanation-correct="Correct. A split pays off when each part can be read and changed on its own. Length alone is not a reason.">When the parts use different knowledge and can be understood alone</button></div></div>
+    <h4>Exercise 2 · Change: a new confidence rule (⏱️ ~15 min)</h4>
+    <p><strong>Goal:</strong> Feel the difference between the two designs.</p>
+    <p><strong>Instructions:</strong></p>
+    <ol><li>New rule: when two categories tie for the most hits, confidence must be capped at 0.5.</li><li>Implement it in <code>exercises/day06_short_functions.py</code> and in <code>enricher/classifier.py</code>.</li><li>Count how many functions you had to read and edit in each.</li><li>Update <code>tests/test_designs_agree.py</code> only if your two versions disagree, then run <code>python -m pytest -q</code>.</li></ol>
+    <details class="exercise-hints"><summary>Hint</summary><p>In the deep version the tie check sits right after <code>best = ...</code>. In the short version you will need the hit counts, the total, and the best category at once, which no single short function has.</p></details>
+    <h4>Exercise 3 · Transfer: name the knowledge (⏱️ ~10 min)</h4>
+    <p>Pick two modules in a codebase you know. Write one sentence for what each one knows. If the sentences overlap, write down the change that would have to touch both.</p>
+    <h3>📖 Curated Resources</h3>
+    <ol><li><strong>Main design reading:</strong> John Ousterhout, <em>A Philosophy of Software Design</em>, 2nd ed., Chapter 9, "Better Together Or Better Apart?" (to verify against book).<br>🔗 <a href="https://web.stanford.edu/~ouster/cgi-bin/book.php" target="_blank" rel="noopener">Official book page</a><br>Why: when to combine and when to separate code.</li><li><strong>Practice reading:</strong> David Thomas and Andrew Hunt, <em>The Pragmatic Programmer</em>, 20th Anniversary Edition, Topics 9, "DRY - The Evils of Duplication" and 10, "Orthogonality" (to verify against book).<br>🔗 <a href="https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/" target="_blank" rel="noopener">Publisher page</a><br>Why: duplication of knowledge and independent parts.</li><li><strong><a href="https://docs.pytest.org/en/stable/how-to/parametrize.html" target="_blank" rel="noopener">pytest: parametrizing tests</a></strong><br>Why: how one test function in Example 3 runs once per sample company.</li><li><strong>Free sources:</strong> the publisher's free excerpt on the <a href="https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/" target="_blank" rel="noopener">book page</a> (Topic 9) and Ousterhout's free <a href="https://web.stanford.edu/~ouster/cgi-bin/aposd2ndEdExtract.pdf" target="_blank" rel="noopener">2nd-edition extract</a> (section 9.8).<br>Why: both arguments in the authors' own words.</li></ol>
+    <h3>🤔 Reflection Questions</h3>
+    <ol><li><strong>Comprehension:</strong> What knowledge do the six short functions all share?</li><li><strong>Application:</strong> The business wants keyword weights, where "restaurant" counts double. Which module changes?</li><li><strong>Connection:</strong> How does Day 5's deep module make the classifier and website code orthogonal?</li><li><strong>Critical Thinking:</strong> Is there a length at which you would split the deep <code>suggest</code> anyway? What would justify it?</li></ol>
+    <p>Stop and ask whenever a word feels harder than the idea.</p>
+    <h3>➡️ Next Steps</h3>
+    <p><strong>Tomorrow:</strong> <a href="https://github.com/CeciliaW888/software-fundamentals/blob/main/week-01/day-07-design-it-twice.md" target="_blank" rel="noopener">Day 7: Design it twice</a>. You will design the service's public operation two ways and choose with criteria.</p>
+    <p><strong>Before moving on, make sure you can:</strong></p>
+    <div class="checklist"><label><input type="checkbox"> Explain DRY as a rule about knowledge.</label><label><input type="checkbox"> Give an orthogonal pair and a non-orthogonal pair from the project.</label><label><input type="checkbox"> Argue for or against a split without mentioning line counts.</label></div>
+    <p><a href="https://github.com/CeciliaW888/software-fundamentals/blob/main/week-01/day-06-split-by-information.md" target="_blank" rel="noopener">Read this guide as Markdown on GitHub →</a></p>
+  </div>
+</section>

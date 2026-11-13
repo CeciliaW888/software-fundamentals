@@ -1,0 +1,39 @@
+{
+  "day": 11,
+  "title": "Refactor under evidence",
+  "questions": [
+    {
+      "question": "Which change is a refactoring?",
+      "options": [
+        "Storing the decision in a variable instead of computing it twice",
+        "Raising the threshold from 0.82 to 0.85",
+        "Sending missing websites to review instead of raising",
+        "Adding a new category"
+      ],
+      "answer": 0,
+      "explanation": "Only this change keeps every observable behaviour the same. The others change what the service does."
+    },
+    {
+      "question": "The tests turn red after a refactoring step and the cause is not obvious. What next?",
+      "options": [
+        "Keep editing until they pass",
+        "Revert to the last green commit and take a smaller step",
+        "Delete the failing tests",
+        "Commit anyway and fix later"
+      ],
+      "answer": 1,
+      "explanation": "A small step that fails is cheap to throw away. Debugging forward mixes the failed step with new edits."
+    },
+    {
+      "question": "Why not refactor and change behaviour in the same commit?",
+      "options": [
+        "Git does not allow it.",
+        "It makes the commit message too long.",
+        "When tests fail, you cannot tell which change caused it.",
+        "Refactoring is slower."
+      ],
+      "answer": 2,
+      "explanation": "Keeping them apart means a failing test points at one kind of change."
+    }
+  ]
+}

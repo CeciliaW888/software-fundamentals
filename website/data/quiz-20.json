@@ -1,0 +1,39 @@
+{
+  "day": 20,
+  "title": "Protect invariants under concurrency",
+  "questions": [
+    {
+      "question": "Why does \"check, then insert\" fail with two reviewers?",
+      "options": [
+        "The check is written in SQL.",
+        "SQLite cannot run two queries.",
+        "The reviewers use different categories.",
+        "Another write can happen between the check and the insert."
+      ],
+      "answer": 3,
+      "explanation": "The gap between check and act is where the other reviewer's write lands. Speed does not remove the gap."
+    },
+    {
+      "question": "Where should the \"one confirmation per company\" rule be enforced?",
+      "options": [
+        "In the database, where every write must pass",
+        "In the reviewer screen's JavaScript",
+        "In a comment in the code",
+        "In each reviewer's head"
+      ],
+      "answer": 0,
+      "explanation": "The database is the single point every writer goes through, so a constraint there holds regardless of timing."
+    },
+    {
+      "question": "Why does confirm_category raise AlreadyConfirmed instead of letting IntegrityError through?",
+      "options": [
+        "To hide a bug",
+        "So callers deal with a business situation in business words",
+        "Because IntegrityError cannot be caught",
+        "To retry automatically"
+      ],
+      "answer": 1,
+      "explanation": "The core and the reviewer screen should not need to know SQLite's exception types; the adapter translates, as on Day 10."
+    }
+  ]
+}

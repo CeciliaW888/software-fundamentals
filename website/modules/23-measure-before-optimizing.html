@@ -1,0 +1,87 @@
+<section class="module" id="module-23" data-day="23">
+  <div class="module-inner">
+    <h2>Measure before optimizing</h2>
+    <div class="callout-accent"><span class="callout-icon">📍</span><div class="callout-content"><strong>Where we are in the story:</strong> Week 4 · The service is almost ready for production. Now you run it, watch it, and recover when it fails.</div></div>
+    <h3>🎯 Learning Objectives</h3>
+    <p>By the end of today, you will be able to:</p>
+    <ol><li>Time each step of a batch to find where the time actually goes.</li><li>Use a profiler to confirm the critical path.</li><li>Choose the one change that attacks the slowest step.</li><li>Compare before and after with the same benchmark, and keep a test for the improvement.</li></ol>
+    <p><strong>Plain idea:</strong> guesses about speed are usually wrong, so measure first, change one thing, and measure again.</p>
+    <p><strong>Difficulty:</strong> 🔴 Advanced<br><strong>Estimated Time:</strong> 40 minutes (15 reading + 25 hands-on)<br><strong>Module:</strong> 6 · Operate what you build (lesson 0023)</p>
+    <h3>📚 Core Concepts</h3>
+    <h4>Observe: the batch is slow; what is slow?</h4>
+    <p>Day 21's duration metrics show the nightly batch getting slower as more companies are added, and the same companies often appear several times in a batch. Someone suggests rewriting the keyword classifier "because it loops over every word for every category". It sounds plausible. Before changing anything, measure.</p>
+    <p>The project has a <span class="term" tabindex="0" data-definition="A repeatable measurement of how fast something runs. Source: Standard software vocabulary; this plain definition is course-authored.">benchmark</span>: <code>python -m enricher.benchmark</code> in <code>stages/06-operate</code>. It runs every sample company three times through a website source that waits 20 ms per page, standing in for a real network round trip, and times each step separately. On one run of the benchmark on a laptop, the output was:</p>
+    <table><thead><tr><th>Step</th><th>Time for 33 companies</th></tr></thead><tbody><tr><td>read website</td><td>about 900 ms</td></tr><tr><td>classify</td><td>about 3 ms</td></tr></tbody></table>
+    <p>Your numbers will differ, but the shape will not: reading the website takes hundreds of times longer than classifying. Rewriting the classifier could save at most a few milliseconds.</p>
+    <h4>Say it plainly: attack the biggest step, and only that</h4>
+    <p>Once you know where the time goes, the options narrow. The website step is slow because of waiting, not computing, and the same company's page is read three times per batch. So the change is: remember each About page already read in this run.</p>
+    <p><code>CachingWebsiteSource</code> wraps any website source and keeps successful pages in a dictionary for the life of the run. It is another adapter behind Day 10's boundary, so nothing in the core changes. On the same benchmark run, the batch went from about 920 ms without the <span class="term" tabindex="0" data-definition="A store of earlier results, used to answer repeated requests without redoing the work. Source: Standard software vocabulary; this plain definition is course-authored.">cache</span> to about 330 ms with it: each company's page is now fetched once instead of three times.</p>
+    <p>Two rules kept this honest:</p>
+    <ul><li><strong>Same benchmark before and after.</strong> The comparison is only fair if nothing else changed.</li><li><strong>A test for the improvement.</strong> <code>test_cache_reads_each_website_once_per_run</code> checks the behaviour that makes it faster, so a later change cannot quietly undo it. The test counts calls rather than measuring milliseconds, because timing tests are flaky on shared machines.</li></ul>
+    <p>For a fuller picture, <code>python -m enricher.benchmark --profile</code> runs the batch under Python's <code>cProfile</code>, which reports how much time is spent inside each function.</p>
+    <h4>Name it: critical path, profiling, caching</h4>
+    <p>John Ousterhout's <em>A Philosophy of Software Design</em>, Chapter 20, "Designing for Performance" (to verify against book), advises measuring before modifying, because intuitions about performance are unreliable, and then focusing on the <strong><span class="term" tabindex="0" data-definition="The small part of a program where most of its time is spent. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 20 (to verify against book).">critical path</span></strong>, the small part of the code where most of the time is spent. He also argues for designs that are naturally efficient without making them more complex; the cache is a small adapter, not a change to the core.</p>
+    <p>A <strong>benchmark</strong> is a repeatable measurement of performance. A <strong><span class="term" tabindex="0" data-definition="A tool that measures how much time a program spends in each function. Source: Official Python vocabulary (The Python Profilers).">profiler</span></strong> measures how much time a program spends in each function. A <strong>cache</strong> stores results so repeated requests can be answered without redoing the work.</p>
+    <p><em>The Pragmatic Programmer</em>'s Topic 39, "Algorithm Speed" (to verify against book), makes the same demand; its Tip 64 (p. 208 in the publisher's <a href="https://pragprog.com/tips/" target="_blank" rel="noopener">official list of the book's tips</a>) is "Test Your Estimates". Ousterhout's free extract also notes, in Chapter 6, that removing special cases can make code faster as well as simpler, a theme he develops in Chapter 20 (to verify against book).</p>
+    <div class="callout-accent"><span class="callout-icon">💡</span><div class="callout-content"><strong>Key Insight:</strong> The slow part is rarely the part that looks slow. Let a measurement choose what to optimise.</div></div>
+    <h3>🔑 Key Terminology</h3>
+    <dl class="term-grid"><div class="term-card"><dt><strong>Critical path</strong></dt><dd>The small part of a program where most of its time is spent.<br><em>Paraphrased from John Ousterhout, <em>A Philosophy of Software Design</em>, 2nd ed., Chapter 20 (to verify against book)</em></dd></div><div class="term-card"><dt><strong>Benchmark</strong></dt><dd>A repeatable measurement of how fast something runs.<br><em>Standard software vocabulary; this plain definition is course-authored</em></dd></div><div class="term-card"><dt><strong>Profiler</strong></dt><dd>A tool that measures how much time a program spends in each function.<br><em>Official Python vocabulary (<a href="https://docs.python.org/3/library/profile.html" target="_blank" rel="noopener">The Python Profilers</a>)</em></dd></div><div class="term-card"><dt><strong>Cache</strong></dt><dd>A store of earlier results, used to answer repeated requests without redoing the work.<br><em>Standard software vocabulary; this plain definition is course-authored</em></dd></div><div class="term-card"><dt><strong>Latency</strong></dt><dd>The time between asking for something and getting it.<br><em>Standard software vocabulary; this plain definition is course-authored</em></dd></div></dl>
+    <h3>💻 Code Examples</h3>
+    <h4>Example 1: Timing each step separately</h4>
+    <div class="code-block" data-lang="python"><div class="code-header"><span class="filename">stage 06 · enricher/benchmark.py</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code>def time_steps(companies):
+    source, classifier = SlowSampleSource(), KeywordCategoryClassifier()
+    totals = {"read website": 0.0, "classify": 0.0}
+    for company in companies:
+        started = time.perf_counter()
+        page = source.about_page(company.name)
+        totals["read website"] += time.perf_counter() - started
+        started = time.perf_counter()
+        classifier.suggest(page.main_activity)
+        totals["classify"] += time.perf_counter() - started
+    return totals</code></pre></div>
+    <p><strong>What's happening:</strong> each step gets its own timer, so the result says where the time went, not just how much there was.</p>
+    <h4>Example 2: The one change the measurement chose</h4>
+    <div class="code-block" data-lang="python"><div class="code-header"><span class="filename">stage 06 · enricher/adapters/caching.py</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code>class CachingWebsiteSource:
+    def __init__(self, inner):
+        self._inner = inner
+        self._pages = {}
+
+    def about_page(self, company_name):
+        if company_name not in self._pages:
+            self._pages[company_name] = self._inner.about_page(company_name)
+        return self._pages[company_name]</code></pre></div>
+    <p><strong>What's happening:</strong> if the inner source raises, nothing is stored, so failures are never cached.</p>
+    <h4>Example 3: A test for the improvement, not the stopwatch</h4>
+    <div class="code-block" data-lang="python"><div class="code-header"><span class="filename">stage 06 · tests/test_performance.py</span><button class="copy-btn" onclick="copyCode(this)">📋 Copy</button></div><pre><code>def test_cache_reads_each_website_once_per_run():
+    inner = CountingSource()
+    cached = CachingWebsiteSource(inner)
+
+    for _ in range(3):
+        cached.about_page("Saltwater Kitchen")
+
+    assert inner.calls == 1</code></pre></div>
+    <div class="callout-info"><span class="callout-icon">ℹ️</span><div class="callout-content"><strong>💡 Try it:</strong> in <code>stages/06-operate</code>, run <code>python -m enricher.benchmark</code>, then <code>python -m enricher.benchmark --profile</code>, and find <code>time.sleep</code> near the top of the profile.</div></div>
+    <h3>✏️ Hands-On Exercises</h3>
+    <h4>Exercise 1 · Check (⏱️ ~3 min)</h4>
+    <div class="quiz-card"><p class="quiz-question"><strong>Q1:</strong> The benchmark shows website reads take about 900 ms and classification about 3 ms. What should you optimise?</p><div class="quiz-options"><button class="quiz-option" data-correct="true" data-explanation-correct="Correct. Even a perfect classifier would save a few milliseconds. The measurement points at website reads.">Reading websites, the critical path</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is A. Even a perfect classifier would save a few milliseconds. The measurement points at website reads.">The classifier, because its loops look slow</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is A. Even a perfect classifier would save a few milliseconds. The measurement points at website reads.">Both equally</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is A. Even a perfect classifier would save a few milliseconds. The measurement points at website reads.">Nothing; benchmarks are unreliable</button></div></div>
+    <div class="quiz-card"><p class="quiz-question"><strong>Q2:</strong> Why does the test count calls instead of asserting a time limit?</p><div class="quiz-options"><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is B. The behaviour that makes it faster, one read per company, is deterministic; milliseconds are not.">Counting is more accurate than timing.</button><button class="quiz-option" data-correct="true" data-explanation-correct="Correct. The behaviour that makes it faster, one read per company, is deterministic; milliseconds are not.">Timing tests are flaky on shared machines; the call count checks the cause of the speed-up reliably.</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is B. The behaviour that makes it faster, one read per company, is deterministic; milliseconds are not.">Python cannot measure time in tests.</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is B. The behaviour that makes it faster, one read per company, is deterministic; milliseconds are not.">To make the test faster.</button></div></div>
+    <div class="quiz-card"><p class="quiz-question"><strong>Q3:</strong> Why does the cache not store failed lookups?</p><div class="quiz-options"><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is C. Caching a failure turns one bad moment into many. Only successful pages are remembered.">Failures are too big to store.</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is C. Caching a failure turns one bad moment into many. Only successful pages are remembered.">Dictionaries cannot hold exceptions.</button><button class="quiz-option" data-correct="true" data-explanation-correct="Correct. Caching a failure turns one bad moment into many. Only successful pages are remembered.">A temporary failure would otherwise be repeated for the rest of the run.</button><button class="quiz-option" data-correct="false" data-explanation-wrong="Not quite: the answer is C. Caching a failure turns one bad moment into many. Only successful pages are remembered.">It would be slower.</button></div></div>
+    <h4>Exercise 2 · Change: measure a second idea (⏱️ ~20 min)</h4>
+    <p><strong>Goal:</strong> Let numbers decide.</p>
+    <p><strong>Instructions:</strong></p>
+    <ol><li>Hypothesis: "building the keyword sets on every call makes classification slow".</li><li>Write a micro-benchmark with <code>timeit</code> that calls <code>KeywordCategoryClassifier().suggest</code> on one About page 10,000 times.</li><li>Compare its total with the website step from <code>python -m enricher.benchmark</code>.</li><li>Write one sentence: is this worth optimising? Why or why not?</li></ol>
+    <details class="exercise-hints"><summary>Hint</summary><p><code>timeit.timeit(lambda: classifier.suggest(text), number=10_000)</code> returns seconds for all 10,000 calls. Divide to compare per-company costs.</p></details>
+    <h4>Exercise 3 · Transfer: measure one slow thing (⏱️ ~10 min)</h4>
+    <p>Pick something you believe is slow in a system you use. Write how you would time each of its steps separately, and what result would prove your belief wrong.</p>
+    <h3>📖 Curated Resources</h3>
+    <ol><li><strong>Main design reading:</strong> John Ousterhout, <em>A Philosophy of Software Design</em>, 2nd ed., Chapter 20, "Designing for Performance" (to verify against book).<br>🔗 <a href="https://web.stanford.edu/~ouster/cgi-bin/book.php" target="_blank" rel="noopener">Official book page</a><br>Why: measure first, then find the critical path.</li><li><strong><a href="https://docs.python.org/3/library/profile.html" target="_blank" rel="noopener">Python documentation: The Python Profilers</a></strong><br>Why: how <code>cProfile</code> and <code>pstats</code> work.</li><li><strong><a href="https://docs.python.org/3/library/timeit.html" target="_blank" rel="noopener">Python documentation: timeit</a></strong><br>Why: timing small pieces of code reliably.</li><li><strong><a href="https://docs.python.org/3/library/time.html#time.perf_counter" target="_blank" rel="noopener">Python documentation: time.perf_counter</a></strong><br>Why: the clock used by the benchmark.</li></ol>
+    <h3>🤔 Reflection Questions</h3>
+    <ol><li><strong>Comprehension:</strong> What is the critical path of the Company Enricher's batch?</li><li><strong>Application:</strong> With real websites, the cache helps only within one run. What would a cache across runs need to handle?</li><li><strong>Connection:</strong> How did Day 10's boundary make adding a cache a one-file change?</li><li><strong>Critical Thinking:</strong> When could a cache make the service wrong rather than just faster?</li></ol>
+    <p>Stop and ask whenever a word feels harder than the idea.</p>
+    <h3>➡️ Next Steps</h3>
+    <p><strong>Tomorrow:</strong> <a href="https://github.com/CeciliaW888/software-fundamentals/blob/main/week-04/day-24-design-for-failure.md" target="_blank" rel="noopener">Day 24: Design for expected failure</a>. The last lesson: websites will fail; you decide in advance what the service does when they do.</p>
+    <p><strong>Before moving on, make sure you can:</strong></p>
+    <div class="checklist"><label><input type="checkbox"> Time each step of a process separately.</label><label><input type="checkbox"> Read a <code>cProfile</code> report's top lines.</label><label><input type="checkbox"> Justify one optimisation with a before-and-after measurement.</label></div>
+    <p><a href="https://github.com/CeciliaW888/software-fundamentals/blob/main/week-04/day-23-measure-before-optimizing.md" target="_blank" rel="noopener">Read this guide as Markdown on GitHub →</a></p>
+  </div>
+</section>

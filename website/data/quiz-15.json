@@ -1,0 +1,39 @@
+{
+  "day": 15,
+  "title": "Distil the core",
+  "questions": [
+    {
+      "question": "Which part of the Company Enricher is the core domain?",
+      "options": [
+        "The rules for when a suggestion needs review",
+        "Fetching HTML pages",
+        "Saving results",
+        "Logging"
+      ],
+      "answer": 0,
+      "explanation": "The review rules encode the business's own judgement. The others are generic and could come from libraries."
+    },
+    {
+      "question": "Why does the core declare WebsiteSource instead of importing HttpWebsiteSource?",
+      "options": [
+        "Because Protocols are faster",
+        "To make the core's dependencies point inwards, so adapters can change freely",
+        "Because HTTP is not allowed in Python",
+        "To avoid writing tests"
+      ],
+      "answer": 1,
+      "explanation": "The core states what it needs; any adapter can provide it. The core never changes when an adapter does."
+    },
+    {
+      "question": "What does test_layers.py protect?",
+      "options": [
+        "Performance of the core",
+        "The spelling of category names",
+        "The rule that the core never imports adapters",
+        "The partner's sector codes"
+      ],
+      "answer": 2,
+      "explanation": "It turns the folder convention into a check that fails on every run if broken."
+    }
+  ]
+}
