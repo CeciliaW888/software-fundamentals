@@ -6,8 +6,8 @@
 
 ---
 
-> **Book coverage:** Observability is not covered in the three books' freely available material.
-> This lesson relies on the official Python, OpenTelemetry, and OWASP documentation only.
+> **Book coverage:** *The Pragmatic Programmer*'s Topic 20, "Debugging", covers tracing messages written in a consistent format so tools can process them.
+> Metrics, indicators, and alerting are not covered in the three books, so those parts rely on the official Python, OpenTelemetry, and OWASP documentation.
 
 ## 🎯 Learning Objectives
 
@@ -73,7 +73,8 @@ OpenTelemetry's own libraries are the next step when the service has more than o
 **Structured logging** means writing events as fields rather than free text.
 An **alert** is a rule that tells a person when an indicator crosses a threshold.
 
-None of the three books' freely available material covers logging, metrics, or alerting, so this lesson relies on official documentation only.
+*The Pragmatic Programmer*'s Topic 20, "Debugging", supports the structured part: trace messages should follow a regular, consistent format so you can process the log with tools later.
+None of the three books covers metrics or alerting, so those parts rely on official documentation only.
 
 > **Key Insight:** Observe the promises users depend on. Every log field and counter should help answer "is it keeping them, and if not, why?".
 
@@ -241,8 +242,7 @@ Write two promises it makes to you, and for each, the log field or metric that w
    - Why: the `caplog` fixture in Example 4.
 4. **[OWASP: Logging Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Logging_Cheat_Sheet.html)**
    - Why: what not to log, and why.
-5. **Book coverage:** none in the three books' freely available material; official documentation only.
-   - Why: a book source should be chosen when the full books are available.
+5. **Book coverage:** *The Pragmatic Programmer*, Topic 20, "Debugging", section on logging and tracing; metrics and alerting rely on official documentation.
 
 ---
 

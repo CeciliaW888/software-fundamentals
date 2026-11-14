@@ -54,10 +54,10 @@ If the tests fail, you cannot tell which change caused it.
 
 ### Name it: refactoring, characterization tests, version control
 
-*The Pragmatic Programmer*, Topic 40, "Refactoring" (to verify against book), describes refactoring as a disciplined restructuring of existing code that does not change its external behaviour, done in small steps with good tests.
-The book's Topic 19, "Version Control" (to verify against book) argues for keeping everything in version control, so any step can be undone.
+*The Pragmatic Programmer*, Topic 40, "Refactoring", describes refactoring as a disciplined restructuring of existing code that does not change its external behaviour, done in small steps with good tests.
+The book's Topic 19, "Version Control" argues for keeping everything in version control, so any step can be undone.
 
-John Ousterhout's *A Philosophy of Software Design*, Chapter 16, "Modifying Existing Code" (to verify against book), adds the design view: when you change code, aim to leave the design better than you found it, as if it had been written that way from the start, rather than making the smallest possible patch.
+John Ousterhout's *A Philosophy of Software Design*, Chapter 16, "Modifying Existing Code", adds the design view: when you change code, aim to leave the design better than you found it, as if it had been written that way from the start, rather than making the smallest possible patch.
 
 Git provides the tools: `git commit` records a step; `git revert` creates a new commit that undoes an earlier one; `git restore` throws away uncommitted edits.
 
@@ -72,11 +72,11 @@ Its tips in the publisher's [official list of the book's tips](https://pragprog.
 
 | Term | Definition | Source |
 |------|-----------|--------|
-| **Refactoring** | Restructuring existing code without changing its external behaviour. | Paraphrased from Thomas and Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 40, "Refactoring" (to verify against book) |
+| **Refactoring** | Restructuring existing code without changing its external behaviour. | Paraphrased from Thomas and Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 40, "Refactoring" |
 | **Characterization test** | A test that pins what the code does today, so a change that alters it fails. | Standard software vocabulary; this plain definition is course-authored |
 | **Commit** | A saved snapshot of changes in Git, with a message explaining them. | Official Git vocabulary ([git-commit](https://git-scm.com/docs/git-commit)) |
 | **Revert** | A new commit that undoes the changes of an earlier commit. | Official Git vocabulary ([git-revert](https://git-scm.com/docs/git-revert)) |
-| **Version control** | A system that records every change to files so any earlier state can be recovered. | Paraphrased from Thomas and Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 19, "Version Control" (to verify against book) |
+| **Version control** | A system that records every change to files so any earlier state can be recovered. | Paraphrased from Thomas and Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 19, "Version Control" |
 
 ---
 
@@ -245,10 +245,10 @@ def test_missing_website_needs_review_instead_of_crashing(enricher, store):
 
 ## 📖 Curated Resources
 
-1. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topics 40, "Refactoring" and 19, "Version Control" (to verify against book).
+1. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topics 40, "Refactoring" and 19, "Version Control".
    - 🔗 [Publisher page](https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/)
    - Why: when and how to restructure, and how to keep every step reversible.
-2. **Main design reading:** John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 16, "Modifying Existing Code" (to verify against book).
+2. **Main design reading:** John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 16, "Modifying Existing Code".
    - 🔗 [Official book page](https://web.stanford.edu/~ouster/cgi-bin/book.php)
    - Why: leaving the design better with each change.
 3. **[Git documentation: git-revert](https://git-scm.com/docs/git-revert)**

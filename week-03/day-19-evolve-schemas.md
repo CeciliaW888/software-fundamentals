@@ -6,8 +6,8 @@
 
 ---
 
-> **Book coverage:** Schema evolution and migrations are not covered in the three books' freely available material.
-> *The Pragmatic Programmer* supplies only the attitude of small, reversible steps; the mechanics rely on the official SQLite, PostgreSQL, and Python documentation.
+> **Book coverage:** The three books do not teach migration mechanics.
+> *The Pragmatic Programmer* supplies the attitude of small, reversible steps, and Evans's *Domain-Driven Design*, Chapter 6, warns why schema changes are costly; the mechanics rely on the official SQLite, PostgreSQL, and Python documentation.
 
 ## 🎯 Learning Objectives
 
@@ -70,7 +70,9 @@ SQLite's `ALTER TABLE ... ADD COLUMN` adds a column to an existing table; its do
 **Expand and contract** is a common name for doing compatible changes first and removing the old shape later.
 PostgreSQL documents the same kinds of `ALTER TABLE` operations, and the same rule applies there.
 
-The books do not cover database migrations, but *The Pragmatic Programmer* supplies the attitude behind expand and contract.
+The books do not teach database migrations, but two of them explain why they need care.
+Evans's *Domain-Driven Design*, Chapter 6, "The Life Cycle of a Domain Object", observes that serious data migration problems discourage frequent schema changes, and that a model and a schema allowed to drift apart quickly become hard to follow.
+*The Pragmatic Programmer* supplies the attitude behind expand and contract.
 Its Tip 18 (p. 48 in the publisher's [official list of the book's tips](https://pragprog.com/tips/)) is "There Are No Final Decisions", and Topic 27, "Don't Outrun Your Headlights", available as the publisher's free excerpt on the [book page](https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/), argues for small steps whose effects you can check before taking the next.
 Each migration is one such step, and expand-only steps keep the previous version runnable.
 
@@ -229,8 +231,7 @@ Check whether old code and new code ever run against it at the same time, and wh
    - Why: the same operations in PostgreSQL.
 4. **[Python documentation: sqlite3 transaction control](https://docs.python.org/3/library/sqlite3.html#sqlite3-controlling-transactions)**
    - Why: what `with connection:` does around each step.
-5. **Book coverage for migrations:** none in the three books' freely available material; official documentation only.
-   - Why: a book source should be chosen when the full books are available.
+5. **Book coverage for migrations:** Evans's *Domain-Driven Design*, Chapter 6, section "Designing Objects for Relational Databases", for why schema changes are costly; the mechanics rely on official documentation.
 6. **Free source:** the publisher's free excerpt on the [book page](https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/), Topic 27, "Don't Outrun Your Headlights".
    - Why: small, checkable steps, in the authors' own words.
 

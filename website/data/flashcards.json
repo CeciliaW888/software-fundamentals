@@ -5,7 +5,7 @@
   },
   {
     "term": "Service",
-    "definition": "A higher-level unit of software with an interface and an implementation. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 4 (to verify against book)."
+    "definition": "A larger unit of software that other programs use through its interface. Source: Standard software vocabulary; Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 4, lists services as one form a module can take."
   },
   {
     "term": "Classifier",
@@ -37,7 +37,7 @@
   },
   {
     "term": "Ubiquitous language",
-    "definition": "Words agreed and used by one domain's experts and developers. Source: Eric Evans's Domain-Driven Design term, Chapter 2 (to verify against book); not universal software vocabulary."
+    "definition": "Words agreed and used by one domain's experts and developers. Source: Eric Evans's Domain-Driven Design term, Chapter 2; not universal software vocabulary."
   },
   {
     "term": "Docstring",
@@ -49,11 +49,11 @@
   },
   {
     "term": "Interface",
-    "definition": "What other code must know to use a function or module. Source: Standard software vocabulary; central in Ousterhout Chapter 4 (to verify against book)."
+    "definition": "What other code must know to use a function or module. Source: Standard software vocabulary; central in Ousterhout Chapter 4."
   },
   {
     "term": "Implementation",
-    "definition": "The steps currently used to do the work. Source: Standard software vocabulary; central in Ousterhout Chapter 4 (to verify against book)."
+    "definition": "The steps currently used to do the work. Source: Standard software vocabulary; central in Ousterhout Chapter 4."
   },
   {
     "term": "Side effect",
@@ -61,11 +61,11 @@
   },
   {
     "term": "Module",
-    "definition": "A unit of code with an interface and an implementation. It can be a function, class, subsystem, or service. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 4 (to verify against book)."
+    "definition": "A unit of code with an interface and an implementation. It can be a function, class, subsystem, or service. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 4."
   },
   {
     "term": "Abstraction",
-    "definition": "A simplified view of something that leaves out unimportant details. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 4 (to verify against book)."
+    "definition": "A simplified view of something that leaves out unimportant details. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 4."
   },
   {
     "term": "Input",
@@ -85,47 +85,47 @@
   },
   {
     "term": "Unknown unknown",
-    "definition": "Something you must know to change code safely, with no sign in the code that you need to know it. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 2 (to verify against book)."
+    "definition": "Something you must know to change code safely, with no sign in the code that you need to know it. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 2."
   },
   {
     "term": "Information leakage",
-    "definition": "The same design knowledge appearing in more than one module, so a change to it touches all of them. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 5 (to verify against book)."
+    "definition": "The same design knowledge appearing in more than one module, so a change to it touches all of them. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 5."
   },
   {
     "term": "Complexity",
-    "definition": "Anything about the structure of a system that makes it hard to understand and modify. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 2 (to verify against book)."
+    "definition": "Anything about the structure of a system that makes it hard to understand and modify. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 2."
   },
   {
     "term": "Change amplification",
-    "definition": "A simple change requiring edits in many different places. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 2 (to verify against book)."
+    "definition": "A simple change requiring edits in many different places. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 2."
   },
   {
     "term": "Cognitive load",
-    "definition": "How much a developer needs to know to complete a task. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 2 (to verify against book)."
+    "definition": "How much a developer needs to know to complete a task. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 2."
   },
   {
     "term": "Dependency",
-    "definition": "Code that cannot be understood or modified in isolation from other code. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 2 (to verify against book)."
+    "definition": "Code that cannot be understood or modified in isolation from other code. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 2."
   },
   {
     "term": "Obscurity",
-    "definition": "Facts a reader needs to know that the code does not show. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 2 (to verify against book)."
+    "definition": "Facts a reader needs to know that the code does not show. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 2."
   },
   {
     "term": "Broken window",
-    "definition": "A small, visible sign of neglect that, left unfixed, encourages more neglect. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 3, \"Software Entropy\" (to verify against book)."
+    "definition": "A small, visible sign of neglect that, left unfixed, encourages more neglect. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 3, \"Software Entropy\"."
   },
   {
     "term": "Deep module",
-    "definition": "A module that provides powerful functionality behind a simple interface. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 4 (to verify against book)."
+    "definition": "A module that provides powerful functionality behind a simple interface. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 4."
   },
   {
     "term": "Shallow module",
-    "definition": "A module whose interface is complicated compared with the functionality it provides. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 4 (to verify against book)."
+    "definition": "A module whose interface is complicated compared with the functionality it provides. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 4."
   },
   {
     "term": "Pass-through method",
-    "definition": "A method that does little except pass its arguments to another method. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 7 (to verify against book)."
+    "definition": "A method that does little except pass its arguments to another method. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 7."
   },
   {
     "term": "Property",
@@ -141,7 +141,7 @@
   },
   {
     "term": "Orthogonality",
-    "definition": "Two parts are orthogonal when a change to one does not affect the other. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 10, \"Orthogonality\" (to verify against book)."
+    "definition": "Two parts are orthogonal when a change to one does not affect the other. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 10, \"Orthogonality\"."
   },
   {
     "term": "Duplicated knowledge",
@@ -149,7 +149,7 @@
   },
   {
     "term": "Shared information",
-    "definition": "Knowledge two pieces of code must both have, which is a reason to keep them together. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 9 (to verify against book)."
+    "definition": "Knowledge two pieces of code must both have, which is a reason to keep them together. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 9."
   },
   {
     "term": "Dictionary",
@@ -157,15 +157,15 @@
   },
   {
     "term": "Design it twice",
-    "definition": "Considering two or more substantially different designs before choosing one. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 11 (to verify against book)."
+    "definition": "Considering two or more substantially different designs before choosing one. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 11."
   },
   {
     "term": "Tracer bullet",
-    "definition": "A thin, working path through every layer of a system, kept and filled in over time. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 12, \"Tracer Bullets\" (to verify against book)."
+    "definition": "A thin, working path through every layer of a system, kept and filled in over time. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 12, \"Tracer Bullets\"."
   },
   {
     "term": "Prototype",
-    "definition": "A throwaway experiment built to answer one specific question. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 13, \"Prototypes and Post-it Notes\" (to verify against book)."
+    "definition": "A throwaway experiment built to answer one specific question. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 13, \"Prototypes and Post-it Notes\"."
   },
   {
     "term": "Result object",
@@ -181,15 +181,15 @@
   },
   {
     "term": "Exception masking",
-    "definition": "Handling an exceptional condition at a low level so higher levels never see it. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 10 (to verify against book)."
+    "definition": "Handling an exceptional condition at a low level so higher levels never see it. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 10."
   },
   {
     "term": "Exception aggregation",
-    "definition": "Handling many exceptions with one piece of code instead of many. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 10 (to verify against book)."
+    "definition": "Handling many exceptions with one piece of code instead of many. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 10."
   },
   {
     "term": "Crash early",
-    "definition": "Stopping as soon as the code finds an impossible state, instead of continuing with bad data. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 24, \"Dead Programs Tell No Lies\" (to verify against book)."
+    "definition": "Stopping as soon as the code finds an impossible state, instead of continuing with bad data. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 24, \"Dead Programs Tell No Lies\"."
   },
   {
     "term": "Review reason",
@@ -213,7 +213,7 @@
   },
   {
     "term": "Property-based test",
-    "definition": "A test that checks a rule holds for many generated inputs. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 42, \"Property-Based Testing\" (to verify against book)."
+    "definition": "A test that checks a rule holds for many generated inputs. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 42, \"Property-Based Testing\"."
   },
   {
     "term": "Deterministic",
@@ -241,7 +241,7 @@
   },
   {
     "term": "Refactoring",
-    "definition": "Restructuring existing code without changing its external behaviour. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 40, \"Refactoring\" (to verify against book)."
+    "definition": "Restructuring existing code without changing its external behaviour. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 40, \"Refactoring\"."
   },
   {
     "term": "Commit",
@@ -253,7 +253,7 @@
   },
   {
     "term": "Version control",
-    "definition": "A system that records every change to files so any earlier state can be recovered. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 19, \"Version Control\" (to verify against book)."
+    "definition": "A system that records every change to files so any earlier state can be recovered. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 19, \"Version Control\"."
   },
   {
     "term": "Domain expert",
@@ -261,7 +261,7 @@
   },
   {
     "term": "Knowledge crunching",
-    "definition": "Working through examples with domain experts to distil a useful model. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 1 (to verify against book)."
+    "definition": "Working through examples with domain experts to distil a useful model. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 1."
   },
   {
     "term": "Scenario",
@@ -273,15 +273,15 @@
   },
   {
     "term": "Entity",
-    "definition": "An object defined by its identity and continuity over time, not by its attributes. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 5 (to verify against book)."
+    "definition": "An object defined by its identity and continuity over time, not by its attributes. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 5."
   },
   {
     "term": "Value object",
-    "definition": "An object that describes something, has no identity of its own, and is usually immutable. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 5 (to verify against book)."
+    "definition": "An object that describes something, has no identity of its own, and is usually immutable. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 5."
   },
   {
     "term": "Domain service",
-    "definition": "An operation in the model that does not belong naturally to any entity or value object. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 5 (to verify against book)."
+    "definition": "An operation in the model that does not belong naturally to any entity or value object. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 5."
   },
   {
     "term": "Immutable",
@@ -297,15 +297,15 @@
   },
   {
     "term": "Bounded context",
-    "definition": "The explicit boundary within which one model and its language apply. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 14 (to verify against book)."
+    "definition": "The explicit boundary within which one model and its language apply. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 14."
   },
   {
     "term": "Context map",
-    "definition": "A description of the bounded contexts in play and how they relate. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 14 (to verify against book)."
+    "definition": "A description of the bounded contexts in play and how they relate. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 14."
   },
   {
     "term": "Anticorruption layer",
-    "definition": "A layer that translates between your model and another system's, keeping the other model out. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 14 (to verify against book)."
+    "definition": "A layer that translates between your model and another system's, keeping the other model out. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 14."
   },
   {
     "term": "Directory hint",
@@ -317,11 +317,11 @@
   },
   {
     "term": "Core domain",
-    "definition": "The most valuable and specialised part of the model, where design effort should go first. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 15 (to verify against book)."
+    "definition": "The most valuable and specialised part of the model, where design effort should go first. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 15."
   },
   {
     "term": "Generic subdomain",
-    "definition": "A part the system needs that is not special to this business. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 15 (to verify against book)."
+    "definition": "A part the system needs that is not special to this business. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 15."
   },
   {
     "term": "Supporting subdomain",
@@ -329,11 +329,11 @@
   },
   {
     "term": "Domain vision statement",
-    "definition": "A short description of the core domain and the value it brings. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 15 (to verify against book)."
+    "definition": "A short description of the core domain and the value it brings. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 15."
   },
   {
     "term": "Segregated core",
-    "definition": "Core code separated from supporting code so it can be understood alone. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 15 (to verify against book)."
+    "definition": "Core code separated from supporting code so it can be understood alone. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 15."
   },
   {
     "term": "Port",
@@ -389,7 +389,7 @@
   },
   {
     "term": "Repository",
-    "definition": "An object that gives the model query access to stored objects in the model's own language, hiding the database details. Source: Paraphrased from Eric Evans, Domain-Driven Design; concept checked in Evans's free DDD Reference; chapter to verify against book."
+    "definition": "An object that gives the model query access to stored objects in the model's own language, hiding the database details. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 6."
   },
   {
     "term": "Index",
@@ -445,7 +445,7 @@
   },
   {
     "term": "Aggregate",
-    "definition": "A cluster of objects treated as one unit for changes, with a boundary inside which invariants must hold. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 6 (to verify against book)."
+    "definition": "A cluster of objects treated as one unit for changes, with a boundary inside which invariants must hold. Source: Paraphrased from Eric Evans, Domain-Driven Design, Chapter 6."
   },
   {
     "term": "Unique index",
@@ -485,11 +485,11 @@
   },
   {
     "term": "Configuration",
-    "definition": "Values that control a program's behaviour and can change without changing its code. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 32, \"Configuration\" (to verify against book)."
+    "definition": "Values that control a program's behaviour and can change without changing its code. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 32, \"Configuration\"."
   },
   {
     "term": "Reversibility",
-    "definition": "How easily a decision can be changed or undone later. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 11, \"Reversibility\" (to verify against book)."
+    "definition": "How easily a decision can be changed or undone later. Source: Paraphrased from Thomas and Hunt, The Pragmatic Programmer, 20th Anniversary Edition, Topic 11, \"Reversibility\"."
   },
   {
     "term": "Environment variable",
@@ -508,8 +508,12 @@
     "definition": "Running the tests automatically on every change. Source: Standard software vocabulary; see GitHub Actions documentation."
   },
   {
+    "term": "Bottleneck",
+    "definition": "The small part of a program where most of its time is spent. Source: Standard software vocabulary; this plain definition is course-authored."
+  },
+  {
     "term": "Critical path",
-    "definition": "The small part of a program where most of its time is spent. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 20 (to verify against book)."
+    "definition": "The minimum code that must run to do a task in the most common case. Source: Paraphrased from John Ousterhout, A Philosophy of Software Design, 2nd ed., Chapter 20."
   },
   {
     "term": "Benchmark",

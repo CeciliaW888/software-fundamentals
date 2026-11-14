@@ -7,7 +7,7 @@
 ---
 
 > **Book coverage:** *The Pragmatic Programmer* supports making quality an explicit requirement agreed with users (Tip 8 in the official tip list).
-> How to measure quality, with indicators, targets, and percentiles, is not in the books' freely available material, so that part relies on Python's documentation and course-authored definitions.
+> How to measure quality, with indicators, targets, and percentiles, is not covered in the three books, so that part relies on Python's documentation and course-authored definitions.
 
 ## 🎯 Learning Objectives
 
@@ -74,7 +74,7 @@ A **percentile** is the value below which a given share of measurements fall.
 These terms are standard across the industry; the definitions here are course-authored.
 For timing, Python's `time.perf_counter()` gives a clock with the highest available resolution for measuring short durations.
 
-*The Pragmatic Programmer*'s Topic 5, "Good-Enough Software" (to verify against book), treats quality as something the people who use the software should help decide, not something developers pick alone.
+*The Pragmatic Programmer*'s Topic 5, "Good-Enough Software", treats quality as something the people who use the software should help decide, not something developers pick alone.
 Its Tip 8 (p. 12 in the publisher's [official list of the book's tips](https://pragprog.com/tips/)) is "Make Quality a Requirements Issue": the targets above are that tip written down as numbers.
 
 > **Key Insight:** A quality you cannot measure cannot guide a design decision. Write the indicator, the target, and the method, then test them.
@@ -218,9 +218,8 @@ Then write down what decision the target would change.
    - Why: the right clock for timing short operations.
 2. **[Python documentation: statistics](https://docs.python.org/3/library/statistics.html)**
    - Why: `statistics.quantiles` computes percentiles if you want more than the simple version in `quality.py`.
-3. **Book coverage for measurement:** none in the three books' freely available material; official documentation only.
-   - Why: a book source should be chosen when the full books are available.
-4. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 5, "Good-Enough Software" (to verify against book).
+3. **Book coverage for measurement:** none in the three books; official documentation only.
+4. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 5, "Good-Enough Software".
    - 🔗 [Official tip list](https://pragprog.com/tips/)
    - Why: Tip 8, on making quality a requirement agreed with users.
 

@@ -56,7 +56,7 @@ A clearer name may be longer to type once, but it saves guessing every time the 
 
 The second version in the code examples below tells you that About-page text enters, a category classifier produces probabilities, and a confidence rule selects a result.
 
-*The Pragmatic Programmer*'s Topic 44, "Naming Things" (to verify against book), gives the same advice from the practice side.
+*The Pragmatic Programmer*'s Topic 44, "Naming Things", gives the same advice from the practice side.
 Its Tip 74 (p. 242 in the publisher's [official list of the book's tips](https://pragprog.com/tips/)) is "Name Well; Rename When Needed": when your understanding of the code changes, the names should change with it.
 
 > **Key Insight:** A useful name removes a question from the next reader's mind.
@@ -88,7 +88,7 @@ Fast review:
 | Term | Definition | Source |
 |------|-----------|--------|
 | **Function** | A named block of code that performs a job. | Official Python vocabulary ([Python tutorial](https://docs.python.org/3/tutorial/controlflow.html#defining-functions)) |
-| **Service** | A higher-level unit of software with an interface and an implementation. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 4 (to verify against book) |
+| **Service** | A larger unit of software that other programs use through its interface. | Standard software vocabulary; Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 4, lists services as one form a module can take |
 | **Classifier** | Something that assigns an input to a category. In this course it proposes a business category from website evidence. | Standard data and machine-learning vocabulary, specialised for this course |
 | **Confidence** | A score used here to show how strongly the model supports a suggestion. | Course domain term; its exact meaning must be defined by the chosen model |
 | **Category list** | The short, plain list of about ten business categories the Company Enricher can suggest, such as Retail, Manufacturing, or Software & IT. | Course domain term, defined in the [practice project](../projects/company-enricher/README.md) |
@@ -96,7 +96,7 @@ Fast review:
 | **Stage** | Where a value is in a sequence of work, such as candidate, verified, or classified. | Course-authored teaching word |
 | **Domain** | The real business problem the software works on. | Standard software vocabulary; important in *Domain-Driven Design* |
 | **Boundary** | The point where this code meets another system or responsibility. | Standard software vocabulary; this plain definition is course-authored |
-| **Ubiquitous language** | Words agreed and used by one domain's experts and developers. | Eric Evans's *Domain-Driven Design* term, Chapter 2 (to verify against book); not universal software vocabulary |
+| **Ubiquitous language** | Words agreed and used by one domain's experts and developers. | Eric Evans's *Domain-Driven Design* term, Chapter 2; not universal software vocabulary |
 
 ---
 
@@ -197,12 +197,12 @@ Rename it before adding a comment.
 
 ## 📖 Curated Resources
 
-1. **Main design reading:** John Ousterhout, *A Philosophy of Software Design*, Chapter 14, "Choosing Names." (to verify against book)
+1. **Main design reading:** John Ousterhout, *A Philosophy of Software Design*, Chapter 14, "Choosing Names."
    - 🔗 [Official book page](https://web.stanford.edu/~ouster/cgi-bin/book.php)
    - Why: the design advice behind this lesson.
 2. **[PEP 8: Function and Variable Names](https://peps.python.org/pep-0008/#function-and-variable-names)**
    - Why: defines Python's lowercase naming convention. Ousterhout supplies design advice; PEP 8 supplies Python convention.
-3. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 44, "Naming Things" (to verify against book).
+3. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 44, "Naming Things".
    - 🔗 [Official tip list](https://pragprog.com/tips/)
    - Why: Tip 74, on naming well and renaming when your understanding improves.
 

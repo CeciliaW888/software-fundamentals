@@ -6,8 +6,8 @@
 
 ---
 
-> **Book coverage:** Retries, timeouts, and idempotency are not covered in the three books' freely available material.
-> Those parts rely on the official Python, SQLite, and HTTP documentation; the error-handling shape follows Ousterhout's Chapter 10, marked to verify against the book.
+> **Book coverage:** Ousterhout's Chapter 10 gives the error-handling shape, including an example of retrying in one low layer.
+> Timeouts, backoff, and idempotency are not covered in the three books, so those parts rely on the official Python, SQLite, and HTTP documentation.
 
 ## 🎯 Learning Objectives
 
@@ -66,10 +66,11 @@ An operation is **idempotent** if doing it several times has the same effect as 
 SQLite's `ON CONFLICT ... DO NOTHING` clause (its "upsert" syntax) is what makes the second save a no-op.
 **Degraded mode** is running with reduced capability instead of stopping.
 
-John Ousterhout's *A Philosophy of Software Design*, Chapter 10, "Define Errors Out Of Existence" (to verify against book), explains the design shape: the retrying source masks temporary failures so callers never see them, and the core aggregates every website problem into a review result.
+John Ousterhout's *A Philosophy of Software Design*, Chapter 10, "Define Errors Out Of Existence", explains the design shape: the retrying source masks temporary failures so callers never see them, and the core aggregates every website problem into a review result.
 
-None of the three books' freely available material covers retries, backoff, or idempotency; those parts rely on official documentation only.
-Ousterhout's ideas on masking errors, from Chapter 10 (to verify against book), shape the design.
+Chapter 10's example is the NFS network file system: when a file server stops responding, the client keeps reissuing the request until the server recovers, instead of reporting an error to every application.
+Ousterhout argues that retrying in that one low layer is simpler than making every caller handle the failure; the Company Enricher's retrying source follows the same reasoning, but gives up after a few tries so a batch never hangs.
+None of the three books covers timeouts, backoff, or idempotency; those parts rely on official documentation only.
 
 > **Key Insight:** For every dependency, decide three things in advance: what counts as temporary, how many times to retry, and what the service does when retries run out.
 
@@ -277,7 +278,7 @@ def build_enricher(settings, about_urls=None):
 
 ## 📖 Curated Resources
 
-1. **Main design reading:** John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 10, "Define Errors Out Of Existence" (to verify against book).
+1. **Main design reading:** John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 10, "Define Errors Out Of Existence".
    - 🔗 [Official book page](https://web.stanford.edu/~ouster/cgi-bin/book.php)
    - Why: masking and aggregating failures so callers see fewer of them.
 2. **[RFC 9110, HTTP Semantics: idempotent methods](https://www.rfc-editor.org/rfc/rfc9110#name-idempotent-methods)**
@@ -286,8 +287,7 @@ def build_enricher(settings, about_urls=None):
    - Why: `ON CONFLICT ... DO NOTHING`, used for idempotent saves.
 4. **[Python documentation: built-in exceptions, OSError and TimeoutError](https://docs.python.org/3/library/exceptions.html#os-exceptions)**
    - Why: which network errors are which.
-5. **Book coverage for retries, timeouts, and idempotency:** none in the three books' freely available material; official documentation only.
-   - Why: a book source should be chosen when the full books are available.
+5. **Book coverage for timeouts, backoff, and idempotency:** none in the three books; official documentation only.
 
 ---
 

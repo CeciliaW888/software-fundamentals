@@ -67,7 +67,7 @@ A simple **context map** shows who speaks which language:
 
 ### Name it: bounded context, context map, anticorruption layer
 
-Eric Evans's *Domain-Driven Design*, Chapter 14, "Maintaining Model Integrity" (to verify against book), explains that a model is only consistent within a boundary.
+Eric Evans's *Domain-Driven Design*, Chapter 14, "Maintaining Model Integrity", explains that a model is only consistent within a boundary.
 A **bounded context** is the explicit boundary within which one model and its language apply.
 A **context map** shows the bounded contexts in play and how they relate.
 An **anticorruption layer** is an isolating layer that translates between your model and another system's, so the other model cannot corrupt yours.
@@ -86,9 +86,9 @@ That is `company_from_listing`: Tradeline keeps its feed, and we keep our words.
 
 | Term | Definition | Source |
 |------|-----------|--------|
-| **Bounded context** | The explicit boundary within which one model and its language apply. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 14 (to verify against book) |
-| **Context map** | A description of the bounded contexts in play and how they relate. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 14 (to verify against book) |
-| **Anticorruption layer** | A layer that translates between your model and another system's, keeping the other model out. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 14 (to verify against book) |
+| **Bounded context** | The explicit boundary within which one model and its language apply. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 14 |
+| **Context map** | A description of the bounded contexts in play and how they relate. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 14 |
+| **Anticorruption layer** | A layer that translates between your model and another system's, keeping the other model out. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 14 |
 | **Directory hint** | The category a partner directory suggests for a company, translated into our categories. | Course domain term |
 | **Translation table** | An explicit mapping from another system's values to yours. | Course-authored plain definition |
 
@@ -228,7 +228,7 @@ For each, write two of its words that differ from yours, and where the translati
 
 ## 📖 Curated Resources
 
-1. **Domain reading:** Eric Evans, *Domain-Driven Design*, Chapter 14, "Maintaining Model Integrity" (to verify against book).
+1. **Domain reading:** Eric Evans, *Domain-Driven Design*, Chapter 14, "Maintaining Model Integrity".
    - 🔗 [DDD resources from Domain Language](https://www.domainlanguage.com/ddd/)
    - Why: bounded contexts, context maps, and the anticorruption layer.
 2. **[Python documentation: str.removesuffix](https://docs.python.org/3/library/stdtypes.html#str.removesuffix)**

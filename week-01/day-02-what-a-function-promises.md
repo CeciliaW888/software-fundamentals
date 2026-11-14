@@ -56,7 +56,7 @@ The docstring in the second code example states the result, the low-confidence c
 
 It leaves out replaceable details: which service finds the website, which tool reads the page, which model suggests the category, how often it tries again, and where it saves the result.
 
-*The Pragmatic Programmer*'s Topic 23, "Design by Contract" (to verify against book), frames the same idea as a contract: what a routine expects before it runs, what it guarantees when it finishes, and what stays true throughout.
+*The Pragmatic Programmer*'s Topic 23, "Design by Contract", frames the same idea as a contract: what a routine expects before it runs, what it guarantees when it finishes, and what stays true throughout.
 Its Tip 37 (p. 107 in the publisher's [official list of the book's tips](https://pragprog.com/tips/)) is "Design with Contracts".
 This course uses the plainer word *promise* until the idea is familiar.
 
@@ -93,11 +93,11 @@ Remember the four plain questions first: input, result, outside change, and fail
 | **Function** | A named block of code that performs a job. | Official Python vocabulary ([Python tutorial](https://docs.python.org/3/tutorial/controlflow.html#defining-functions)) |
 | **Docstring** | Text inside a function that explains how to use it. | Official Python vocabulary ([PEP 257](https://peps.python.org/pep-0257/#what-is-a-docstring)) |
 | **None** | Python's built-in marker for "no value here." | Official Python vocabulary ([Python documentation](https://docs.python.org/3/library/constants.html#None)) |
-| **Interface** | What other code must know to use a function or module. | Standard software vocabulary; central in Ousterhout Chapter 4 (to verify against book) |
-| **Implementation** | The steps currently used to do the work. | Standard software vocabulary; central in Ousterhout Chapter 4 (to verify against book) |
+| **Interface** | What other code must know to use a function or module. | Standard software vocabulary; central in Ousterhout Chapter 4 |
+| **Implementation** | The steps currently used to do the work. | Standard software vocabulary; central in Ousterhout Chapter 4 |
 | **Side effect** | An outside change, such as saving data or sending a message. | Standard software vocabulary; [PEP 257](https://peps.python.org/pep-0257/#multi-line-docstrings) says function documentation should describe side effects |
-| **Module** | A unit of code with an interface and an implementation. It can be a function, class, subsystem, or service. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 4 (to verify against book) |
-| **Abstraction** | A simplified view of something that leaves out unimportant details. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 4 (to verify against book) |
+| **Module** | A unit of code with an interface and an implementation. It can be a function, class, subsystem, or service. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 4 |
+| **Abstraction** | A simplified view of something that leaves out unimportant details. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 4 |
 
 **Two words you do not need yet:**
 
@@ -240,14 +240,14 @@ Then read the body to check whether your list is complete.
 
 ## 📖 Curated Resources
 
-1. **Main design reading:** John Ousterhout, *A Philosophy of Software Design*, Chapter 4 on interface versus implementation and Chapter 13 (to verify against book) on useful function documentation.
+1. **Main design reading:** John Ousterhout, *A Philosophy of Software Design*, Chapter 4 on interface versus implementation and Chapter 13 on useful function documentation.
    - 🔗 [Official book page](https://web.stanford.edu/~ouster/cgi-bin/book.php)
    - Why: the design advice behind this lesson.
 2. **[PEP 257: Multi-line Docstrings](https://peps.python.org/pep-0257/#multi-line-docstrings)**
    - Why: says a function docstring should cover behaviour, arguments, returns, outside changes, errors, and calling restrictions when applicable.
 3. **[Python glossary: callable](https://docs.python.org/3/glossary.html#term-callable)**
    - Why: the broader Python term behind "function."
-4. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 23, "Design by Contract" (to verify against book).
+4. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 23, "Design by Contract".
    - 🔗 [Official tip list](https://pragprog.com/tips/)
    - Why: Tip 37, on stating what code expects and guarantees.
 

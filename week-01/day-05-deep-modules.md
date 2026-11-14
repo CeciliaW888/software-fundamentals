@@ -53,12 +53,12 @@ Even "the first sentence states the main activity" is now a property of the page
 
 ### Name it: deep modules, shallow modules, pass-through methods
 
-John Ousterhout's *A Philosophy of Software Design* uses **module** for any unit with an interface and an implementation, from a function to a service (Chapter 4, "Modules Should Be Deep" (to verify against book)).
+John Ousterhout's *A Philosophy of Software Design* uses **module** for any unit with an interface and an implementation, from a function to a service (Chapter 4, "Modules Should Be Deep").
 A **deep module** offers powerful functionality through a simple interface.
 A **shallow module** has an interface that is complicated relative to what it does, so it adds more to learn than it saves.
 
-Chapter 7, "Different Layer, Different Abstraction" (to verify against book), names a common shallow pattern: the **pass-through method**, which does little except hand its arguments to another method.
-Chapter 8, "Pull Complexity Downwards" (to verify against book), gives the direction of the fix: it is better for the module to absorb complexity than for every caller to deal with it.
+Chapter 7, "Different Layer, Different Abstraction", names a common shallow pattern: the **pass-through method**, which does little except hand its arguments to another method.
+Chapter 8, "Pull Complexity Downwards", gives the direction of the fix: it is better for the module to absorb complexity than for every caller to deal with it.
 
 The `main_activity` property is a small example of pulling complexity down.
 The rule "use the first sentence" now lives in one place, inside the module that owns the page.
@@ -76,11 +76,11 @@ It answers a general question about any company, and says nothing about keywords
 
 | Term | Definition | Source |
 |------|-----------|--------|
-| **Module** | A unit of code with an interface and an implementation, from a function to a whole service. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 4 (to verify against book) |
-| **Interface** | Everything someone working elsewhere must know to use the module. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 4 (to verify against book) |
-| **Deep module** | A module that provides powerful functionality behind a simple interface. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 4 (to verify against book) |
-| **Shallow module** | A module whose interface is complicated compared with the functionality it provides. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 4 (to verify against book) |
-| **Pass-through method** | A method that does little except pass its arguments to another method. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 7 (to verify against book) |
+| **Module** | A unit of code with an interface and an implementation, from a function to a whole service. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 4 |
+| **Interface** | Everything someone working elsewhere must know to use the module. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 4 |
+| **Deep module** | A module that provides powerful functionality behind a simple interface. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 4 |
+| **Shallow module** | A module whose interface is complicated compared with the functionality it provides. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 4 |
+| **Pass-through method** | A method that does little except pass its arguments to another method. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 7 |
 | **Property** | A Python attribute whose value is computed by a method each time it is read. | Official Python vocabulary ([built-in functions: property](https://docs.python.org/3/library/functions.html#property)) |
 | **Somewhat general-purpose** | A module whose functionality meets today's needs while its interface is general enough for several uses. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 6, checked in the author's free extract |
 
@@ -219,7 +219,7 @@ Decide whether it earns its place: does it hide a decision, or only add a name t
 
 ## 📖 Curated Resources
 
-1. **Main design reading:** John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapters 4 to 8, especially Chapter 4, "Modules Should Be Deep" (to verify against book).
+1. **Main design reading:** John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapters 4 to 8, especially Chapter 4, "Modules Should Be Deep".
    - 🔗 [Official book page](https://web.stanford.edu/~ouster/cgi-bin/book.php)
    - Why: the source of deep and shallow modules.
 2. **[Python documentation: dataclasses](https://docs.python.org/3/library/dataclasses.html)**

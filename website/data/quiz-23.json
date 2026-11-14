@@ -5,7 +5,7 @@
     {
       "question": "The benchmark shows website reads take about 900 ms and classification about 3 ms. What should you optimise?",
       "options": [
-        "Reading websites, the critical path",
+        "Reading websites, the bottleneck",
         "The classifier, because its loops look slow",
         "Both equally",
         "Nothing; benchmarks are unreliable"

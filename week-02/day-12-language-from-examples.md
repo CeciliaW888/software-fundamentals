@@ -64,9 +64,9 @@ Not every word is domain language.
 
 ### Name it: ubiquitous language, knowledge crunching
 
-Eric Evans's *Domain-Driven Design*, Chapter 1, "Crunching Knowledge" (to verify against book), describes developers and domain experts working through examples together until a useful model emerges.
-Chapter 2, "Communication and the Use of Language" (to verify against book), introduces the **ubiquitous language**: a language built around the domain model and used consistently by the team in conversation, documents, and code.
-Chapter 3, "Binding Model and Implementation" (to verify against book), argues that the code should follow the model closely, so a change in the language is a change in the code.
+Eric Evans's *Domain-Driven Design*, Chapter 1, "Crunching Knowledge", describes developers and domain experts working through examples together until a useful model emerges.
+Chapter 2, "Communication and the Use of Language", introduces the **ubiquitous language**: a language built around the domain model and used consistently by the team in conversation, documents, and code.
+Chapter 3, "Binding Model and Implementation", argues that the code should follow the model closely, so a change in the language is a change in the code.
 
 Ubiquitous language is specific to one domain and one team.
 It is not a name for general programming vocabulary.
@@ -84,8 +84,8 @@ Evans's free [*DDD Reference*](https://www.domainlanguage.com/ddd/reference/), a
 |------|-----------|--------|
 | **Domain** | The subject area in which the software is used and the knowledge needed to work in that area. | Paraphrased from Eric Evans, *Domain-Driven Design* |
 | **Domain expert** | A person who knows the business area well, such as a reviewer who categorises companies. | Standard DDD vocabulary; this plain definition is course-authored |
-| **Ubiquitous language** | Language built around one domain model and used consistently by the team in speech, documents, and code. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 2 (to verify against book) |
-| **Knowledge crunching** | Working through examples with domain experts to distil a useful model. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 1 (to verify against book) |
+| **Ubiquitous language** | Language built around one domain model and used consistently by the team in speech, documents, and code. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 2 |
+| **Knowledge crunching** | Working through examples with domain experts to distil a useful model. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 1 |
 | **Scenario** | A concrete example of a situation and what should happen in it. | Course-authored plain definition |
 | **Enum** | A Python type with a fixed set of named values, such as `Outcome.SUGGESTED`. | Official Python vocabulary ([enum](https://docs.python.org/3/library/enum.html)) |
 
@@ -209,7 +209,7 @@ Write both meanings and one concrete example that shows the difference.
 
 ## 📖 Curated Resources
 
-1. **Domain reading:** Eric Evans, *Domain-Driven Design*, Chapters 1 to 3 (to verify against book): "Crunching Knowledge", "Communication and the Use of Language", and "Binding Model and Implementation".
+1. **Domain reading:** Eric Evans, *Domain-Driven Design*, Chapters 1 to 3: "Crunching Knowledge", "Communication and the Use of Language", and "Binding Model and Implementation".
    - 🔗 [DDD resources from Domain Language](https://www.domainlanguage.com/ddd/)
    - Why: the source of ubiquitous language and model-driven code.
 2. **[Python documentation: enum](https://docs.python.org/3/library/enum.html)**

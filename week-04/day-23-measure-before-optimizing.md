@@ -11,7 +11,7 @@
 By the end of today, you will be able to:
 
 1. Time each step of a batch to find where the time actually goes.
-2. Use a profiler to confirm the critical path.
+2. Use a profiler to confirm where the time goes.
 3. Choose the one change that attacks the slowest step.
 4. Compare before and after with the same benchmark, and keep a test for the improvement.
 
@@ -61,17 +61,20 @@ Two rules kept this honest:
 
 For a fuller picture, `python -m enricher.benchmark --profile` runs the batch under Python's `cProfile`, which reports how much time is spent inside each function.
 
-### Name it: critical path, profiling, caching
+### Name it: bottleneck, profiling, caching
 
-John Ousterhout's *A Philosophy of Software Design*, Chapter 20, "Designing for Performance" (to verify against book), advises measuring before modifying, because intuitions about performance are unreliable, and then focusing on the **critical path**, the small part of the code where most of the time is spent.
+John Ousterhout's *A Philosophy of Software Design*, Chapter 20, "Designing for Performance", advises measuring before modifying, because programmers' intuitions about performance are unreliable.
+The measurements should point to a small number of specific places where the system spends a lot of time; this course calls such a place a **bottleneck**.
+Ousterhout's preferred remedy is a fundamental change, and introducing a cache is one of his examples, which is exactly what the Company Enricher does.
+Only when no fundamental fix exists does he suggest redesigning code around the **critical path**: the minimum code that must run in the most common case.
 He also argues for designs that are naturally efficient without making them more complex; the cache is a small adapter, not a change to the core.
 
 A **benchmark** is a repeatable measurement of performance.
 A **profiler** measures how much time a program spends in each function.
 A **cache** stores results so repeated requests can be answered without redoing the work.
 
-*The Pragmatic Programmer*'s Topic 39, "Algorithm Speed" (to verify against book), makes the same demand; its Tip 64 (p. 208 in the publisher's [official list of the book's tips](https://pragprog.com/tips/)) is "Test Your Estimates".
-Ousterhout's free extract also notes, in Chapter 6, that removing special cases can make code faster as well as simpler, a theme he develops in Chapter 20 (to verify against book).
+*The Pragmatic Programmer*'s Topic 39, "Algorithm Speed", makes the same demand; its Tip 64 (p. 208 in the publisher's [official list of the book's tips](https://pragprog.com/tips/)) is "Test Your Estimates".
+Ousterhout also notes, in Chapter 6, that eliminating special cases can make code faster as well as simpler, which Chapter 20 demonstrates.
 
 > **Key Insight:** The slow part is rarely the part that looks slow. Let a measurement choose what to optimise.
 
@@ -81,7 +84,8 @@ Ousterhout's free extract also notes, in Chapter 6, that removing special cases 
 
 | Term | Definition | Source |
 |------|-----------|--------|
-| **Critical path** | The small part of a program where most of its time is spent. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 20 (to verify against book) |
+| **Bottleneck** | The small part of a program where most of its time is spent. | Standard software vocabulary; this plain definition is course-authored |
+| **Critical path** | The minimum code that must run to do a task in the most common case. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 20 |
 | **Benchmark** | A repeatable measurement of how fast something runs. | Standard software vocabulary; this plain definition is course-authored |
 | **Profiler** | A tool that measures how much time a program spends in each function. | Official Python vocabulary ([The Python Profilers](https://docs.python.org/3/library/profile.html)) |
 | **Cache** | A store of earlier results, used to answer repeated requests without redoing the work. | Standard software vocabulary; this plain definition is course-authored |
@@ -154,7 +158,7 @@ def test_cache_reads_each_website_once_per_run():
 
 **Q1. The benchmark shows website reads take about 900 ms and classification about 3 ms. What should you optimise?**
 
-- A. Reading websites, the critical path
+- A. Reading websites, the bottleneck
 - B. The classifier, because its loops look slow
 - C. Both equally
 - D. Nothing; benchmarks are unreliable
@@ -220,9 +224,9 @@ Write how you would time each of its steps separately, and what result would pro
 
 ## 📖 Curated Resources
 
-1. **Main design reading:** John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 20, "Designing for Performance" (to verify against book).
+1. **Main design reading:** John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 20, "Designing for Performance".
    - 🔗 [Official book page](https://web.stanford.edu/~ouster/cgi-bin/book.php)
-   - Why: measure first, then find the critical path.
+   - Why: measure first, then fix the place the measurements point to.
 2. **[Python documentation: The Python Profilers](https://docs.python.org/3/library/profile.html)**
    - Why: how `cProfile` and `pstats` work.
 3. **[Python documentation: timeit](https://docs.python.org/3/library/timeit.html)**
@@ -234,7 +238,7 @@ Write how you would time each of its steps separately, and what result would pro
 
 ## 🤔 Reflection Questions
 
-1. **Comprehension:** What is the critical path of the Company Enricher's batch?
+1. **Comprehension:** What is the bottleneck of the Company Enricher's batch?
 2. **Application:** With real websites, the cache helps only within one run. What would a cache across runs need to handle?
 3. **Connection:** How did Day 10's boundary make adding a cache a one-file change?
 4. **Critical Thinking:** When could a cache make the service wrong rather than just faster?

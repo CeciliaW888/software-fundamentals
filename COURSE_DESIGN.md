@@ -115,7 +115,7 @@ Do not turn its tactical patterns into a default architecture.
 
 These three books are the only main book sources.
 Where none of them fits a lesson, the lesson says so plainly and relies on official documentation.
-Citations not yet checked against the full books are marked "(to verify against book)" and listed in [docs/book-verification-todo.md](docs/book-verification-todo.md).
+Every citation has been checked against the full books; [docs/book-verification.md](docs/book-verification.md) records the check.
 
 ### Source roles and labels
 
@@ -194,12 +194,11 @@ Technical terms such as **function**, **exception**, and **return value** are no
 
 #### Known source gaps
 
-Book citations that still need checking against the full books are listed in [docs/book-verification-todo.md](docs/book-verification-todo.md).
-The topics below have no coverage in the three books' freely available material, and need a stable primary source:
+The topics below have no or only partial coverage in the three books, and need a stable primary source:
 
-- measurable quality requirements, data models, storage and indexing, schema evolution, and transaction isolation (Module 5; official database documentation covers behaviour, but no main book covers the design trade-offs)
-- retries, timeouts, idempotency, and degraded modes (lesson 0024)
-- secure software design and threat modeling (*The Pragmatic Programmer*’s “Stay Safe Out There” is an introduction only, not a threat-modeling source; to verify against book)
+- measurable quality requirements, data models, storage and indexing, schema evolution, and transaction isolation (Module 5; *Domain-Driven Design* Chapter 6 covers mapping a model onto relational tables, and official database documentation covers behaviour, but no main book covers the wider trade-offs)
+- timeouts, backoff, idempotency, and degraded modes (lesson 0024; *A Philosophy of Software Design* Chapter 10 covers only retrying in one low layer)
+- secure software design and threat modeling (*The Pragmatic Programmer*’s “Stay Safe Out There” is an introduction only, not a threat-modeling source)
 - deployment, migration, and rollback
 - production incident response
 - accessibility for developer-facing and user-facing interfaces
@@ -285,11 +284,11 @@ Each lesson's code comes from `projects/company-enricher/stages/`, one runnable 
 
 | Lesson | Durable decision | Practice change | Main sources |
 |---|---|---|---|
-| 0016 Turn qualities into measurable requirements | Define latency, reliability, load, and maintainability targets | Write service-level indicators and budgets | *TPP* Topic 5 and Tip 8 (to verify against book); measurement: official docs |
-| 0017 Choose a data model from access patterns | Match relationships and queries to the model | Compare relational, document, and graph designs | *DDD Reference* (repositories); data models: SQLite, PostgreSQL and Python docs |
-| 0018 Understand storage trade-offs | Connect indexes and layout to read/write behaviour | Explain one query plan and index decision | *TPP* Topic 39, Tips 63 and 64 (to verify against book); indexes: SQLite and PostgreSQL docs |
-| 0019 Evolve schemas without coordinated deployment | Preserve compatibility across versions | Run old and new readers against evolving data | Official SQLite, PostgreSQL and Python docs only; *TPP* Tip 18 and Topic 27 for small, reversible steps |
-| 0020 Protect invariants under concurrency | Choose an isolation guarantee from the failure you must prevent | Reproduce and fix a transaction anomaly | *TPP* Topic 34 (free excerpt); *DDD Reference* (aggregates); isolation levels: database docs |
+| 0016 Turn qualities into measurable requirements | Define latency, reliability, load, and maintainability targets | Write service-level indicators and budgets | *TPP* Topic 5 and Tip 8; measurement: official docs |
+| 0017 Choose a data model from access patterns | Match relationships and queries to the model | Compare relational, document, and graph designs | *DDD* Ch. 6 (repositories, relational mapping); data models: SQLite, PostgreSQL and Python docs |
+| 0018 Understand storage trade-offs | Connect indexes and layout to read/write behaviour | Explain one query plan and index decision | *TPP* Topic 39, Tips 63 and 64; indexes: SQLite and PostgreSQL docs |
+| 0019 Evolve schemas without coordinated deployment | Preserve compatibility across versions | Run old and new readers against evolving data | SQLite, PostgreSQL and Python docs; *TPP* Tip 18 and Topic 27 for small, reversible steps; *DDD* Ch. 6 on why schema changes are costly |
+| 0020 Protect invariants under concurrency | Choose an isolation guarantee from the failure you must prevent | Reproduce and fix a transaction anomaly | *TPP* Topic 34; *DDD* Ch. 6 (aggregates); isolation levels: database docs |
 
 **Exit evidence:** the learner can justify a data decision using access patterns, compatibility, and correctness requirements.
 
@@ -300,10 +299,10 @@ Official database documentation defines behaviour, but the reasoning about requi
 
 | Lesson | Durable decision | Practice change | Main sources |
 |---|---|---|---|
-| 0021 Observe promises and failures | Instrument what users depend on | Add structured logs, metrics, traces, and one alert | OpenTelemetry, Python and OWASP docs only |
+| 0021 Observe promises and failures | Instrument what users depend on | Add structured logs, metrics, traces, and one alert | *TPP* Topic 20 (tracing); OpenTelemetry, Python and OWASP docs |
 | 0022 Deploy reversibly | Make configuration, migration, rollout, and rollback explicit | Ship a backwards-compatible change with rollback | *TPP* “Reversibility”, “Configuration”; GitHub Actions and Git docs |
 | 0023 Measure before optimizing | Locate the critical path before changing code | Benchmark, change, and compare | *APOSD* Ch. 20 |
-| 0024 Design for expected failure | Choose retries, timeouts, idempotency, and fallbacks from failure semantics | Test one degraded-mode scenario | Python, SQLite and HTTP (RFC 9110) docs only; *APOSD* Ch. 10 for masking errors (to verify against book) |
+| 0024 Design for expected failure | Choose retries, timeouts, idempotency, and fallbacks from failure semantics | Test one degraded-mode scenario | *APOSD* Ch. 10 (masking errors, retrying in one layer); Python, SQLite and HTTP (RFC 9110) docs |
 
 **Exit evidence:** the learner can deploy and diagnose the service without guessing.
 

@@ -54,7 +54,7 @@ The first two slow you down; the third lets you ship a bug with confidence.
 
 ### Name it: the three symptoms
 
-John Ousterhout's *A Philosophy of Software Design*, Chapter 2, "The Nature of Complexity" (to verify against book), names these symptoms.
+John Ousterhout's *A Philosophy of Software Design*, Chapter 2, "The Nature of Complexity", names these symptoms.
 **Change amplification** is when a simple change needs edits in many places.
 **Cognitive load** is how much a developer must know to complete a task.
 **Unknown unknowns** are cases where it is not obvious which code must change, or what you need to know to change it.
@@ -62,14 +62,14 @@ John Ousterhout's *A Philosophy of Software Design*, Chapter 2, "The Nature of C
 He describes the causes as **dependencies** (code that cannot be understood or changed on its own) and **obscurity** (facts a reader needs but cannot see in the code).
 The duplicated threshold is a dependency; the hidden `1 / len(CATEGORIES)` rule is obscurity.
 
-*The Pragmatic Programmer* adds a warning about time in its Topic 3, "Software Entropy" (to verify against book): small signs of neglect left unfixed invite more of the same, which the authors call "broken windows".
+*The Pragmatic Programmer* adds a warning about time in its Topic 3, "Software Entropy": small signs of neglect left unfixed invite more of the same, which the authors call "broken windows".
 A second duplicated constant is easier to add once the first one is tolerated.
 
 The fix in Module 2 is to put each piece of knowledge in exactly one place.
 In `stages/02-control-complexity`, all category knowledge lives in `categories.py`, and the threshold is defined once.
 
-The three symptoms are not only in Chapter 2 (to verify against book): Ousterhout lists them again in his chapter on why to write comments, which is included in Ousterhout's free [2nd-edition extract](https://web.stanford.edu/~ouster/cgi-bin/aposd2ndEdExtract.pdf).
-*The Pragmatic Programmer*'s Topic 8, "The Essence of Good Design" (to verify against book), offers one yardstick for every design choice.
+The three symptoms are not only in Chapter 2: Ousterhout lists them again in his chapter on why to write comments, which is included in Ousterhout's free [2nd-edition extract](https://web.stanford.edu/~ouster/cgi-bin/aposd2ndEdExtract.pdf).
+*The Pragmatic Programmer*'s Topic 8, "The Essence of Good Design", offers one yardstick for every design choice.
 Its Tip 14 (p. 28 in the publisher's [official list of the book's tips](https://pragprog.com/tips/)) is "Good Design Is Easier to Change Than Bad Design", which is exactly what today's scoring measures.
 
 > **Key Insight:** Count the edits and the facts a change needs. That count is a measure of complexity you can compare before and after.
@@ -80,12 +80,12 @@ Its Tip 14 (p. 28 in the publisher's [official list of the book's tips](https://
 
 | Term | Definition | Source |
 |------|-----------|--------|
-| **Complexity** | Anything about the structure of a system that makes it hard to understand and modify. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 2 (to verify against book) |
-| **Change amplification** | A simple change requiring edits in many different places. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 2 (to verify against book) |
-| **Cognitive load** | How much a developer needs to know to complete a task. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 2 (to verify against book) |
-| **Dependency** | Code that cannot be understood or modified in isolation from other code. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 2 (to verify against book) |
-| **Obscurity** | Facts a reader needs to know that the code does not show. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 2 (to verify against book) |
-| **Broken window** | A small, visible sign of neglect that, left unfixed, encourages more neglect. | Paraphrased from Thomas and Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 3, "Software Entropy" (to verify against book) |
+| **Complexity** | Anything about the structure of a system that makes it hard to understand and modify. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 2 |
+| **Change amplification** | A simple change requiring edits in many different places. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 2 |
+| **Cognitive load** | How much a developer needs to know to complete a task. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 2 |
+| **Dependency** | Code that cannot be understood or modified in isolation from other code. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 2 |
+| **Obscurity** | Facts a reader needs to know that the code does not show. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 2 |
+| **Broken window** | A small, visible sign of neglect that, left unfixed, encourages more neglect. | Paraphrased from Thomas and Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 3, "Software Entropy" |
 
 ---
 
@@ -218,10 +218,10 @@ Write down the change request that would expose it and how many edits it would n
 
 ## 📖 Curated Resources
 
-1. **Main design reading:** John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 2, "The Nature of Complexity" (to verify against book).
+1. **Main design reading:** John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 2, "The Nature of Complexity".
    - 🔗 [Official book page](https://web.stanford.edu/~ouster/cgi-bin/book.php)
    - Why: the source of the three symptoms and their two causes.
-2. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 3, "Software Entropy" (to verify against book).
+2. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 3, "Software Entropy".
    - 🔗 [Publisher page](https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/)
    - Why: why small neglected problems grow.
 3. **[pytest: monkeypatching](https://docs.pytest.org/en/stable/how-to/monkeypatch.html)**

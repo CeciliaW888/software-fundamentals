@@ -57,7 +57,7 @@ The separation is no longer a convention someone might forget; it is checked on 
 
 ### Name it: core domain, generic subdomains, segregated core
 
-Eric Evans's *Domain-Driven Design*, Chapter 15, "Distillation" (to verify against book), describes distilling a model to find the **core domain**: the part that is most valuable and specialised, and that deserves the best people and the most care.
+Eric Evans's *Domain-Driven Design*, Chapter 15, "Distillation", describes distilling a model to find the **core domain**: the part that is most valuable and specialised, and that deserves the best people and the most care.
 **Generic subdomains** are parts that are needed but not special to the business, and can be handled with off-the-shelf solutions or less effort.
 The chapter also describes a **domain vision statement**, a short description of the core's value, and a **segregated core**, where the core's code is separated from supporting code so it can be understood on its own.
 
@@ -73,11 +73,11 @@ The `core/` folder and `test_layers.py` are that idea applied to the Company Enr
 
 | Term | Definition | Source |
 |------|-----------|--------|
-| **Core domain** | The most valuable and specialised part of the model, where design effort should go first. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 15 (to verify against book) |
-| **Generic subdomain** | A part the system needs that is not special to this business. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 15 (to verify against book) |
+| **Core domain** | The most valuable and specialised part of the model, where design effort should go first. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 15 |
+| **Generic subdomain** | A part the system needs that is not special to this business. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 15 |
 | **Supporting subdomain** | A part specific to this business that exists to support the core. | Standard DDD vocabulary; this plain definition is course-authored |
-| **Domain vision statement** | A short description of the core domain and the value it brings. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 15 (to verify against book) |
-| **Segregated core** | Core code separated from supporting code so it can be understood alone. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 15 (to verify against book) |
+| **Domain vision statement** | A short description of the core domain and the value it brings. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 15 |
+| **Segregated core** | Core code separated from supporting code so it can be understood alone. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 15 |
 | **Port** | A small interface in the core that says what it needs from the outside world. | Standard software vocabulary; this plain definition is course-authored |
 
 ---
@@ -237,7 +237,7 @@ def decide(self, suggestion, company):
 
 ## 📖 Curated Resources
 
-1. **Domain reading:** Eric Evans, *Domain-Driven Design*, Chapter 15, "Distillation" (to verify against book).
+1. **Domain reading:** Eric Evans, *Domain-Driven Design*, Chapter 15, "Distillation".
    - 🔗 [DDD resources from Domain Language](https://www.domainlanguage.com/ddd/)
    - Why: core domain, generic subdomains, and the vision statement.
 2. **[Python documentation: ast](https://docs.python.org/3/library/ast.html)**

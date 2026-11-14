@@ -50,13 +50,13 @@ The keyword classifier is still a plain class with one method; giving it identit
 
 ### Name it: value objects, entities, domain services
 
-Eric Evans's *Domain-Driven Design*, Chapter 5, "A Model Expressed in Software" (to verify against book), names these shapes.
+Eric Evans's *Domain-Driven Design*, Chapter 5, "A Model Expressed in Software", names these shapes.
 An **entity** is an object defined by a thread of continuity and identity rather than by its attributes.
 A **value object** describes something and has no conceptual identity; it is often best made immutable.
 A **service** is an operation that stands alone in the model because it does not belong naturally to any entity or value object.
 
-Chapter 4, "Isolating the Domain" (to verify against book), explains why these objects live in their own layer, away from storage and user interface code.
-Chapter 6, "The Life Cycle of a Domain Object" (to verify against book), discusses keeping such objects consistent; Day 20 uses its idea of an aggregate.
+Chapter 4, "Isolating the Domain", explains why these objects live in their own layer, away from storage and user interface code.
+Chapter 6, "The Life Cycle of a Domain Object", discusses keeping such objects consistent; Day 20 uses its idea of an aggregate.
 
 Evans's free [*DDD Reference*](https://www.domainlanguage.com/ddd/reference/) gives the same three shapes in brief, and adds a warning that fits the two companies called Northgate Builders: mistaken identity between entities can corrupt data.
 
@@ -68,9 +68,9 @@ Evans's free [*DDD Reference*](https://www.domainlanguage.com/ddd/reference/) gi
 
 | Term | Definition | Source |
 |------|-----------|--------|
-| **Entity** | An object defined by its identity and continuity over time, not by its attributes. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 5 (to verify against book) |
-| **Value object** | An object that describes something, has no identity of its own, and is usually immutable. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 5 (to verify against book) |
-| **Domain service** | An operation in the model that does not belong naturally to any entity or value object. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 5 (to verify against book) |
+| **Entity** | An object defined by its identity and continuity over time, not by its attributes. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 5 |
+| **Value object** | An object that describes something, has no identity of its own, and is usually immutable. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 5 |
+| **Domain service** | An operation in the model that does not belong naturally to any entity or value object. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 5 |
 | **Immutable** | Unable to change after it is created. | Standard software vocabulary; Python's [frozen dataclasses](https://docs.python.org/3/library/dataclasses.html#frozen-instances) provide it |
 | **Identity** | What makes an entity the same one over time; here, `company_id`. | Course-authored plain definition |
 | **Invariant** | A rule that must always be true, such as "confidence is between 0 and 1". | Standard software vocabulary; this plain definition is course-authored |
@@ -221,7 +221,7 @@ Find one that is modelled the wrong way round.
 
 ## 📖 Curated Resources
 
-1. **Domain reading:** Eric Evans, *Domain-Driven Design*, Chapter 5, "A Model Expressed in Software", with Chapters 4 and 6 (to verify against book) for context.
+1. **Domain reading:** Eric Evans, *Domain-Driven Design*, Chapter 5, "A Model Expressed in Software", with Chapters 4 and 6 for context.
    - 🔗 [DDD resources from Domain Language](https://www.domainlanguage.com/ddd/)
    - Why: the source of entities, value objects, and services.
 2. **[Python documentation: dataclasses](https://docs.python.org/3/library/dataclasses.html)**

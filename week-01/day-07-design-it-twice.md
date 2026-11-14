@@ -56,12 +56,12 @@ That trade is almost always worth it, because a module is built once and used ma
 
 ### Name it: design it twice, tracer bullets, prototypes
 
-John Ousterhout's *A Philosophy of Software Design*, Chapter 11, "Design it Twice" (to verify against book), recommends considering at least two radically different designs for each major decision, and comparing them on what matters most, such as the simplicity of the interface.
+John Ousterhout's *A Philosophy of Software Design*, Chapter 11, "Design it Twice", recommends considering at least two radically different designs for each major decision, and comparing them on what matters most, such as the simplicity of the interface.
 Even when the first idea wins, the comparison shows you why.
 
 *The Pragmatic Programmer* offers two ways to test a design cheaply.
-Topic 12, "Tracer Bullets" (to verify against book) describes building a thin version that runs end to end through every part of the system, then filling it in.
-Topic 13, "Prototypes and Post-it Notes" (to verify against book) describes throwaway experiments that answer one question and are then discarded.
+Topic 12, "Tracer Bullets" describes building a thin version that runs end to end through every part of the system, then filling it in.
+Topic 13, "Prototypes and Post-it Notes" describes throwaway experiments that answer one question and are then discarded.
 
 The Module 2 project has a tracer bullet: `python -m enricher` runs every sample company through the real website module, classifier, and store, and prints one line each.
 It is small, but it is real code you keep and grow.
@@ -76,9 +76,9 @@ Three tips in the publisher's [official list of the book's tips](https://pragpro
 
 | Term | Definition | Source |
 |------|-----------|--------|
-| **Design it twice** | Considering two or more substantially different designs before choosing one. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 11 (to verify against book) |
-| **Tracer bullet** | A thin, working path through every layer of a system, kept and filled in over time. | Paraphrased from Thomas and Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 12, "Tracer Bullets" (to verify against book) |
-| **Prototype** | A throwaway experiment built to answer one specific question. | Paraphrased from Thomas and Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 13, "Prototypes and Post-it Notes" (to verify against book) |
+| **Design it twice** | Considering two or more substantially different designs before choosing one. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 11 |
+| **Tracer bullet** | A thin, working path through every layer of a system, kept and filled in over time. | Paraphrased from Thomas and Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 12, "Tracer Bullets" |
+| **Prototype** | A throwaway experiment built to answer one specific question. | Paraphrased from Thomas and Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 13, "Prototypes and Post-it Notes" |
 | **Result object** | A value that always comes back from an operation and describes what happened. | Course-authored plain definition |
 | **Status** | A field on a result that says which outcome happened, such as accepted or needs review. | Course-authored plain definition |
 
@@ -243,10 +243,10 @@ for company_name in SAMPLE_WEB:
 
 ## 📖 Curated Resources
 
-1. **Main design reading:** John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 11, "Design it Twice" (to verify against book).
+1. **Main design reading:** John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 11, "Design it Twice".
    - 🔗 [Official book page](https://web.stanford.edu/~ouster/cgi-bin/book.php)
    - Why: how and why to compare alternatives.
-2. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topics 12, "Tracer Bullets" and 13, "Prototypes and Post-it Notes" (to verify against book).
+2. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topics 12, "Tracer Bullets" and 13, "Prototypes and Post-it Notes".
    - 🔗 [Publisher page](https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/)
    - Why: two cheap ways to test a design.
 3. **[Python documentation: `__main__`](https://docs.python.org/3/library/__main__.html)**

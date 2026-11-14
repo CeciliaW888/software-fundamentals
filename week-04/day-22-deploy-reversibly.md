@@ -62,8 +62,8 @@ OWASP's secrets guidance explains why and how.
 
 ### Name it: configuration, feature flags, reversibility
 
-*The Pragmatic Programmer*, Topic 11, "Reversibility" (to verify against book), argues that decisions are rarely final, so designs should make them easy to change.
-Its Topic 32, "Configuration" (to verify against book) recommends keeping values that may change after release, such as thresholds and service addresses, outside the code.
+*The Pragmatic Programmer*, Topic 11, "Reversibility", argues that decisions are rarely final, so designs should make them easy to change.
+Its Topic 32, "Configuration" recommends keeping values that may change after release, such as thresholds and service addresses, outside the code.
 
 A **feature flag** is a setting that switches a piece of behaviour on or off without a code change.
 A **rollback** returns a system to its previous working state.
@@ -80,8 +80,8 @@ Topic 27, "Don't Outrun Your Headlights", available as the publisher's free exce
 
 | Term | Definition | Source |
 |------|-----------|--------|
-| **Configuration** | Values that control a program's behaviour and can change without changing its code. | Paraphrased from Thomas and Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 32, "Configuration" (to verify against book) |
-| **Reversibility** | How easily a decision can be changed or undone later. | Paraphrased from Thomas and Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 11, "Reversibility" (to verify against book) |
+| **Configuration** | Values that control a program's behaviour and can change without changing its code. | Paraphrased from Thomas and Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 32, "Configuration" |
+| **Reversibility** | How easily a decision can be changed or undone later. | Paraphrased from Thomas and Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 11, "Reversibility" |
 | **Environment variable** | A named value set outside a program that the program can read, such as `ENRICHER_DB_PATH`. | Official Python vocabulary ([os.environ](https://docs.python.org/3/library/os.html#os.environ)) |
 | **Feature flag** | A setting that turns a piece of behaviour on or off without a code change. | Standard software vocabulary; this plain definition is course-authored |
 | **Rollback** | Returning a system to its previous working state. | Standard software vocabulary; this plain definition is course-authored |
@@ -230,7 +230,7 @@ If any line says "write code", decide which setting or flag would have shortened
 
 ## 📖 Curated Resources
 
-1. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topics 11, "Reversibility" and 32, "Configuration" (to verify against book).
+1. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topics 11, "Reversibility" and 32, "Configuration".
    - 🔗 [Publisher page](https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/)
    - Why: keeping decisions changeable and values outside the code.
 2. **[GitHub Actions documentation](https://docs.github.com/en/actions)**

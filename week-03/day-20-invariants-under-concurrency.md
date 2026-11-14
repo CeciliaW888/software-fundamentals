@@ -6,8 +6,8 @@
 
 ---
 
-> **Book coverage:** *The Pragmatic Programmer*'s Topic 34 (free excerpt) and Evans's *DDD Reference* (aggregates) cover the race and the consistency boundary.
-> Database isolation levels are not in the books' freely available material, so that part relies on the official SQLite and PostgreSQL documentation.
+> **Book coverage:** *The Pragmatic Programmer*'s Topic 34 and Evans's *Domain-Driven Design*, Chapter 6 (aggregates), cover the race and the consistency boundary.
+> Database isolation levels are not covered in the three books, so that part relies on the official SQLite and PostgreSQL documentation.
 
 ## 🎯 Learning Objectives
 
@@ -66,7 +66,7 @@ Now step 4 fails with an `IntegrityError`, whatever order the steps run in.
 An **invariant** is a rule that must always hold.
 A **race condition** is a bug where the result depends on the timing of concurrent actions; check-then-act is the classic shape.
 
-Eric Evans's *Domain-Driven Design*, Chapter 6, "The Life Cycle of a Domain Object" (to verify against book), introduces the **aggregate**: a cluster of objects treated as one unit for data changes, with a boundary inside which invariants must always be consistent.
+Eric Evans's *Domain-Driven Design*, Chapter 6, "The Life Cycle of a Domain Object", introduces the **aggregate**: a cluster of objects treated as one unit for data changes, with a boundary inside which invariants must always be consistent.
 Here, a company together with its confirmation is that unit, and the database constraint is how the boundary is enforced.
 
 *The Pragmatic Programmer*, Topic 34, "Shared State Is Incorrect State", warns that whenever two processes share a resource, you must make access to it atomic, or race conditions follow.
@@ -79,6 +79,7 @@ Neither makes a check-then-act sequence safe on its own: in this example each ch
 The book's remedies are mutual exclusion and, better, making the shared resource itself responsible for its own consistency, so callers cannot forget to protect it.
 The unique index is that second remedy: the database, not each reviewer's code, guards the rule.
 Evans's free [*DDD Reference*](https://www.domainlanguage.com/ddd/reference/) explains why the rule needs one owner: an aggregate draws a boundary around objects whose consistency rules must hold together, and changes inside it are applied as one unit.
+Chapter 6 makes the point with a purchase order edited by two people at once: each change is valid alone, yet together they break a rule about the whole order, which is why the rule must be checked for the order as one unit.
 
 > **Key Insight:** Enforce an invariant at the single point every writer must pass through. For stored data, that is usually a database constraint.
 
@@ -90,7 +91,7 @@ Evans's free [*DDD Reference*](https://www.domainlanguage.com/ddd/reference/) ex
 |------|-----------|--------|
 | **Invariant** | A rule that must always be true, such as "a company has at most one confirmed category". | Standard software vocabulary; this plain definition is course-authored |
 | **Race condition** | A bug where the outcome depends on the timing of actions that happen at the same time. | Standard software vocabulary; this plain definition is course-authored |
-| **Aggregate** | A cluster of objects treated as one unit for changes, with a boundary inside which invariants must hold. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 6 (to verify against book) |
+| **Aggregate** | A cluster of objects treated as one unit for changes, with a boundary inside which invariants must hold. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 6 |
 | **Unique index** | An index that refuses two rows with the same value in its columns. | Official SQLite vocabulary ([CREATE INDEX](https://www.sqlite.org/lang_createindex.html)) |
 | **Transaction** | A group of database changes that succeed or fail together. | Official SQLite vocabulary ([transactions](https://www.sqlite.org/lang_transaction.html)) |
 | **Isolation** | How much one transaction can see of another's changes while both are running. | Official SQLite vocabulary ([isolation in SQLite](https://www.sqlite.org/isolation.html)) |
@@ -265,7 +266,7 @@ def review_queue(self, limit=20):
 
 ## 📖 Curated Resources
 
-1. **Domain reading:** Eric Evans, *Domain-Driven Design*, Chapter 6, "The Life Cycle of a Domain Object" (to verify against book).
+1. **Domain reading:** Eric Evans, *Domain-Driven Design*, Chapter 6, "The Life Cycle of a Domain Object".
    - 🔗 [DDD resources from Domain Language](https://www.domainlanguage.com/ddd/)
    - Why: aggregates as consistency boundaries for invariants.
 2. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 34, "Shared State Is Incorrect State".
@@ -275,8 +276,7 @@ def review_queue(self, limit=20):
    - Why: what SQLite guarantees when several connections use one database.
 4. **[PostgreSQL: Transaction Isolation](https://www.postgresql.org/docs/current/transaction-iso.html)**
    - Why: isolation levels and the anomalies each one allows.
-5. **Book coverage for isolation levels:** none in the three books' freely available material; official documentation only.
-   - Why: a book source should be chosen when the full books are available.
+5. **Book coverage for isolation levels:** none in the three books; official documentation only.
 6. **Free sources:** the publisher's free excerpt on the [book page](https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/) (Topic 34) and Evans's free [*DDD Reference*](https://www.domainlanguage.com/ddd/reference/) (aggregates).
    - Why: the race and its remedies, and the consistency boundary, in the authors' own words.
 

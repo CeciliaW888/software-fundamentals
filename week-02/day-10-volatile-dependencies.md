@@ -65,12 +65,12 @@ An **adapter** is the code at that boundary that translates between the outside 
 In Python, a `typing.Protocol` describes the methods an object must have without requiring it to inherit from anything.
 Passing a dependency in, instead of letting the code fetch it itself, is called **dependency injection**.
 
-John Ousterhout's *A Philosophy of Software Design* gives the reasons in Chapter 5, "Information Hiding (and Leakage)" (to verify against book): details such as HTML parsing and timeouts are hidden in one module.
-Chapter 7, "Different Layer, Different Abstraction" (to verify against book), explains why each layer should speak its own vocabulary: the core talks about About pages, the adapter about URLs and bytes.
-Chapter 8, "Pull Complexity Downwards" (to verify against book), is why the adapter, not every caller, deals with network errors.
+John Ousterhout's *A Philosophy of Software Design* gives the reasons in Chapter 5, "Information Hiding (and Leakage)": details such as HTML parsing and timeouts are hidden in one module.
+Chapter 7, "Different Layer, Different Abstraction", explains why each layer should speak its own vocabulary: the core talks about About pages, the adapter about URLs and bytes.
+Chapter 8, "Pull Complexity Downwards", is why the adapter, not every caller, deals with network errors.
 
 Ousterhout's Chapter 6, "General-Purpose Modules are Deeper", checked in Ousterhout's free [2nd-edition extract](https://web.stanford.edu/~ouster/cgi-bin/aposd2ndEdExtract.pdf), explains why `WebsiteSource` is shaped the way it is: the interface is general enough that sample data, real HTTP, and a test fake all fit behind it, while each implementation stays as simple as today's need.
-*The Pragmatic Programmer*'s Topic 28, "Decoupling" (to verify against book), gives the same direction as Tip 48 (p. 136 in the publisher's [official list of the book's tips](https://pragprog.com/tips/)): if something outside the code is important enough to share, put an API in front of it.
+*The Pragmatic Programmer*'s Topic 28, "Decoupling", gives the same direction as Tip 48 (p. 136 in the publisher's [official list of the book's tips](https://pragprog.com/tips/)): if something outside the code is important enough to share, put an API in front of it.
 
 > **Key Insight:** Hide each volatile thing behind the smallest interface the core needs, and the core never changes when it does.
 
@@ -217,7 +217,7 @@ For each, write whether the core calls it directly or through an adapter, and wh
 
 ## 📖 Curated Resources
 
-1. **Main design reading:** John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapters 5, 7 and 8 (to verify against book).
+1. **Main design reading:** John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapters 5, 7 and 8.
    - 🔗 [Official book page](https://web.stanford.edu/~ouster/cgi-bin/book.php)
    - Why: information hiding, layers with their own vocabulary, and pulling complexity down.
 2. **[Python documentation: typing.Protocol](https://docs.python.org/3/library/typing.html#typing.Protocol)**

@@ -6,8 +6,8 @@
 
 ---
 
-> **Book coverage:** Evans's *DDD Reference* covers repositories, which shape the store's interface.
-> Comparing relational, document, and graph models is not in the books' freely available material, so that part relies on the official SQLite, PostgreSQL, and Python documentation.
+> **Book coverage:** Evans's *Domain-Driven Design*, Chapter 6, covers repositories, which shape the store's interface, and how to map a model onto relational tables.
+> Comparing relational, document, and graph models is not covered in the three books, so that part relies on the official SQLite, PostgreSQL, and Python documentation.
 
 ## 🎯 Learning Objectives
 
@@ -80,6 +80,8 @@ A **primary key** is the column that identifies each row; a **foreign key** is a
 
 Evans's free [*DDD Reference*](https://www.domainlanguage.com/ddd/reference/) describes a **repository** as the way a model offers query access to stored objects in the ubiquitous language, so database details don't leak into the domain code.
 `SqliteResultStore` plays that role: its methods are named for reviewers' questions, such as `review_queue`, and only the adapter knows about SQL.
+The same chapter, Chapter 6, "The Life Cycle of a Domain Object", has a section on designing objects for relational databases.
+When a database exists to store the model's objects, Evans advises keeping the tables close to the model, using the same names, and keeping other programs from writing to it directly, because they could break rules the objects enforce.
 
 > **Key Insight:** List the queries first. A schema that makes your most frequent queries simple is a good schema for you, whatever is fashionable.
 
@@ -95,7 +97,7 @@ Evans's free [*DDD Reference*](https://www.domainlanguage.com/ddd/reference/) de
 | **Primary key** | The column or columns that uniquely identify each row in a table. | Official SQLite vocabulary ([CREATE TABLE](https://www.sqlite.org/lang_createtable.html)) |
 | **Foreign key** | A column whose values must match a key in another table. | Official SQLite vocabulary ([foreign keys](https://www.sqlite.org/foreignkeys.html)) |
 | **Document model** | Storing each record as a self-contained document, such as JSON. | Standard database vocabulary; see [PostgreSQL: JSON types](https://www.postgresql.org/docs/current/datatype-json.html) |
-| **Repository** | An object that gives the model query access to stored objects in the model's own language, hiding the database details. | Paraphrased from Eric Evans, *Domain-Driven Design*; concept checked in Evans's free *DDD Reference*; chapter to verify against book |
+| **Repository** | An object that gives the model query access to stored objects in the model's own language, hiding the database details. | Paraphrased from Eric Evans, *Domain-Driven Design*, Chapter 6 |
 
 ---
 
@@ -234,8 +236,7 @@ Mark the one asked most often, and check whether the current schema makes it sim
    - Why: column types, primary keys, and `NOT NULL`.
 3. **[PostgreSQL: JSON types](https://www.postgresql.org/docs/current/datatype-json.html)**
    - Why: how a relational database can also hold document-shaped data.
-4. **Book coverage for data-model trade-offs:** none in the three books' freely available material; official documentation only.
-   - Why: a book source should be chosen when the full books are available.
+4. **Book coverage for data-model trade-offs:** Evans's *Domain-Driven Design*, Chapter 6, section "Designing Objects for Relational Databases", for relational stores only; the comparison with document and graph models relies on official documentation.
 5. **Free source:** Evans's free [*DDD Reference*](https://www.domainlanguage.com/ddd/reference/).
    - Why: the repository pattern in the author's own short form.
 

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'software-fundamentals-v1';
+const CACHE_NAME = 'software-fundamentals-v2';
 const OFFLINE_URL = './offline.html';
 
 const PRECACHE_ASSETS = [

@@ -7,7 +7,7 @@
 ---
 
 > **Book coverage:** *The Pragmatic Programmer*'s algorithm-speed tips (Tips 63 and 64 in the official tip list) give the reasoning about growth.
-> Indexes and query plans themselves are not in the books' freely available material, so those parts rely on the official SQLite and PostgreSQL documentation.
+> Indexes and query plans themselves are not covered in the three books, so those parts rely on the official SQLite and PostgreSQL documentation.
 
 ## 🎯 Learning Objectives
 
@@ -78,7 +78,7 @@ A **composite index** covers more than one column, and its column order matters:
 
 PostgreSQL works the same way in principle, with its own `EXPLAIN` command and plan format, and documents several index types beyond the default.
 
-*The Pragmatic Programmer*'s Topic 39, "Algorithm Speed" (to verify against book), gives the reasoning behind the index: a scan's work grows in step with the table, while an index lookup grows far more slowly.
+*The Pragmatic Programmer*'s Topic 39, "Algorithm Speed", gives the reasoning behind the index: a scan's work grows in step with the table, while an index lookup grows far more slowly.
 Its Tips 63 (p. 207), "Estimate the Order of Your Algorithms", and 64 (p. 208), "Test Your Estimates", in the publisher's [official list of the book's tips](https://pragprog.com/tips/), are the two halves of this lesson: reason about growth, then check with the query plan.
 
 > **Key Insight:** Don't guess where time goes in a query; ask the planner, add the index the plan needs, and pin the plan in a test.
@@ -226,9 +226,8 @@ Write down whether it scans or searches, and which index it uses.
    - Why: a plain explanation of how indexes and multi-column indexes work.
 4. **[PostgreSQL: Using EXPLAIN](https://www.postgresql.org/docs/current/using-explain.html)** and **[Indexes](https://www.postgresql.org/docs/current/indexes.html)**
    - Why: the same ideas in PostgreSQL.
-5. **Book coverage for indexes and query plans:** none in the three books' freely available material; official documentation only.
-   - Why: a book source should be chosen when the full books are available.
-6. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 39, "Algorithm Speed" (to verify against book).
+5. **Book coverage for indexes and query plans:** none in the three books; official documentation only.
+6. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 39, "Algorithm Speed".
    - 🔗 [Official tip list](https://pragprog.com/tips/)
    - Why: Tips 63 and 64, on estimating growth and testing the estimate.
 

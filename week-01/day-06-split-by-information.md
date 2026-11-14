@@ -56,13 +56,13 @@ The Module 2 classifier counts hits in a dictionary keyed by category, so no cod
 
 ### Name it: better together, DRY, orthogonality
 
-John Ousterhout's *A Philosophy of Software Design*, Chapter 9, "Better Together Or Better Apart?" (to verify against book), argues that pieces of code should be combined when they share information, when combining simplifies the interface, or when it removes duplication.
+John Ousterhout's *A Philosophy of Software Design*, Chapter 9, "Better Together Or Better Apart?", argues that pieces of code should be combined when they share information, when combining simplifies the interface, or when it removes duplication.
 He also warns against splitting a method only to make it shorter, because readers then have to understand several pieces at once.
 
 *The Pragmatic Programmer* states the duplication rule as DRY in Topic 9, "DRY - The Evils of Duplication": each piece of knowledge in a system should be expressed in exactly one place that everything else defers to.
 The authors stress that DRY is about knowledge and intent, not just copied text.
 
-The same book's Topic 10, "Orthogonality" (to verify against book) describes the other half: two parts are orthogonal when changing one does not affect the other.
+The same book's Topic 10, "Orthogonality" describes the other half: two parts are orthogonal when changing one does not affect the other.
 The classifier and the website module are orthogonal; the six short functions are not.
 
 The publisher's free excerpt of Topic 9 makes the knowledge point in detail: the acid test for duplication is whether one change in the world forces edits in more than one place, and two pieces of code that merely look alike are not duplication if they could change for different reasons.
@@ -77,9 +77,9 @@ Ousterhout's free extract also contains section 9.8, his comparison with *Clean 
 | Term | Definition | Source |
 |------|-----------|--------|
 | **DRY** | Each piece of knowledge in a system should be expressed in exactly one authoritative place. | Paraphrased from Thomas and Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 9, "DRY - The Evils of Duplication", checked in the publisher's free excerpt |
-| **Orthogonality** | Two parts are orthogonal when a change to one does not affect the other. | Paraphrased from Thomas and Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 10, "Orthogonality" (to verify against book) |
+| **Orthogonality** | Two parts are orthogonal when a change to one does not affect the other. | Paraphrased from Thomas and Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 10, "Orthogonality" |
 | **Duplicated knowledge** | The same fact or rule needed in more than one place, even if the code text differs. | Course-authored plain definition, following *The Pragmatic Programmer*'s DRY topic |
-| **Shared information** | Knowledge two pieces of code must both have, which is a reason to keep them together. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 9 (to verify against book) |
+| **Shared information** | Knowledge two pieces of code must both have, which is a reason to keep them together. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 9 |
 | **Dictionary** | A Python mapping from keys to values, such as category to hit count. | Official Python vocabulary ([Python tutorial: dictionaries](https://docs.python.org/3/tutorial/datastructures.html#dictionaries)) |
 
 ---
@@ -229,10 +229,10 @@ If the sentences overlap, write down the change that would have to touch both.
 
 ## 📖 Curated Resources
 
-1. **Main design reading:** John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 9, "Better Together Or Better Apart?" (to verify against book).
+1. **Main design reading:** John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 9, "Better Together Or Better Apart?".
    - 🔗 [Official book page](https://web.stanford.edu/~ouster/cgi-bin/book.php)
    - Why: when to combine and when to separate code.
-2. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topics 9, "DRY - The Evils of Duplication" and 10, "Orthogonality" (to verify against book).
+2. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topics 9, "DRY - The Evils of Duplication" and 10, "Orthogonality".
    - 🔗 [Publisher page](https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/)
    - Why: duplication of knowledge and independent parts.
 3. **[pytest: parametrizing tests](https://docs.pytest.org/en/stable/how-to/parametrize.html)**

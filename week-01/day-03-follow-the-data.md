@@ -72,13 +72,13 @@ Programmers have names for these four lists.
 - An **external dependency** is something outside the function that it relies on, such as the website data.
 - A **hidden dependency** is an external dependency that is not visible in the function's parameters.
 
-John Ousterhout's *A Philosophy of Software Design* calls the problem behind hidden dependencies an **unknown unknown**: something you need to know to change the code safely, with nothing in the code telling you that you need to know it (Chapter 2, "The Nature of Complexity" (to verify against book)).
-Chapter 5, "Information Hiding (and Leakage)" (to verify against book), adds a second warning.
+John Ousterhout's *A Philosophy of Software Design* calls the problem behind hidden dependencies an **unknown unknown**: something you need to know to change the code safely, with nothing in the code telling you that you need to know it (Chapter 2, "The Nature of Complexity").
+Chapter 5, "Information Hiding (and Leakage)", adds a second warning.
 Look at `read_about_page`: it loops over every page to find a URL that `find_official_website` already had.
 Two functions both know how `SAMPLE_WEB` is shaped.
 If its shape changes, both must change.
 
-*The Pragmatic Programmer*'s Topic 28, "Decoupling" (to verify against book), warns about exactly the `SAMPLE_WEB` problem.
+*The Pragmatic Programmer*'s Topic 28, "Decoupling", warns about exactly the `SAMPLE_WEB` problem.
 Two of its tips (both p. 136 in the publisher's [official list of the book's tips](https://pragprog.com/tips/)) are "Avoid Global Data" and "If It's Important Enough To Be Global, Wrap It in an API": global data is a hidden input to every function that reads it.
 Day 5 follows that advice and wraps the website data in one module.
 
@@ -95,8 +95,8 @@ Day 5 follows that advice and wraps the website data in one module.
 | **Side effect** | A change outside the returned value, such as saving data, sending a message, or modifying an input. | Standard software vocabulary; [PEP 257](https://peps.python.org/pep-0257/#multi-line-docstrings) asks docstrings to describe side effects |
 | **External dependency** | Something outside the function that it relies on, such as a website, file, database, or clock. | Standard software vocabulary; this plain definition is course-authored |
 | **Hidden dependency** | An external dependency that does not appear in the function's parameters. | Course-authored teaching term |
-| **Unknown unknown** | Something you must know to change code safely, with no sign in the code that you need to know it. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 2 (to verify against book) |
-| **Information leakage** | The same design knowledge appearing in more than one module, so a change to it touches all of them. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 5 (to verify against book) |
+| **Unknown unknown** | Something you must know to change code safely, with no sign in the code that you need to know it. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 2 |
+| **Information leakage** | The same design knowledge appearing in more than one module, so a change to it touches all of them. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 5 |
 
 ---
 
@@ -262,14 +262,14 @@ def suggest_company_category(
 
 ## 📖 Curated Resources
 
-1. **Main design reading:** John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 2, "The Nature of Complexity", and Chapter 5, "Information Hiding (and Leakage)" (to verify against book).
+1. **Main design reading:** John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 2, "The Nature of Complexity", and Chapter 5, "Information Hiding (and Leakage)".
    - 🔗 [Official book page](https://web.stanford.edu/~ouster/cgi-bin/book.php)
    - Why: names the cost of knowledge that the code does not show.
 2. **[PEP 257: Multi-line Docstrings](https://peps.python.org/pep-0257/#multi-line-docstrings)**
    - Why: lists side effects and exceptions as things a function's docstring should state.
 3. **[Python tutorial: Defining Functions](https://docs.python.org/3/tutorial/controlflow.html#defining-functions)**
    - Why: explains how a function reads global names, which is how `SAMPLE_WEB` reaches `find_official_website`.
-4. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 28, "Decoupling" (to verify against book).
+4. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 28, "Decoupling".
    - 🔗 [Official tip list](https://pragprog.com/tips/)
    - Why: Tips 47 and 48, on global data as a hidden coupling.
 

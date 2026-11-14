@@ -58,9 +58,9 @@ That is why the tests use a fixed clock time and the sample website source: they
 pytest calls the shared setup a **fixture**: a function marked with `@pytest.fixture` whose return value is passed to any test that names it as a parameter.
 `@pytest.mark.parametrize` runs one test function once for each set of arguments.
 
-*The Pragmatic Programmer*'s Topic 41, "Test to Code" (to verify against book) argues that thinking about how to test a piece of code improves its design, because testable code tends to be decoupled code.
+*The Pragmatic Programmer*'s Topic 41, "Test to Code" argues that thinking about how to test a piece of code improves its design, because testable code tends to be decoupled code.
 You saw that happen: the injectable clock exists because a test needed a fixed time.
-Topic 42, "Property-Based Testing" (to verify against book) describes checking invariants with generated inputs rather than hand-picked examples.
+Topic 42, "Property-Based Testing" describes checking invariants with generated inputs rather than hand-picked examples.
 The book's examples use a dedicated library; this project uses Python's `random` module with fixed seeds so it needs nothing beyond pytest, and the Hypothesis library is a good next step.
 
 The book's testing tips in the publisher's [official list of the book's tips](https://pragprog.com/tips/) add two angles worth remembering.
@@ -79,7 +79,7 @@ Tip 69 (p. 221), "Design to Test": code that is hard to test is usually telling 
 | **Fixture** | A pytest function that prepares something tests need and passes it to them by name. | Official pytest vocabulary ([fixtures](https://docs.pytest.org/en/stable/how-to/fixtures.html)) |
 | **Parametrized test** | One test function run once for each set of arguments. | Official pytest vocabulary ([parametrize](https://docs.pytest.org/en/stable/how-to/parametrize.html)) |
 | **Characterization test** | A test that pins what the code does today, so a change that alters it fails. | Standard software vocabulary; this plain definition is course-authored |
-| **Property-based test** | A test that checks a rule holds for many generated inputs. | Paraphrased from Thomas and Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 42, "Property-Based Testing" (to verify against book) |
+| **Property-based test** | A test that checks a rule holds for many generated inputs. | Paraphrased from Thomas and Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 42, "Property-Based Testing" |
 | **Deterministic** | Giving the same result every time it runs with the same inputs. | Course-authored plain definition |
 
 ---
@@ -219,7 +219,7 @@ Mark each promise that has no test, and each test that checks an internal step i
 
 ## 📖 Curated Resources
 
-1. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topics 41, "Test to Code" and 42, "Property-Based Testing" (to verify against book).
+1. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topics 41, "Test to Code" and 42, "Property-Based Testing".
    - 🔗 [Publisher page](https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/)
    - Why: why testing shapes design, and testing with generated inputs.
 2. **[pytest: how to use fixtures](https://docs.pytest.org/en/stable/how-to/fixtures.html)**

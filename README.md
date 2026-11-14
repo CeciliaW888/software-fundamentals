@@ -74,20 +74,20 @@ Each lesson follows the same loop: observe, say it plainly, name it, change, che
 
 | Day | Lesson | Module | Durable decision | Main sources | Status |
 |---|---|---|---|---|---|
-| 16 | [Turn qualities into measurable requirements](week-03/day-16-measurable-requirements.md) | 5 Data | Define latency, reliability, load, and maintainability targets | *TPP* Topic 5 and Tip 8 (to verify against book); measurement: official docs | ✅ Written |
-| 17 | [Choose a data model from access patterns](week-03/day-17-data-model-from-access.md) | 5 Data | Match relationships and queries to the model | *DDD Reference* (repositories); data models: SQLite, PostgreSQL and Python docs | ✅ Written |
-| 18 | [Understand storage trade-offs](week-03/day-18-storage-trade-offs.md) | 5 Data | Connect indexes and layout to read/write behaviour | *TPP* Topic 39, Tips 63 and 64 (to verify against book); indexes: SQLite and PostgreSQL docs | ✅ Written |
-| 19 | [Evolve schemas without coordinated deployment](week-03/day-19-evolve-schemas.md) | 5 Data | Preserve compatibility across versions | Official SQLite, PostgreSQL and Python docs only; *TPP* Tip 18 and Topic 27 for small, reversible steps | ✅ Written |
-| 20 | [Protect invariants under concurrency](week-03/day-20-invariants-under-concurrency.md) | 5 Data | Choose an isolation guarantee from the failure you must prevent | *TPP* Topic 34 (free excerpt); *DDD Reference* (aggregates); isolation levels: database docs | ✅ Written |
+| 16 | [Turn qualities into measurable requirements](week-03/day-16-measurable-requirements.md) | 5 Data | Define latency, reliability, load, and maintainability targets | *TPP* Topic 5 and Tip 8; measurement: official docs | ✅ Written |
+| 17 | [Choose a data model from access patterns](week-03/day-17-data-model-from-access.md) | 5 Data | Match relationships and queries to the model | *DDD* Ch. 6 (repositories, relational mapping); data models: SQLite, PostgreSQL and Python docs | ✅ Written |
+| 18 | [Understand storage trade-offs](week-03/day-18-storage-trade-offs.md) | 5 Data | Connect indexes and layout to read/write behaviour | *TPP* Topic 39, Tips 63 and 64; indexes: SQLite and PostgreSQL docs | ✅ Written |
+| 19 | [Evolve schemas without coordinated deployment](week-03/day-19-evolve-schemas.md) | 5 Data | Preserve compatibility across versions | SQLite, PostgreSQL and Python docs; *TPP* Tip 18 and Topic 27 for small, reversible steps; *DDD* Ch. 6 on why schema changes are costly | ✅ Written |
+| 20 | [Protect invariants under concurrency](week-03/day-20-invariants-under-concurrency.md) | 5 Data | Choose an isolation guarantee from the failure you must prevent | *TPP* Topic 34; *DDD* Ch. 6 (aggregates); isolation levels: database docs | ✅ Written |
 
 ### 🚀 Week 4: Operate what you build
 
 | Day | Lesson | Module | Durable decision | Main sources | Status |
 |---|---|---|---|---|---|
-| 21 | [Observe promises and failures](week-04/day-21-observe-promises.md) | 6 Operate | Instrument what users depend on | OpenTelemetry, Python and OWASP docs only | ✅ Written |
+| 21 | [Observe promises and failures](week-04/day-21-observe-promises.md) | 6 Operate | Instrument what users depend on | *TPP* Topic 20 (tracing); OpenTelemetry, Python and OWASP docs | ✅ Written |
 | 22 | [Deploy reversibly](week-04/day-22-deploy-reversibly.md) | 6 Operate | Make configuration, migration, rollout, and rollback explicit | *TPP* "Reversibility", "Configuration"; GitHub Actions and Git docs | ✅ Written |
 | 23 | [Measure before optimizing](week-04/day-23-measure-before-optimizing.md) | 6 Operate | Locate the critical path before changing code | *APOSD* Ch. 20 | ✅ Written |
-| 24 | [Design for expected failure](week-04/day-24-design-for-failure.md) | 6 Operate | Choose retries, timeouts, idempotency, and fallbacks from failure semantics | Python, SQLite and HTTP (RFC 9110) docs only; *APOSD* Ch. 10 for masking errors (to verify against book) | ✅ Written |
+| 24 | [Design for expected failure](week-04/day-24-design-for-failure.md) | 6 Operate | Choose retries, timeouts, idempotency, and fallbacks from failure semantics | *APOSD* Ch. 10 (masking errors, retrying in one layer); Python, SQLite and HTTP (RFC 9110) docs | ✅ Written |
 
 The full curriculum, with each lesson's practice change, exit evidence per module, and the proposed toolkit strand, is in [COURSE_DESIGN.md](COURSE_DESIGN.md).
 
@@ -178,7 +178,7 @@ The course uses three main books:
 - *Domain-Driven Design* by Eric Evans ([DDD resources](https://www.domainlanguage.com/ddd/)) supports selected business-language and modeling lessons.
 
 Where none of the three books fits a lesson, the lesson says so plainly and relies on official documentation.
-Book citations were checked against free, official sources (publisher excerpts and tip list, the author's extract, the *DDD Reference*); any citation still marked "(to verify against book)" is listed in [docs/book-verification-todo.md](docs/book-verification-todo.md).
+Every book citation, chapter or topic number, and paraphrase was checked against the full books; [docs/book-verification.md](docs/book-verification.md) records what was checked and what changed.
 
 Behavioural and domain authority:
 

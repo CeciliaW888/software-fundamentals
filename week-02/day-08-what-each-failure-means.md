@@ -56,12 +56,12 @@ Store failures are left to report themselves: hiding a failed save would lose da
 
 ### Name it: define errors out of existence, crash early
 
-John Ousterhout's *A Philosophy of Software Design*, Chapter 10, "Define Errors Out Of Existence" (to verify against book), argues that exceptions add complexity to every caller, and that the best way to reduce it is to design so that fewer exceptions are needed.
+John Ousterhout's *A Philosophy of Software Design*, Chapter 10, "Define Errors Out Of Existence", argues that exceptions add complexity to every caller, and that the best way to reduce it is to design so that fewer exceptions are needed.
 He describes defining errors out of existence, **exception masking** (handling a condition at a low level so higher levels never see it), and **exception aggregation** (handling many exceptions in one place).
 He also notes that some errors are best handled by simply crashing, when recovery is not worth the complexity.
 
-*The Pragmatic Programmer* makes the crash case in Topic 24, "Dead Programs Tell No Lies" (to verify against book): when code finds something that should be impossible, stopping usually does less harm than carrying on with bad data.
-Topic 25, "Assertive Programming" (to verify against book) recommends checking for the impossible in code, so the check fails loudly if it ever happens.
+*The Pragmatic Programmer* makes the crash case in Topic 24, "Dead Programs Tell No Lies": when code finds something that should be impossible, stopping usually does less harm than carrying on with bad data.
+Topic 25, "Assertive Programming" recommends checking for the impossible in code, so the check fails loudly if it ever happens.
 In this service, `check_confidence` plays that role with an explicit `ValueError`, which unlike `assert` cannot be switched off.
 
 Two tips in the publisher's [official list of the book's tips](https://pragprog.com/tips/) name the rule directly: Tip 38 (p. 113), "Crash Early", and Tip 39 (p. 115), "Use Assertions to Prevent the Impossible".
@@ -75,9 +75,9 @@ Two tips in the publisher's [official list of the book's tips](https://pragprog.
 | Term | Definition | Source |
 |------|-----------|--------|
 | **Exception** | A Python object that signals an error and interrupts normal flow until something handles it. | Official Python vocabulary ([tutorial: errors and exceptions](https://docs.python.org/3/tutorial/errors.html)) |
-| **Exception masking** | Handling an exceptional condition at a low level so higher levels never see it. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 10 (to verify against book) |
-| **Exception aggregation** | Handling many exceptions with one piece of code instead of many. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 10 (to verify against book) |
-| **Crash early** | Stopping as soon as the code finds an impossible state, instead of continuing with bad data. | Paraphrased from Thomas and Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 24, "Dead Programs Tell No Lies" (to verify against book) |
+| **Exception masking** | Handling an exceptional condition at a low level so higher levels never see it. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 10 |
+| **Exception aggregation** | Handling many exceptions with one piece of code instead of many. | Paraphrased from John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 10 |
+| **Crash early** | Stopping as soon as the code finds an impossible state, instead of continuing with bad data. | Paraphrased from Thomas and Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topic 24, "Dead Programs Tell No Lies" |
 | **Review reason** | Why a result needs a person: weak evidence or no website. | Course domain term |
 
 ---
@@ -200,10 +200,10 @@ Find one that is in the wrong group.
 
 ## 📖 Curated Resources
 
-1. **Main design reading:** John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 10, "Define Errors Out Of Existence" (to verify against book).
+1. **Main design reading:** John Ousterhout, *A Philosophy of Software Design*, 2nd ed., Chapter 10, "Define Errors Out Of Existence".
    - 🔗 [Official book page](https://web.stanford.edu/~ouster/cgi-bin/book.php)
    - Why: masking, aggregation, and when to crash.
-2. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topics 24, "Dead Programs Tell No Lies" and 25, "Assertive Programming" (to verify against book).
+2. **Practice reading:** David Thomas and Andrew Hunt, *The Pragmatic Programmer*, 20th Anniversary Edition, Topics 24, "Dead Programs Tell No Lies" and 25, "Assertive Programming".
    - 🔗 [Publisher page](https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/)
    - Why: stopping on the impossible.
 3. **[Python tutorial: Errors and Exceptions](https://docs.python.org/3/tutorial/errors.html)**
